@@ -1,10 +1,11 @@
 
+
 from __future__ import absolute_import
 from __future__ import print_function
 
 from .Olig import InputFileDir
 
-from .Fingerprint import Fingerprint_Wrapper
+#from .Fingerprint import Fingerprint_Wrapper
 
 from PyQt5.uic import loadUi
 import sys
@@ -82,7 +83,6 @@ def make_dialog():
         file_text = QFilename[0]
 
     def fingerprint():
-        Test()
         pass
 
     def run():

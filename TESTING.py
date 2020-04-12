@@ -1,41 +1,27 @@
-#!/Users/Justine/Anaconda3/envs/my-rdkit-env/python
+#! /usr/bin/my-rdkit-env
 
 
 #from rdkit import DataStructs
 #from rdkit import Chem, RDConfig
 #from RDConfig import RDBaseDir
-#from rdkit.Chem import AllChem, rdMolAlign
+from rdkit.Chem import AllChem, rdMolAlign
 import os
 #import fpkit.similarity as fps
 #import fpkit.filters as filters
 #import pandas as pd
 import oddt
 import oddt.fingerprints as fp
-import openbabel
 #import os
 import numpy as np
 import glob
 import sys
 
 
-
-#sys.modules['oddt'] = oddt
-
 #import pymol
 # Main function
 
-
-
-#Heat Map
-#import matplotlib.pyplot as plt
-import seaborn as sns
 import numpy as np
 
-def CreateHeatMap(fingerprint_data, Ligands, Type):
-    sns.set()
-    ax = sns.heatmap(fingerprint_data, cmap="Greens", xticklabels= Ligands, yticklabels= Ligands)
-    ax.set(title = Type)
-    ax.figure.savefig(Type + ".png")
 
 ##########################################################################################
 
@@ -93,7 +79,6 @@ def Fingerprint(proteinName, Listoflig, Type):
         cur_row += 1
     print(All_Fingerprint)
     Fingerprint_write(Listoflig, All_Fingerprint, Type)
-    CreateHeatMap(All_Fingerprint, Listoflig, Type)
 
     # Ideally the create heat map would be in the wrapper
     return Listoflig, All_Fingerprint
@@ -331,7 +316,7 @@ def ProteintoLigList(pfile):
     return protein_name, Saved_Complexes
 
 
-os.chdir(r"C:\Users\Justine\PycharmProjects\Oligomer_script\Vina_docking\Dimers\Oligomer_Analysis\1FX9")
+os.chdir(r"C:\Users\Justine\PycharmProjects\Oligomer_script\Vina_docking\Trimers\comp_metalloprotein")
 
 def Fingerprint_Wrapper(pfile, Type):
     # Takes in the protein file as well as the type of operation that will be performed
@@ -343,15 +328,16 @@ def Fingerprint_Wrapper(pfile, Type):
     pfile = proteinName.rsplit('.', 1)[0] + '.pdb'
     print(pfile)
     Listoflig, All_Fingerprint = Fingerprint(pfile, Saved_Complexes, Type)
-    CreateHeatMap(All_Fingerprint, Listoflig, Type)
+   # CreateHeatMap(All_Fingerprint, Listoflig, Type)
 
 #os.chdir(r"C:\Users\Justine\PycharmProjects\Oligomer_script\Vina_docking\Dimers\Docking\1FX9")
 
 
 
 #proteinpath = '1fx9.pdbqt'
-lig1 = 'lig30.pdb'
-lig2 = 'lig31.pdb'
+lig1 = 'rot1.pdb'
+lig2 = 'rot2.pdb'
+lig3 = 'rot3.pdb'
 #lig3 = 'tlig7.pdb'
 #lig4 = 'lig4.pdb'
 #lig5 = 'lig5.pdb'
@@ -369,18 +355,15 @@ lig2 = 'lig31.pdb'
 #prot = r"C:\Users\Justine\PycharmProjects\Oligomer_script\Vina_docking\Dimers\Docking\1FX9\1fx9_nohet.pdb"
 #prot = r"C:\Users\Justine\PycharmProjects\Oligomer_script\Vina_docking\Dimers\Docking\1FX9\1fx9_nohet.pdb"
 #prot = r"C:\Users\Justine\PycharmProjects\Oligomer_script\Vina_docking\Dimers\Docking\1Z9N\proty.pdb"
-#prot = r'C:\Users\Justine\PycharmProjects\Oligomer_script\Vina_docking\Dimers\Oligomer_Analysis\3HSY\proteinnn.pdb'
-prot = r'C:\Users\Justine\PycharmProjects\Oligomer_script\Vina_docking\Dimers\Oligomer_Analysis\1FX9\proteinp.pdb'
+prot = r'C:\Users\Justine\PycharmProjects\Oligomer_script\Vina_docking\Trimers\comp_metalloprotein\5eil.pdb'
 #Fingerprint_Wrapper(prot, "SPLIF")
 ######################################################################################################################
 
 #print(ProteintoLigList(prot))
 
-LList = [lig1, lig1]
+LList = [lig1, lig2, lig3]
 
-#Fingerprint(prot, LList, "SInteraction")
-#Fingerprint(prot, LList, "Interaction")
-Fingerprint(prot, LList, "SPLIF")
+Fingerprint(prot, LList, "SInteraction")
 
 
 ######################################################################################################################
@@ -390,16 +373,6 @@ Fingerprint(prot, LList, "SPLIF")
 #LigNum = 5  # 5 total
 #fingerprint_data = open("Fingerprint.csv", 'r')
 
-#CreateHeatMap(fingerprint_data, ["Lig1", "Lig2", "Lig3", "Lig4", "Lig5"])
-
-
-
-
-
-
-
-
-
 
 #Fingerprint(prot, [lig1, lig2], "Interaction")
-
+#Fingerprint(prot, [lig1, lig1, lig3], "SPLIF")
