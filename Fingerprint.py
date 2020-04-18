@@ -1,41 +1,40 @@
-#!/Users/Justine/Anaconda3/envs/my-rdkit-env/python
-
 
 #from rdkit import DataStructs
 #from rdkit import Chem, RDConfig
 #from RDConfig import RDBaseDir
 #from rdkit.Chem import AllChem, rdMolAlign
+import pymol
 import os
+from pymol import cmd
 #import fpkit.similarity as fps
 #import fpkit.filters as filters
 #import pandas as pd
 import oddt
 import oddt.fingerprints as fp
-import openbabel
 #import os
 import numpy as np
 import glob
 import sys
-
-
-
-#sys.modules['oddt'] = oddt
-
-#import pymol
-# Main function
-
-
-
-#Heat Map
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
+from pylab import savefig
 import seaborn as sns
 import numpy as np
 
-def CreateHeatMap(fingerprint_data, Ligands, Type):
+def CreateHeatMap(fingerprint_data, Ligands, type, map_type):
     sns.set()
-    ax = sns.heatmap(fingerprint_data, cmap="Greens", xticklabels= Ligands, yticklabels= Ligands)
-    ax.set(title = Type)
-    ax.figure.savefig(Type + ".png")
+    mask = np.zeros_like(fingerprint_data)
+    mask[np.triu_indices_from(mask)] = True
+    with sns.axes_style("white"):
+        ax = sns.heatmap(fingerprint_data, cmap=map_type, xticklabels= Ligands, yticklabels= Ligands, cbar=False, annot=True, mask=mask, square=True, annot_kws={"size": 10})
+        ax.set(title = type)
+       # sns.set(font_scale=2.0)
+        figure = ax.get_figure()
+       # figure.tight_layout()
+        figure.savefig(type + ".png", bbox_inches = "tight")
+    plt.clf()
+  #  cmd.reinitialize()
+
+
 
 ##########################################################################################
 
@@ -67,7 +66,6 @@ def Fingerprint_write(LigList, FArr, Type):
 
 # Type is "SPLIF", "Interaction", or "Simple_Interaction"
 def Fingerprint(proteinName, Listoflig, Type):
-
     # Setting up the array
     ligsize = len(Listoflig)
     All_Fingerprint = np.zeros((ligsize, ligsize))
@@ -92,12 +90,11 @@ def Fingerprint(proteinName, Listoflig, Type):
 
         cur_row += 1
     print(All_Fingerprint)
-    Fingerprint_write(Listoflig, All_Fingerprint, Type)
-    CreateHeatMap(All_Fingerprint, Listoflig, Type)
+
+    #CreateHeatMap(All_Fingerprint, Listoflig, Type)
 
     # Ideally the create heat map would be in the wrapper
     return Listoflig, All_Fingerprint
-
 
 # Give it a string to indicate the file to write to as well as the type of fingerprint
 #    Fingerprint_write(Listoflig, All_Fingerprint, FingerprintTypeString)
@@ -128,14 +125,11 @@ def SPLIF_Fingerprint(ref_input, Listoflig, proteinpath):
     for ligandpath in Listoflig:
         ligand = next(oddt.toolkit.readfile('pdb', ligandpath))
         fp_query = fp.SPLIF(ligand, protein)
+
         # similarity score for current query
-       # cur_score = fp.dice(ref, fp_query)
-       # F_Scores[count] = cur_score
-    #    print(fp_query)
         F_Scores[count] = fp.similarity_SPLIF(ref, fp_query, rmsd_cutoff=3.)
-      #  print(cur_score)
         count = count + 1
-    print(F_Scores)
+   # print(F_Scores)
     # Returns a list of the fingerprint scores
     return F_Scores
 
@@ -258,8 +252,7 @@ def Simple_Interaction_Fingerprint(ref_input, Listoflig, proteinpath):
 
 ######################################################################################################################
 
-def PDBQTtoPDB(dir, savename, mol):
-    os.chdir(dir)
+def PDBQTtoPDB(savename, mol):
     cmd.load(mol)
     save_as = savename + ".pdb"
     mol_s = mol.rsplit(".", 1)[0]
@@ -274,17 +267,26 @@ def PDBQTtoPDB(dir, savename, mol):
 # Take the function from .olig to
 
 # Takes in a pdb or a pdbqt file
-def ProteintoLigList(pfile):
+def ProteintoLigListComplex(pfile):
     # Changes the directory
-    global working_dir
     working_dir = os.path.dirname(pfile)
     os.chdir(working_dir)
-#    print(working_dir)
 
     # pfile just want the extention as well as the name + extension
 
     protein_name = os.path.basename(pfile)
-    file_ext = protein_name.rsplit('.', 1)[1]
+
+    # Protein name, file extension
+    protein_name, file_ext = protein_name.rsplit('.', 1)
+    print("Protein true name: " + protein_name)
+
+    # Saving as a .pdb file
+    print("protein save 1: " + protein_name)
+    print("protein save 2: " + protein_name + file_ext)
+    PDBQTtoPDB(protein_name, protein_name + "." + file_ext)
+
+    protein_name = protein_name + '.pdb'
+    print("Protein and pdb again: " + protein_name)
     all_files = []
 
     query = glob.glob('*.' + file_ext)
@@ -312,13 +314,19 @@ def ProteintoLigList(pfile):
     # Goes through each ligand to make a complex
     SNum = 0
     testlig = LigandList[0]
-    PDBQTtoPDB(working_dir, protein_name, pfile)
+
+
 
     for ligand in LigandList:
         print("ligand: " + ligand)
         lig_name = ligand.rsplit('.', 1)[0]
         # #MakeComplex(dir, "Justlig", "lig2.pdbqt", "protein.pdbqt")
-        PDBQTtoPDB(working_dir, lig_name, ligand)
+
+        # Commenting out for now
+        print("Lig_name: " + lig_name)
+        print("Ligand: " + ligand)
+        PDBQTtoPDB(lig_name, ligand)
+
         #   print("loading complex")
         #   cmd.load(lig_name + '.pdb')
 
@@ -330,76 +338,29 @@ def ProteintoLigList(pfile):
     print(protein_name)
     return protein_name, Saved_Complexes
 
-
-os.chdir(r"C:\Users\Justine\PycharmProjects\Oligomer_script\Vina_docking\Dimers\Oligomer_Analysis\1FX9")
-
+######################################################################################################################
+# Type is a list, goes through each in the list
 def Fingerprint_Wrapper(pfile, Type):
     # Takes in the protein file as well as the type of operation that will be performed
-    proteinName, Saved_Complexes = ProteintoLigList(pfile)
-    print(Saved_Complexes)
+    proteinName, Saved_Complexes = ProteintoLigListComplex(pfile)
+    Saved_Complexes.sort()
+    # For each of the values in the list
+  #  ax = sns.heatmap(All_Fingerprint, cmap="Greens")
+    for fprint in Type:
+        # Define these variables
+        Listoflig, All_Fingerprint = Fingerprint(proteinName, Saved_Complexes, fprint)
 
-    #Outputs the requested fingerprint
-    print(proteinName)
-    pfile = proteinName.rsplit('.', 1)[0] + '.pdb'
-    print(pfile)
-    Listoflig, All_Fingerprint = Fingerprint(pfile, Saved_Complexes, Type)
-    CreateHeatMap(All_Fingerprint, Listoflig, Type)
+        # Write to a .csv file
+        Fingerprint_write(Listoflig, All_Fingerprint, fprint)
+        sns.set()
+        # sns.reset_defaults()
+        CreateHeatMap(All_Fingerprint, Listoflig, fprint, "Greens")
 
-#os.chdir(r"C:\Users\Justine\PycharmProjects\Oligomer_script\Vina_docking\Dimers\Docking\1FX9")
-
-
-
-#proteinpath = '1fx9.pdbqt'
-lig1 = 'lig30.pdb'
-lig2 = 'lig31.pdb'
-#lig3 = 'tlig7.pdb'
-#lig4 = 'lig4.pdb'
-#lig5 = 'lig5.pdb'
-#lig4 = 'tlig9.pdb'
-#lig4 = 'vina_output_ligand_4.pdbqt'
-#lig4 = 'vina_output_ligand_4.pdbqt'
-#lig5 = 'vina_output_ligand_5.pdbqt'
-#lig6 = 'vina_output_ligand_6.pdbqt'
-#lig7 = 'vina_output_ligand_7.pdb'
-#lig8 = 'vina_output_ligand_8.pdb'
-#lig9 = 'vina_output_ligand_9.pdb'
-
-#prot = r"C:\Users\Justine\PycharmProjects\Oligomer_script\Vina_docking\Tetramers\5VA1\prot.pdb"
-#prot = r"C:\Users\Justine\PycharmProjects\Oligomer_script\Vina_docking\Tetramers\5KMH\5kmh.pdb"
-#prot = r"C:\Users\Justine\PycharmProjects\Oligomer_script\Vina_docking\Dimers\Docking\1FX9\1fx9_nohet.pdb"
-#prot = r"C:\Users\Justine\PycharmProjects\Oligomer_script\Vina_docking\Dimers\Docking\1FX9\1fx9_nohet.pdb"
-#prot = r"C:\Users\Justine\PycharmProjects\Oligomer_script\Vina_docking\Dimers\Docking\1Z9N\proty.pdb"
-#prot = r'C:\Users\Justine\PycharmProjects\Oligomer_script\Vina_docking\Dimers\Oligomer_Analysis\3HSY\proteinnn.pdb'
-prot = r'C:\Users\Justine\PycharmProjects\Oligomer_script\Vina_docking\Dimers\Oligomer_Analysis\1FX9\proteinp.pdb'
-#Fingerprint_Wrapper(prot, "SPLIF")
-######################################################################################################################
-
-#print(ProteintoLigList(prot))
-
-LList = [lig1, lig1]
-
-#Fingerprint(prot, LList, "SInteraction")
-#Fingerprint(prot, LList, "Interaction")
-Fingerprint(prot, LList, "SPLIF")
+    print("Fingerprint finished processing.")
 
 
 ######################################################################################################################
 
-
-# Load the example flights dataset and convert to long-form
-#LigNum = 5  # 5 total
-#fingerprint_data = open("Fingerprint.csv", 'r')
-
-#CreateHeatMap(fingerprint_data, ["Lig1", "Lig2", "Lig3", "Lig4", "Lig5"])
-
-
-
-
-
-
-
-
-
-
-#Fingerprint(prot, [lig1, lig2], "Interaction")
-
+#Fingerprint_Wrapper('protein.pdb', 'SPLIF')
+#ProteintoLigListComplex('/home/justine/PycharmProjects/PoseFilter/Test/Trimer/protein.pdbqt')
+#Fingerprint_Wrapper('/home/justine/PycharmProjects/PoseFilter/Test/Trimer/protein.pdbqt', "SPLIF")

@@ -4,8 +4,7 @@ from __future__ import absolute_import
 from __future__ import print_function
 
 from .Olig import InputFileDir
-
-#from .Fingerprint import Fingerprint_Wrapper
+from .Fingerprint import Fingerprint_Wrapper
 
 from PyQt5.uic import loadUi
 import sys
@@ -58,7 +57,7 @@ def make_dialog():
     dialog = QDialog()
 
     # populate the Window from our *.ui file which was created with the Qt Designer
-    uifile = os.path.join(os.path.dirname(__file__), 'olig_gui_fingerprint.ui')
+    uifile = os.path.join(os.path.dirname(__file__), 'olig_gui_fingerprint_new.ui')
     global form
     form = loadUi(uifile, dialog)
 
@@ -81,17 +80,36 @@ def make_dialog():
         global file_text
         QFilename = QFileDialog.getOpenFileName(None, "Choose a protein file...")
         file_text = QFilename[0]
+        # Change the text in the form
+        form.file_select.setText(QFilename[0])
+        print(file_text)
 
     def fingerprint():
-        pass
+        global file_text
+        cmd.reinitialize()
+
+        print('Run fingerprint portion.')
+     #   print("Protein file: " + file_text)
+        AnyChecked = 0
+        IText = []
+
+        if form.SPLIF.isChecked():
+            IText.append("SPLIF")
+            AnyChecked = 1
+        if form.Interaction.isChecked():
+            IText.append("Interaction")
+            AnyChecked = 1
+        if form.Simple_Interaction.isChecked() or AnyChecked == 0:
+            IText.append("SInteraction")
+        print(IText)
+        Fingerprint_Wrapper(file_text, IText)
 
     def run():
         global file_text, dialog
-
+        cmd.reinitialize()
         print(file_text)
         print("Running the oligomer script.")
-        #InputFileDir(file_text)
-        InputFileDir(file_text)
+        InputFileDir(file_text, form.PDBCODE.text())
        # complexes = FindLigands(file_text)
         #OligWrapper(complexes, file_text)
 
