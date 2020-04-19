@@ -1,8 +1,3 @@
-
-#from rdkit import DataStructs
-#from rdkit import Chem, RDConfig
-#from RDConfig import RDBaseDir
-#from rdkit.Chem import AllChem, rdMolAlign
 import pymol
 import os
 from pymol import cmd
@@ -20,14 +15,16 @@ from pylab import savefig
 import seaborn as sns
 import numpy as np
 
-def CreateHeatMap(fingerprint_data, Ligands, type, map_type):
+from .Olig import GenerateRotList
+
+def CreateHeatMap(fingerprint_data, Ligands, type, map_type, PDB_code):
     sns.set()
     mask = np.zeros_like(fingerprint_data)
     mask[np.triu_indices_from(mask)] = True
     with sns.axes_style("white"):
-        ax = sns.heatmap(fingerprint_data, cmap=map_type, xticklabels= Ligands, yticklabels= Ligands, cbar=False, annot=True, mask=mask, square=True, annot_kws={"size": 10})
-        ax.set(title = type)
-       # sns.set(font_scale=2.0)
+        ax = sns.heatmap(fingerprint_data, cmap=map_type, xticklabels= Ligands, yticklabels= Ligands, cbar=False, mask=mask, square=True)
+        Map_title = type + ' ' + PDB_code
+        ax.set(title = Map_title)
         figure = ax.get_figure()
        # figure.tight_layout()
         figure.savefig(type + ".png", bbox_inches = "tight")
@@ -37,14 +34,98 @@ def CreateHeatMap(fingerprint_data, Ligands, type, map_type):
 
 
 ##########################################################################################
+# Checks for similarities from a row. Saves the files to corresponding: Similar/Unique directories
+# Cutoff
+def FingerprintSimCheck(RotList, All_Fingerprint, cutoff):
+
+
+    # Puts the Rotation structure into this new variable
+    Rot_type = [RotStruct, [0]*len(RotStruct)]
+
+    sim_file = open('Similar.csv', 'w')
+    sim_file.write('Reference, Structure, RMS, Rotation #\n')
+
+    # The first row is the name, the second is the type: 's' for similar, nothing for unique
+    # Uses the global numpy variable to check for similarities and then sorts the files.
+    x = len(RotList)-1
+    while x > 0:
+        y = x
+        while y >= 0:
+            if x == y:
+                pass
+            else:
+                if Testing:
+                    print("y val: " + str(y))
+                    print("x val: " + str(x))
+                if All_RMS[x][y] < 2:
+                    # Structure
+                    Rot_type[1][y] = 'u'
+                   # print(Rot_type[0][y] + "is similar")
+                    # Need to make one unique out of the set
+                    # Reference
+                    Rot_type[1][x] = 's'
+
+                    # Could now write to a file to indicate which files are similar
+                    sim_file.write(str(Rot_type[0][x]) + ', ' + str(Rot_type[0][y]) + ', ' +
+                                   str(All_RMS[x][y]) + ', ' + RotNumList[y] + '\n')
+
+                # Not similar; pass for now
+                else:
+                    pass
+
+            y = y - 1
+        x = x - 1
+    # Use this to create two new lists, sList, uList
+  #  simfinder = RotStruct
+    # Check to see if the directories exist
+    if not os.path.exists('Similar'):
+        os.makedirs('Similar')
+
+    if not os.path.exists('Unique'):
+        os.makedirs('Unique')
+
+    # Go through the structures again and add to the proper directories
+    for w in range(len(RotStruct)):
+        # Name
+        rot = str(Rot_type[0][w])
+
+        if Rot_type[1][w] == 's':
+            # Move from dir to dir
+
+            # Want a new path that has the directory similar on it
+            path_1 = os.path.join(working_dir, rot)
+            print(path_1)
+            path_2 = os.path.join(working_dir, 'Similar', rot)
+            print(path_2)
+            shutil.move(path_1, path_2)
+
+        else:
+            path_1 = os.path.join(working_dir, rot)
+            print(path_1)
+            path_2 = os.path.join(working_dir, 'Unique', rot)
+            print(path_2)
+            shutil.move(path_1, path_2)
+
+    sim_file.close()
+
+
+
+
+#######################################################################################################
+
+
+
+
+
+
 
 # Takes the np array and then writes to file
 # Takes in a LigandList, Array to write to the file, and type of fingerprint
-def Fingerprint_write(LigList, FArr, Type):
+def Fingerprint_write(LigList, FArr, Type, PDB_code):
 
 # 'Fingerprint_SPLIF.csv'
 
-    f2 = open(Type + '_Fingerprint.csv', 'w')
+    f2 = open(Type + '_' + PDB_code + '_' + '_Fingerprint.csv', 'w')
     f2.write('Fingerprint values'+'\n')
     f2.write(' ,')
 
@@ -90,8 +171,6 @@ def Fingerprint(proteinName, Listoflig, Type):
 
         cur_row += 1
     print(All_Fingerprint)
-
-    #CreateHeatMap(All_Fingerprint, Listoflig, Type)
 
     # Ideally the create heat map would be in the wrapper
     return Listoflig, All_Fingerprint
@@ -340,21 +419,52 @@ def ProteintoLigListComplex(pfile):
 
 ######################################################################################################################
 # Type is a list, goes through each in the list
-def Fingerprint_Wrapper(pfile, Type):
+def Fingerprint_Wrapper(pfile, Type, PDB_code):
+    # First, load the first file as a reference
+    cmd.load(energy_files[0], 'obj1')
+    print(energy_files[0])
+
+    # Resets the olig num here
+    #  ChainCheck('obj1')
+    #  print(olig_num)
+
+    # Load files; disregard any for now that would have been output from before
+    for x in energy_files:
+        if "rotation" in x:
+            pass
+        elif "UNK" in x:
+            pass
+        elif "COM" in x:
+            pass
+        else:
+            print(x)
+            cmd.load(x)
+
+    # Gets all objects of this type
+    myobjects = cmd.get_object_list()
+
+
+
+    ######################################################################################
     # Takes in the protein file as well as the type of operation that will be performed
     proteinName, Saved_Complexes = ProteintoLigListComplex(pfile)
     Saved_Complexes.sort()
+
+    # Distinction between rotlist and rotstruct?
+    RotList, RotStruct, RotNumList = GenerateRotList(myobjects[1:])
+    # Delete obj1
+    cmd.delete('obj1')
+
     # For each of the values in the list
-  #  ax = sns.heatmap(All_Fingerprint, cmap="Greens")
     for fprint in Type:
         # Define these variables
         Listoflig, All_Fingerprint = Fingerprint(proteinName, Saved_Complexes, fprint)
 
         # Write to a .csv file
-        Fingerprint_write(Listoflig, All_Fingerprint, fprint)
+        Fingerprint_write(Listoflig, All_Fingerprint, fprint, PDB_code)
         sns.set()
         # sns.reset_defaults()
-        CreateHeatMap(All_Fingerprint, Listoflig, fprint, "Greens")
+        CreateHeatMap(All_Fingerprint, Listoflig, fprint, "Greens", PDB_code)
 
     print("Fingerprint finished processing.")
 

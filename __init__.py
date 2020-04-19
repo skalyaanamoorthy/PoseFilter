@@ -1,30 +1,18 @@
-
-
 from __future__ import absolute_import
 from __future__ import print_function
-
 from .Olig import InputFileDir
 from .Fingerprint import Fingerprint_Wrapper
-
 from PyQt5.uic import loadUi
 import sys
 from pymol.Qt import QtWidgets
 from pymol.Qt.utils import getSaveFileNameWithExt
-
 from PyQt5.QtWidgets import QDialog, QFileDialog
 from PyQt5.QtCore import *
 from pymol import cmd
 import os
-
 import glob
-#import Olig_Link
 
-#olig = 4
 file_text = ""
-
-
-# Avoid importing "expensive" modules here (e.g. scipy), since this code is
-# executed on PyMOL's startup. Only import such modules inside functions.
 
 def __init_plugin__(app=None):
     '''
@@ -61,20 +49,6 @@ def make_dialog():
     global form
     form = loadUi(uifile, dialog)
 
-
-    # getting a directory
-    def get_dir():
-        global file_text
-        filedir = str(QFileDialog.getExistingDirectory(None, "Select Directory"))
-        # self.dlg.download_path.setText(filename)
-        #form.file_select.text = filedir
-        #filename = getSaveFileNameWithExt(dialog, 'Save As...', filter='PDB File (*.PDB)')
-        if filedir:
-            form.file_select.setText(filedir)
-            file_text = filedir
-
-            #return filename
-
     # callback for the "Browse" button
     def browse_filename():
         global file_text
@@ -102,7 +76,7 @@ def make_dialog():
         if form.Simple_Interaction.isChecked() or AnyChecked == 0:
             IText.append("SInteraction")
         print(IText)
-        Fingerprint_Wrapper(file_text, IText)
+        Fingerprint_Wrapper(file_text, IText, form.PDBCODE.text())
 
     def run():
         global file_text, dialog
@@ -110,26 +84,10 @@ def make_dialog():
         print(file_text)
         print("Running the oligomer script.")
         InputFileDir(file_text, form.PDBCODE.text())
-       # complexes = FindLigands(file_text)
-        #OligWrapper(complexes, file_text)
-
-    # Implement fingerprint
-  #  def fingerprint():
-   #     pass
-       # global file_text, dialog
-     #   FingerprintWrapper()
-
-    #global file_text
-
-   # form.Button_browse.clicked.connect(get_dir)
-
-
 
     form.Button_browse.clicked.connect(browse_filename)
     form.Docking_analysis.clicked.connect(run)
     form.Fingerprint_button.clicked.connect(fingerprint)
     form.close_button.clicked.connect(dialog.close)
     file_text = form.file_select.text()
-
-
     return dialog

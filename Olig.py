@@ -12,35 +12,20 @@ import glob
 import numpy as np
 import sys
 from .Fingerprint import CreateHeatMap
-#from ResTest import PDB_Info
 from statistics import mode
-#from center_of_mass import com
-#import center_of_mass.py
 from collections import Counter
-
-
-
-# All_RMS is a np olig_num x olig_num array; RMS_rot is a list of the olig rotations that are lowest RMS value
-global All_RMS, res_min, res_max, olig_num, RotList, RotStruct, RotNumList
+global res_min, res_max, olig_num, working_dir, toAlph
+from pymol import cmd
 
 # Will be used as a switch- when it is on then we have lots of output to test, off we do not have any
 global Testing
 Testing = 0
 
-RotList = []
-RotNumList = []
-RotStruct = []
 olig_num = 0
-global working_dir, toAlph
-#toAlph = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N']
 
-
-
-from pymol import cmd
-
-# we have a .pdb file that was chosen. Need to get the .pdb ID from it, as well as the Res_min and Res_max numbers
-# the chain order, and the chain labels
-
+######################################################################################################################
+######################################################################################################################
+# Protein file is chosen. Need to get the Res_min and Res_max numbers, chain labels and chain order
 # returns minval, maxval, (List of chainstrings)
 
 def PDB_Info(file):
@@ -126,7 +111,8 @@ def PDB_Info(file):
         print(chainstrings)
         print(newchains)
 
-    # newchains before
+    # Delete the object
+    cmd.delete('obj')
     return minval, maxval, chains
 
 # The chainstrings list has all of the chains that are part of the oligomer,
@@ -156,91 +142,8 @@ def ChainOrder(energy_file):
   #  for x in atomList:
   #      print("atomlist: " + str(x))
     return atomList
-#   return res_min, res_max
 
-
-# Should make this based on the olig_size
-#All_RMS = []
-
-# User inputs the type of oligomer
-# Function takes in if di, tri, tetramer, as well as the lowest energy file (name or .pdb, we can strip)
-
-######################################################################################################################
-
-def olig_rot(i):
-    # olig_num is important here
-    global olig_num
-    iList = [0]*olig_num
-    ref_List = [0]*olig_num
-    RMSArr = [0]*olig_num
-
-    # Create the initial lists, based on the oligomer's size.
-    for n in range(olig_num):
-        iList[n] = n
-        ref_List[n] = n
-
-    # Calls the rotation m number of times
-    mod_add = 0
-    for m in range(olig_num):
-        # First, goes through to modify iList; adds the m value and then takes mod olig_num
-        for x in range(len(iList)):
-            iList[x] = (iList[x] + mod_add) % olig_num
-
-        mod_add = 1
-
-         # Rotation is called
-
-        #printing
-       # for p in range(len(iList)):
-        #    print('iList el: ' + str(iList[p]))
-         #   print('refList el: ' + str(ref_List[p]))
-
-        RMSArr[m] = rotation(olig_string(i, iList, ref_List), i, m)
-        print(RMSArr[m])
-
-    # The number of rotations directly correlate to the olig_num value (tetra = 4 - 1 -> 3, tri -> 2, di -> 1)
-    print(i)
-   # for x in RMSArr:
-     #   print("RMS Arr: " + str(x))
-
-    return RMSArr
-
-
-######################################################################################################################
-# distComp functions choose the closest rotation file, and then deletes the files that are further away
-# (those files are not of concern)
-
-# Takes the RMSArray and then outputs the lowest rms value
-def distComp(RMSArr, i):
-    global RotStruct
-    # Find the min index and then loop through to delete the other files
-    min_index = RMSArr.index(min(RMSArr))
-
-    for x in range(olig_num):
-
-        # If we have reached the index, then load!
-        if x == min_index:
-          #  cmd.save(i + '_' + str(x) + 'rotation.pdb', i + ' and not resn PSD')
-          #  cmd.save(i + '_UNK' + str(x) + '.pdb', i + ' and resn UNK')
-            cmd.load(i + '_UNK' + str(x) + '.pdb', i + '_UNK' + str(x) + '.pdb', )
-
-            Lowest_RMS = i + '_UNK' + str(x)
-            x_val = str(x)
-            RotStruct.append(i + '_' + str(x) + 'rotation.pdb')
-
-          #  Rtn_Str.append(Lowest_RMS + '.pdb')
-
-        else:
-           # os.remove(i + '_' + str(x) + 'rotation.pdb')
-
-           # REMOVE later!! Saves the rotation
-          #  cmd.save(i + '_' + str(x) + 'rotation.pdb', i + ' and not resn PSD')
-            os.remove(i + '_UNK' + str(x) + '.pdb')
-
-    # Returns a string of a name that has the lowest RMS
-    return Lowest_RMS, x_val
-
-######################################################################################################################
+#####################################################################################################################
 
 # Takes a number input and outputs the appropriate letter
 def NumtoAlph(num):
@@ -249,53 +152,12 @@ def NumtoAlph(num):
    # Letters = ['B', 'A', 'C', 'D' ]
     return Letters[num]
 
-######################################################################################################################
-# This function generates a pair_fit string that can then be called multiple times, depending on the type of olig
-# Takes in i, and Pair_List, which is a list of numbers that should be added to the expression olig # times
-
-def olig_string(i, i_List, ref_List):
-    global toAlph
-    # if dimer x = 0, 1
-    # if trimer x = 0, 1, 2
-    total_string = "pair_fit /"
-    for x in range(olig_num):
-
-        sub_string = i + "//" + toAlph[i_List[x]] + "/" + str(res_min) + "-" + str(res_max) +\
-                     "/N+C+O+CA, /obj1//" + toAlph[ref_List[x]] + "/" + str(res_min) + "-" + str(res_max) + "/N+C+O+CA"
-        total_string = total_string + sub_string
-
-        if x < (olig_num - 1):
-            total_string = total_string + ', /'
-
-    return total_string
-
-
-######################################################################################################################
-
-# Does rotation, makes the rot structures
-def rotation(rot_str, i, num):
-    cmd.do('set retain_order,1')
-    cmd.do(rot_str)
-    # cmd.save(i + '_' + str(num) + 'rotation.pdb', i + ' and not(resn UNK or resn PSD)')
-    cmd.save(i + '_' + str(num) + 'rotation.pdb', i + ' and not resn PSD')
-  # cmd.save(i + '_COM' + str(num) + '.pdb', i + ' and resn PSD')
-    cmd.save(i + '_UNK' + str(num) + '.pdb', i + ' and resn UNK')
-
-    # dist_val = cmd.distance('d' + num, i + ' and resn PSD', 'ref_lig')
-
-    rms_val = cmd.rms_cur('obj1 and resn UNK', i + ' and resn UNK')
-    print("rms val: " + str(rms_val))
-
-    # All of the RMS_vals will be compared later
-    return rms_val
-
-
 #####################################################################################################################
 
 # Takes an optional PDB code and uses that for labelling purposes
-def Olig_MainLoop(energy_files, PDB_code):
+def Olig_MainLoop(energy_files, PDB_code, PDB_len):
 
-    global All_RMS, RotInfo, olig_num
+    global All_RMS, olig_num
     print("energy files: ")
     print(energy_files)
 
@@ -322,37 +184,15 @@ def Olig_MainLoop(energy_files, PDB_code):
     # Gets all objects of this type
     myobjects = cmd.get_object_list()
 
-    # Cycle through the objects in this list from position 1 to the end.
-    global RotList, RotStruct, RotNumList
+    RotList, RotStruct, RotNumList = GenerateRotList(myobjects[1:])
+    # Delete obj1
+    cmd.delete('obj1')
 
-    obj_num = 0
-
-    # For each object
-    for i in myobjects[2:]:
-
-        # Can probably remove the tname stuff
-        i = i.strip()
-
-        # Does the rotation
-        # olig_rot needs to give back info about files to delete, rms
-
-        # Performs the rotation on one object, gives back the rmsArr which is a list of all of the rms values
-        # we need to know for later which is the lowest and corresponds to which structure
-
-        rmsArr = olig_rot(i)
-        print("RMS ARRAY")
-        for x in rmsArr:
-            print(x)
-
-        # Removes the necessary files, calculates the lowest RMS
-        New_rot, x_val = distComp(rmsArr, i)
-        RotList.append(New_rot)
-        RotNumList.append(x_val)
-
+    All_RMS = np.zeros((PDB_len, PDB_len))
     row_n = 0
     # For the designated lowest rotation, we cycle through
     for obj_x in RotList:
-
+        print("RotList: " + obj_x)
         # Calculates RMSList values and puts into list
         RMSList = RMS_Calc(obj_x, RotList)
 
@@ -364,20 +204,23 @@ def Olig_MainLoop(energy_files, PDB_code):
 
         row_n = row_n + 1
 
-    # Now need to analyze the RMS values and then print them.
-    RMS_analysis()
-    CreateHeatMap(All_RMS, RotList, "RMS", "Greens_r")
+    # Print RMS values to .CSV
+    RMS_analysis(All_RMS, RotList, PDB_code)
 
-    SimCheck()
+    #
+    CreateHeatMap(All_RMS, RotList, "RMS", "Greens_r", PDB_code)
+
+    # Analyze the symmetry
+    SimCheck(RotList, RotStruct, RotNumList, All_RMS)
 
 ######################################################################################################################
 
 # Takes the np array and then writes to file
-def RMS_analysis():
+def RMS_analysis(All_RMS, RotList, PDB_code):
     # store all of the rms values
-    global All_RMS, RotList, RotNumList
+   # global All_RMS, RotList
 
-    f2 = open('RMS.csv', 'w')
+    f2 = open('RMS_' + PDB_code + '.csv', 'w')
     f2.write('Root mean squared values'+'\n')
     f2.write(' ,')
 
@@ -393,11 +236,18 @@ def RMS_analysis():
         f2.write('\n')
         row_t = row_t + 1
 
+
+
+
 ######################################################################################################################
 
 # Checks for similarities from a row. Saves the files to corresponding: Similar/Unique directories
-def SimCheck():
-    global RotList, RotStruct, RotNumList, All_RMS
+def SimCheck(RotList, RotStruct, RotNumList, All_RMS):
+    print("RotStruct len: " + str(len(RotStruct)))
+    print("RotList len: " + str(len(RotList)))
+
+    for x in RotStruct:
+        print("RotStruct: " + str(x))
 
     # Puts the Rotation structure into this new variable
     Rot_type = [RotStruct, [0]*len(RotStruct)]
@@ -420,7 +270,7 @@ def SimCheck():
                 if All_RMS[x][y] < 2:
                     # Structure
                     Rot_type[1][y] = 'u'
-                    print(Rot_type[0][y] + "is similar")
+                   # print(Rot_type[0][y] + "is similar")
                     # Need to make one unique out of the set
                     # Reference
                     Rot_type[1][x] = 's'
@@ -436,7 +286,7 @@ def SimCheck():
             y = y - 1
         x = x - 1
     # Use this to create two new lists, sList, uList
-    simfinder = RotStruct
+  #  simfinder = RotStruct
     # Check to see if the directories exist
     if not os.path.exists('Similar'):
         os.makedirs('Similar')
@@ -546,7 +396,6 @@ def ProteintoLigList(pfile):
     print("Saved complexes: ")
     return Saved_Complexes
 
-
 ######################################################################################################################
 
 def InputFileDir(pfile, PDBCode):
@@ -624,38 +473,14 @@ def ListtoLig(all_files):
 
 # Changing to incorporate selecting a protein.pdb/pdbqt file first
 def OligWrapper(PDBfiles, PDB_code):
-
-    global RotList, RotNumList, RotStruct, res_min, res_max, toAlph, olig_num
-    RotList = []
-    RotNumList = []
-    RotStruct = []
+    global res_min, res_max, toAlph, olig_num
     # First, reinitialize the PyMOL window
     cmd.reinitialize()
-
-   # energyfiles = InputFileDir(protein_file)
-
-
-
-    # Call the function to get the files from the directory.. but now it would be based on the protein.pdb/pdbqt file
-
-    # Not super necessary but gets the first energy file
-
-    # Need to redefine some things
-    #print("splitting ext")
-   # print()
-
     energy_file = PDBfiles[0] #.rsplit(".", 1)[0]
     print("energy file: " + energy_file)
     PDB_len = len(PDBfiles)
 
-    # Initialize the global numpy array
-    global All_RMS
-    All_RMS = np.zeros((PDB_len, PDB_len))
-
-
-   # print("energy file: " + energy_file)
-
-    # Assigns the min and max res, as well as the chain to use
+    # Assigns the min and max res, as well as the chain to use: A, B, C
     res_min, res_max, toAlph = PDB_Info(energy_file)
     print(res_min)
     print(res_max)
@@ -663,9 +488,8 @@ def OligWrapper(PDBfiles, PDB_code):
     if Testing:
         print(olig_num)
 
-    Olig_MainLoop(PDBfiles, PDB_code)
+    Olig_MainLoop(PDBfiles, PDB_code, PDB_len)
 
-    del(All_RMS)
   #  del(RotList)
     print("Finished processing.")
   #  cmd.reinitialize()
