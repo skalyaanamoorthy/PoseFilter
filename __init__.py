@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 from __future__ import print_function
-from .Olig import InputFileDir
+from .Olig import OligWrapper
 from .Fingerprint import Fingerprint_Wrapper
 from PyQt5.uic import loadUi
 import sys
@@ -49,6 +49,12 @@ def make_dialog():
     global form
     form = loadUi(uifile, dialog)
 
+    # Set the initial values of the cutoff boxes
+    form.RMSCutoff.setText("2.0")
+    form.FP_SICutoff.setText("0.5")
+   # form.FP_IntCutoff.setText("0.6")
+    form.FP_SPLIFCutoff.setText("0.5")
+
     # callback for the "Browse" button
     def browse_filename():
         global file_text
@@ -57,6 +63,18 @@ def make_dialog():
         # Change the text in the form
         form.file_select.setText(QFilename[0])
         print(file_text)
+
+    # getting a directory
+    def get_dir():
+        global file_text
+        filedir = str(QFileDialog.getExistingDirectory(None, "Select Directory"))
+        # self.dlg.download_path.setText(filename)
+        #form.file_select.text = filedir
+        #filename = getSaveFileNameWithExt(dialog, 'Save As...', filter='PDB File (*.PDB)')
+        if filedir:
+            form.file_select.setText(filedir)
+            file_text = filedir
+
 
     def fingerprint():
         global file_text
@@ -70,20 +88,26 @@ def make_dialog():
         if form.SPLIF.isChecked():
             IText.append("SPLIF")
             AnyChecked = 1
-        if form.Interaction.isChecked():
-            IText.append("Interaction")
-            AnyChecked = 1
+       # if form.Interaction.isChecked():
+       #     IText.append("Interaction")
+       #     AnyChecked = 1
         if form.Simple_Interaction.isChecked() or AnyChecked == 0:
             IText.append("SInteraction")
         print(IText)
-        Fingerprint_Wrapper(file_text, IText, form.PDBCODE.text())
+
+        FP_SI = form.FP_SICutoff.text()
+       # FP_I =form.FP_IntCutoff.text()
+        FP_SPLIF = form.FP_SPLIFCutoff.text()
+
+        Fingerprint_Wrapper(file_text, IText, form.PDBCODE.text(), FP_SI, FP_SPLIF)
 
     def run():
         global file_text, dialog
         cmd.reinitialize()
         print(file_text)
         print("Running the oligomer script.")
-        InputFileDir(file_text, form.PDBCODE.text())
+
+        OligWrapper(file_text, form.PDBCODE.text(), form.RMSCutoff.text())
 
     form.Button_browse.clicked.connect(browse_filename)
     form.Docking_analysis.clicked.connect(run)

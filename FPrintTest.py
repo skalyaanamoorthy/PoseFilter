@@ -11,10 +11,6 @@ import numpy as np
 import glob
 import sys
 import numpy as np
-from .General import GenerateRotList
-from .General import CreateHeatMap
-from .General import FilterFiles, ProteintoLigList, GeneralSimCheck, File_write
-from .Preprocessing import PDBInfo_Wrapper
 
 global Testing
 Testing = 0
@@ -95,13 +91,12 @@ def SPLIF_Fingerprint(ref_input, Listoflig, proteinpath):
     print(Listoflig)
  #   proteinpath = r"C:\Users\Justine\PycharmProjects\Oligomer_script\Vina_docking\Dimers\Docking\1FX9\1fx9.pdbqt"
     protein = next(oddt.toolkit.readfile('pdb', proteinpath))
-    print("splif wants to make fingerprint")
-    print(proteinpath)
     protein.protein = True
 
     # Read in and define the reference ligand
     ref_ligand = next(oddt.toolkit.readfile('pdb', ref_input))
     ref = fp.SPLIF(ref_ligand, protein)
+   # print(ref)
 
     # Loop through each ligand in the list
     count = 0
@@ -109,6 +104,7 @@ def SPLIF_Fingerprint(ref_input, Listoflig, proteinpath):
     for ligandpath in Listoflig:
         ligand = next(oddt.toolkit.readfile('pdb', ligandpath))
         fp_query = fp.SPLIF(ligand, protein)
+      #  print(fp_query)
 
         # similarity score for current query
         F_Scores[count] = fp.similarity_SPLIF(ref, fp_query, rmsd_cutoff=3.)
@@ -240,7 +236,7 @@ def PDBQTtoPDB(savename, mol):
 # For the actual fingerprint input we need to take in the .pdb/.pdbqt protein file and then output the fingerprint
 # based on that
 # Take the function from .olig to
-
+'''
 # Takes in a pdb or a pdbqt file
 def ProteintoLigListComplex(pfile):
     # Changes the directory
@@ -312,11 +308,11 @@ def ProteintoLigListComplex(pfile):
     print(Saved_Complexes)
     print(protein_name)
     return protein_name, Saved_Complexes
-
+'''
 ######################################################################################################################
 # Type is a list, goes through each in the list
-def Fingerprint_Wrapper(pfile, Type, PDB_code, SI_cutoff, SPLIF_cutoff):
-    '''
+def Fingerprint_Wrapper(pfile, Type, PDB_code, SI_cutoff, I_cutoff, SPLIF_cutoff):
+
     # Reinitialize
     cmd.reinitialize()
 
@@ -352,51 +348,37 @@ def Fingerprint_Wrapper(pfile, Type, PDB_code, SI_cutoff, SPLIF_cutoff):
       #  print('UNK: ' + Saved_Complexes[x] + '_UNK' + str(x) + '.pdb')
         #print('Rot Struct: ' + RotStruct[x])
         FP_List.append(RotList[x] + '.pdb')
-    '''
-    # need the protein .pdb file
-    # Make sure the dir is correct
-    working_dir = os.path.dirname(pfile)
-    os.chdir(working_dir)
-    protein_name, Saved_Complexes = ProteintoLigListComplex(pfile)
-    Saved_Complexes.sort()
-    print("Protein name: " + protein_name)
 
-    for x in Saved_Complexes:
-        print(x)
+# need the protein .pdb file
+
     # pfile just want the extention as well as the name + extension
 
-   # protein_name = os.path.basename(pfile)
+    protein_name = os.path.basename(pfile)
 
     # Protein name, file extension
- #   protein_name, file_ext = protein_name.rsplit('.', 1)
+    protein_name, file_ext = protein_name.rsplit('.', 1)
 
     # Saving as a .pdb file
- #   PDBQTtoPDB(pfile, protein_name + "." + file_ext)
+    PDBQTtoPDB(protein_name, protein_name + "." + file_ext)
     # Protein name for fingeprint portion
-  #  protein_name = protein_name + '.pdb'
+    protein_name = protein_name + '.pdb'
 
     # For each of the values in the list
     for fprint in Type:
         # Define these variables
-        Listoflig, All_Fingerprint = Fingerprint(protein_name, Saved_Complexes, fprint)
+        Listoflig, All_Fingerprint = Fingerprint(protein_name, FP_List, fprint)
 
       #  SI_cutoff, I_cutoff, SPLIF_cutoff
 
         if fprint is "SPLIF":
             cutoff = SPLIF_cutoff
-       # elif fprint is "Interaction":
-        #    cutoff = I_cutoff
+        elif fprint is "Interaction":
+            cutoff = I_cutoff
         else:
             cutoff = SI_cutoff
 
-        RotNumList = ["0"] * len(Listoflig)
-        # Rotlist (minus the .pdb), Rotstruct
-        FPList = []
-        for el in Listoflig:
-            el_name, ext = el.rsplit('.', 1)
-            FPList.append(el_name)
 
-        GeneralSimCheck(FPList, Listoflig, RotNumList, All_Fingerprint, working_dir, "Fingerprint", float(cutoff), fprint)
+        GeneralSimCheck(RotList, RotStruct, RotNumList, All_Fingerprint, working_dir, "Fingerprint", float(cutoff), fprint)
         # Write to a .csv file
 
 
@@ -417,5 +399,27 @@ def Fingerprint_Wrapper(pfile, Type, PDB_code, SI_cutoff, SPLIF_cutoff):
 #ProteintoLigListComplex('/home/justine/PycharmProjects/PoseFilter/Test/Trimer/protein.pdbqt')
 #Fingerprint_Wrapper('/home/justine/PycharmProjects/PoseFilter/Test/Trimer/protein.pdbqt', "SPLIF")
 
-#x =SPLIF_Fingerprint('vina_output_ligand_9_complex_1rotation.pdb', ['vina_output_ligand_9_complex_1rotation.pdb', 'vina_output_ligand_9_complex_0rotation.pdb'], '/home/justine/Documents/Vina_docking/Dimers/1FX9/1FX9/1fx9.pdb')
+# Make sure the dir is correct
+working_dir = os.path.dirname('/home/justine/Documents/DockingPart2/newprotfile.pdb')
+os.chdir(working_dir)
+#LigList = ['ligand1_complex_UNK0.pdb', 'ligand1_complex_UNK1.pdb', 'ligand1_complex_UNK2.pdb']
+#x =SPLIF_Fingerprint('ligand1_complex_UNK0.pdb', LigList, protein)
 #print(x)
+
+#x =SPLIF_Fingerprint('ligand1_complex_UNK0.pdb', LigList, protein)
+#print(x)
+
+#x =Simple_Interaction_Fingerprint('ligand1_complex_UNK0.pdb', LigList, protein)
+#print(x)
+
+LigList = ['pose1.pdb', 'pose2.pdb', 'pose3.pdb']
+protein = '/home/justine/Documents/DockingPart2/newprotfile.pdb'
+
+x =SPLIF_Fingerprint('pose1.pdb', LigList, protein)
+print(x)
+
+x =Interaction_Fingerprint('pose1.pdb', LigList, protein)
+print(x)
+
+x =Simple_Interaction_Fingerprint('pose1.pdb', LigList, protein)
+print(x)
