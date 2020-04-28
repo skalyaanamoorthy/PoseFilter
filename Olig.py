@@ -14,7 +14,7 @@ from statistics import mode
 from collections import Counter
 from pymol import cmd
 from .Preprocessing import PDBInfo_Wrapper
-from .General import GenerateRotList, ProteintoLigList, FilterFiles, GeneralSimCheck, File_write
+from .General import GenerateRotList, LigandtoComplex, FilterFiles, GeneralSimCheck, File_write, DirSearch
 
 global olig_num, working_dir, Testing
 Testing = 0
@@ -23,7 +23,7 @@ Testing = 0
 ######################################################################################################################
 
 # Takes an optional PDB code and uses that for labelling purposes
-def Olig_MainLoop(energy_files, PDB_code, PDB_len, cutoff):
+def Olig_MainLoop(energy_files, PDB_code, PDB_len, cutoff, UNK_var):
 
     global olig_num, working_dir
     print("energy files: ")
@@ -45,7 +45,7 @@ def Olig_MainLoop(energy_files, PDB_code, PDB_len, cutoff):
     for obj in myobjects:
         print("obj: " + obj)
 
-    RotList, RotStruct, RotNumList = GenerateRotList(myobjects[1:])
+    RotList, RotStruct, RotNumList = GenerateRotList(myobjects[1:], UNK_var)
     # Delete obj1
     cmd.delete('obj1')
 
@@ -208,23 +208,53 @@ def RMS_Calc(Ref_obj, OList):
 ###############################################################################################################
 
 # Changing to incorporate selecting a protein.pdb/pdbqt file first
-def OligWrapper(pfile, PDB_code, cutoff):
+# Instead let's have an info parameter that's a list:
+# Tab 1: [pfile, ligID]
+# Tab 2: [dir, complexid, ligresid]
+def OligWrapper(info, PDB_code, cutoff):
+    # pfile is instead info list
     global olig_num, working_dir
-
-    working_dir = os.path.dirname(pfile)
-    os.chdir(working_dir)
-
     cmd.reinitialize()
-    Saved_Complexes = ProteintoLigList(pfile)
-    Saved_Complexes.sort()
+  #  UNK_var = ""
 
-    PDBfiles = Saved_Complexes
+    # Tab 1, protein file and ligand list
+    if len(info) == 2:
+        pfile, LigandID = info
+        working_dir = os.path.dirname(pfile)
+        os.chdir(working_dir)
+
+        # Creates ligand and protein complexes
+        Saved_Complexes, LigandFile = LigandtoComplex(pfile, LigandID)
+        Saved_Complexes.sort()
+        cmd.load(LigandFile)
+
+        # Just get the ligand name and not the extension
+        LigandName = LigandFile.rsplit('.', 1)[0]
+
+        # Check the residue ID
+        stored.residues = []
+        #cmd.iterate(selector.process('pose10'),'stored.residues.append(resn)')
+        cmd.iterate(selector.process(LigandName),'stored.residues.append(resn)')
+        UNK_var = stored.residues[0]
+        cmd.delete(LigandName)
+
+    else:
+        # Tab 2
+        pdir, ComplexID, LigResID = info
+        os.chdir(pdir)
+
+        # sets the residue ID
+        UNK_var = LigResID
+        Saved_Complexes = DirSearch(ComplexID)
+        Saved_Complexes.sort()
+
+    # Preprocessing, need to make sure everything is a complex
 
     # First, reinitialize the PyMOL window
     cmd.reinitialize()
-    energy_file = PDBfiles[0]
+    energy_file = Saved_Complexes[0]
     print("energy file: " + energy_file)
-    PDB_len = len(PDBfiles)
+    PDB_len = len(Saved_Complexes)
 
     # Assigns the min and max res, as well as the chain to use: A, B, C
     res_min, res_max, toAlph = PDBInfo_Wrapper(energy_file)
@@ -235,7 +265,7 @@ def OligWrapper(pfile, PDB_code, cutoff):
     if Testing:
         print(olig_num)
 
-    Olig_MainLoop(PDBfiles, PDB_code, PDB_len, cutoff)
+    Olig_MainLoop(Saved_Complexes, PDB_code, PDB_len, cutoff, UNK_var)
 
   #  del(RotList)
     print("RMS finished processing.")

@@ -13,6 +13,7 @@ import sys
 import numpy as np
 
 global Testing
+from .Preprocessing import  PDB_Info
 Testing = 0
 # Will be used as a switch- when it is on then we have lots of output to test, off we do not have any
 
@@ -400,8 +401,9 @@ def Fingerprint_Wrapper(pfile, Type, PDB_code, SI_cutoff, I_cutoff, SPLIF_cutoff
 #Fingerprint_Wrapper('/home/justine/PycharmProjects/PoseFilter/Test/Trimer/protein.pdbqt', "SPLIF")
 
 # Make sure the dir is correct
-working_dir = os.path.dirname('/home/justine/Documents/DockingPart2/newprotfile.pdb')
-os.chdir(working_dir)
+#working_dir = os.path.dirname('/home/justine/Documents/DockingPart2/newprotfile.pdb')
+os.chdir('/home/justine/Documents/Vina_docking/Tetramers/5VA1')
+PDB_Info('ligand1_complex.pdb')
 #LigList = ['ligand1_complex_UNK0.pdb', 'ligand1_complex_UNK1.pdb', 'ligand1_complex_UNK2.pdb']
 #x =SPLIF_Fingerprint('ligand1_complex_UNK0.pdb', LigList, protein)
 #print(x)
@@ -412,14 +414,14 @@ os.chdir(working_dir)
 #x =Simple_Interaction_Fingerprint('ligand1_complex_UNK0.pdb', LigList, protein)
 #print(x)
 
-LigList = ['pose1.pdb', 'pose2.pdb', 'pose3.pdb']
-protein = '/home/justine/Documents/DockingPart2/newprotfile.pdb'
+#LigList = ['pose1.pdb', 'pose2.pdb', 'pose3.pdb']
+#protein = '/home/justine/Documents/DockingPart2/newprotfile.pdb'
 
-x =SPLIF_Fingerprint('pose1.pdb', LigList, protein)
-print(x)
+#x =SPLIF_Fingerprint('pose1.pdb', LigList, protein)
+#print(x)
 
-x =Interaction_Fingerprint('pose1.pdb', LigList, protein)
-print(x)
+#x =Interaction_Fingerprint('pose1.pdb', LigList, protein)
+#print(x)
 
-x =Simple_Interaction_Fingerprint('pose1.pdb', LigList, protein)
-print(x)
+#x =Simple_Interaction_Fingerprint('pose1.pdb', LigList, protein)
+#print(x)

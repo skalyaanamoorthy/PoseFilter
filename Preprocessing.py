@@ -62,6 +62,8 @@ def PDB_Info(file):
         # Res_min, res_max
         stored.residues = []
         cmd.iterate(selector.process(label), 'stored.residues.append(resv)')
+        print("stored residues")
+        print(stored.residues)
         val = float(stored.residues[-1] - stored.residues[0])
         minval = stored.residues[0]
         maxval = stored.residues[-1]
@@ -143,3 +145,5 @@ def PDBInfo_Wrapper(file):
 
 #print("running")
 #(PDBInfo_Wrapper('obj'))
+os.chdir('/home/justine/Documents/Vina_docking/Tetramers/5VA1')
+PDB_Info('ligand1_complex.pdb')

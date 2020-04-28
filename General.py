@@ -20,7 +20,7 @@ import seaborn as sns
 #global olig
 global Testing
 # Fix these.
-global chain, r_min, r_max, olig
+global chain, r_min, r_max, olig, UNK
 Testing = 0
 # Will be used as a switch- when it is on then we have lots of output to test, off we do not have any
 
@@ -110,6 +110,7 @@ def olig_string(i, i_List, ref_List):
 
 # Does rotation, makes the rot structures
 def rotation(rot_str, i, num):
+    global UNK
     cmd.do('set retain_order,1')
     cmd.do(rot_str)
 
@@ -117,26 +118,27 @@ def rotation(rot_str, i, num):
     cmd.save(i + '_' + str(num) + 'rotation.pdb', i)
 
     # Save just the ligand
-    cmd.save(i + '_UNK' + str(num) + '.pdb', i + ' and resn UNK')
+    cmd.save(i + '_UNK' + str(num) + '.pdb', i + ' and resn ' + UNK)
     print("UNK Rotation: " + i + '_UNK' + str(num) + '.pdb')
 
     # Calculates the RMS between the UNK and the obj1 UNK reference
-    rms_val = cmd.rms_cur('obj1 and resn UNK', i + ' and resn UNK')
+    rms_val = cmd.rms_cur('obj1 and resn ' + UNK, i + ' and resn ' + UNK)
     print("Rotation " + str(num) + " rms val: " + str(rms_val))
 
     return rms_val
 
 #####################################################################################################################
 # Generate rotation list from the already labelled 'obj1' structure
-def GenerateRotList(objects):
+def GenerateRotList(objects, UNK_var):
     # Get the variables from the Preprocessing file
     #from .Olig import olig_num, toAlph, res_min, res_max
     from .Preprocessing import minofres, maxofres, ListChains, o_num
-    global r_min, r_max, chain, olig
+    global r_min, r_max, chain, olig, UNK
     olig = o_num
     r_min = minofres
     r_max = maxofres
     chain = ListChains
+    UNK = UNK_var
 
     # For each object
     RotStruct = []
@@ -200,6 +202,7 @@ def distComp(RMSArr, i):
 
 ####################################################################################
 # Takes in a list with some extra files that may not be ligands, only outputs the files that are of the same format
+'''
 def ListtoLig(all_files):
     # Check the files for duplicates
 
@@ -243,65 +246,8 @@ def ListtoLig(all_files):
 
     # returns a list of the ligands, including their extension
     return(ListofDup[max_dup][2])
+'''
 
-######################################################################################################################
-# Directory must have one protein file (specified) and multiple ligand files
-# Takes the protein .pdb/.pdbqt file and then finds the appropriate ligand files of that extension
-# outputs the ligand files in a list format.
-
-def ProteintoLigList(pfile):
-    working_dir = os.path.dirname(pfile)
-    os.chdir(working_dir)
-    print(working_dir)
-
-    # pfile just want the extention as well as the name + extension
-
-    protein_name = os.path.basename(pfile)
-    file_ext = protein_name.rsplit('.', 1)[1]
-    all_files = []
-
-    query = glob.glob('*.' + file_ext)
-
-    caught = 0
-    # len = 0
-    # Deletes the extra files
-    for x in query:
-
-        # This is the protein
-        if protein_name == x:
-            pass
-        elif "rotation" in x:
-            pass
-        elif "UNK" in x:
-            pass
-        else:
-            #     len += 1
-            if caught == 0:
-                energy_file = x
-            caught = 1
-            all_files.append(x)
-
-    LigandList = ListtoLig(all_files)
-    print(LigandList)
-    Saved_Complexes = [""] * len(LigandList)
-    # Goes through each ligand to make a complex
-    SNum = 0
-   # testlig = LigandList[0]
-   # MakeComplex(testlig.rsplit('.', 1)[0], testlig, protein_name)
-
-    for ligand in LigandList:
-        print("ligand: " + ligand)
-        lig_name = ligand.rsplit('.', 1)[0]
-        print("Make complex: ")
-        MakeComplex(lig_name + '_complex', ligand, protein_name)
-        #   print("loading complex")
-        #   cmd.load(lig_name + '.pdb')
-
-        # These are the names of the complexes that will be iterated through the program
-        Saved_Complexes[SNum] = lig_name + '_complex' + ".pdb"
-        SNum += 1
-    print("Saved complexes: ")
-    return Saved_Complexes
 
 ######################################################################################################################
 
@@ -505,4 +451,85 @@ def File_write(LigList, Total_Array, Type, TypeInfo, PDB_code, working_dir):
 
 #####################################################################################################
 # Checks if individual ligands or a protein + ligand complex
-def LigorComplex():
+# proteintoliglist is a function that gets the ligand list from the directory
+# In general, want to have the directory, specified by pfile or by the dir itself
+# Want a list of ligand files or complex files in the directory
+# Need shared lists of the complexes, or just the ligands so we don't need to regenerate stuff
+# IComplexList = []
+# ILigandList = []
+# Depending on the user input, one of these will be created.
+
+#def LigandtoComplex(pfile, LigandId):
+    # Change dir
+#    files = DirSearch(LigandId)
+    # for each of those ligands, make a ligand + protein complex
+
+
+def DirSearch(keyword):
+ #   file_ext = filewithext.rsplit('.', 1)[1]
+    all_files = []
+    query = glob.glob("*" + keyword + "*")
+    print("*" + keyword + "*")
+    print(query)
+
+    for x in query:
+        print("query:")
+        print(query)
+        if "rotation" in x:
+            pass
+        elif "UNK" in x:
+            pass
+        elif keyword in x:
+            all_files.append(x)
+        else:
+            pass
+
+    all_files.sort()
+    return all_files
+
+
+# Returns the appropriate ligand list for the circumstances
+def ListGenerate(AnalysisType, TabInput):
+    # Tab 1 means protein and listoflig
+    pass
+  #  if TabInput == "Ligand":
+        # Take the protein file as ext
+   #     protein_name = os.path.basename(pfile)
+   #     file_ext = protein_name.rsplit('.', 1)[1]
+
+  #  else:
+
+######################################################################################################################
+# Directory must have one protein file (specified) and multiple ligand files
+# Takes the protein .pdb/.pdbqt file and then finds the appropriate ligand files of that extension
+# outputs the ligand files in a list format.
+
+#Proteintoliglist
+def LigandtoComplex(pfile, keyword):
+    working_dir = os.path.dirname(pfile)
+    os.chdir(working_dir)
+    print(working_dir)
+
+    protein_name = os.path.basename(pfile)
+    file_ext = protein_name.rsplit('.', 1)[1]
+    all_files = DirSearch(keyword)
+
+    #   LigandList = ListtoLig(all_files)
+    #  print(LigandList)
+    Saved_Complexes = [""] * len(all_files)
+    # Goes through each ligand to make a complex
+    SNum = 0
+
+    # Make the protein + ligand complexes
+    for ligand in all_files:
+        print("ligand: " + ligand)
+        lig_name = ligand.rsplit('.', 1)[0]
+        print("Make complex: ")
+        MakeComplex(lig_name + '_complex', ligand, protein_name)
+
+        # These are the names of the complexes that will be iterated through the program
+        Saved_Complexes[SNum] = lig_name + '_complex' + ".pdb"
+        SNum += 1
+    print("Saved complexes: ")
+    # Saved complexes are protein + ligand .pdb named
+    return Saved_Complexes, all_files[0]

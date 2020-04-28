@@ -13,7 +13,7 @@ import sys
 import numpy as np
 from .General import GenerateRotList
 from .General import CreateHeatMap
-from .General import FilterFiles, ProteintoLigList, GeneralSimCheck, File_write
+from .General import FilterFiles, GeneralSimCheck, File_write, DirSearch
 from .Preprocessing import PDBInfo_Wrapper
 
 global Testing
@@ -240,7 +240,7 @@ def PDBQTtoPDB(savename, mol):
 # For the actual fingerprint input we need to take in the .pdb/.pdbqt protein file and then output the fingerprint
 # based on that
 # Take the function from .olig to
-
+'''
 # Takes in a pdb or a pdbqt file
 def ProteintoLigListComplex(pfile):
     # Changes the directory
@@ -313,79 +313,96 @@ def ProteintoLigListComplex(pfile):
     print(protein_name)
     return protein_name, Saved_Complexes
 
+'''
+#####################################################################################################################
+
+
+def ComplextoLigand(ComplexId, ResId):
+
+    # for each file
+    files = DirSearch(ComplexId)
+    Ligands = []
+
+
+
+    for complex in files:
+        print("complex")
+        print(complex)
+        cmd.load(complex)
+
+        # Ligand name, file extension
+        l_name, file_ext = complex.rsplit('.', 1)
+
+        cmd.save(l_name + '_l.pdb', l_name + ' and resn ' + ResId)
+        Ligands.append(l_name + '_l.pdb')
+
+    # Protein file
+    protein = 'protein_l.pdb'
+    # Ligand name, file extension
+    ligand_name, file_ext = files[0].rsplit('.', 1)
+    cmd.save('protein_l.pdb', ligand_name + ' and not resn ' + ResId)
+
+    return Ligands, protein
+
+
 ######################################################################################################################
 # Type is a list, goes through each in the list
-def Fingerprint_Wrapper(pfile, Type, PDB_code, SI_cutoff, SPLIF_cutoff):
-    '''
-    # Reinitialize
-    cmd.reinitialize()
+def Fingerprint_Wrapper(info, Type, PDB_code, SI_cutoff, SPLIF_cutoff):
+    working_dir = ""
+    # Tab 1, just the ligands and the protein file
+    if len(info) == 2:
+        pfile, LigandID = info
+        working_dir = os.path.dirname(pfile)
+        os.chdir(working_dir)
+        protein_name = pfile
 
-    # Make sure the dir is correct
-    working_dir = os.path.dirname(pfile)
-    os.chdir(working_dir)
+        Ligand_files = DirSearch(LigandID)
+        for x in Ligand_files:
+            print("FP")
+            print("Ligand files:" + x)
 
-    # Takes in the protein file as well as the type of operation that will be performed
-   # proteinName, Saved_Complexes = ProteintoLigListComplex(pfile)
+        # Ligand name, file extension
+        ligand_name, file_ext = Ligand_files[0].rsplit('.', 1)
+        print("ligand name: " + ligand_name)
+        print("file ext: " + file_ext)
+        PDBLigands = []
+        if file_ext is not "pdb":
+            for lig in Ligand_files:
+                ligand_name, file_ext = lig.rsplit('.', 1)
+                print("ligand pdbqt")
+                PDBQTtoPDB(ligand_name + '_l', lig)
+                PDBLigands.append(ligand_name + '_l.pdb')
 
-    Saved_Complexes = ProteintoLigList(pfile)
-    Saved_Complexes.sort()
+            print("protein pdbqt:")
+            PDBQTtoPDB('protein_l', os.path.basename(pfile))
+            protein_name = 'protein_l.pdb'
+            Ligand_files = PDBLigands
+        # need to check if the ligand files are .pdb
 
-    # First, load the first file as a reference
-    cmd.load(Saved_Complexes[0], 'obj1')
+        Ligand_files.sort()
 
-    # Assigns the min and max res, as well as the chain to use: A, B, C
-    res_min, res_max, toAlph = PDBInfo_Wrapper(Saved_Complexes[0])
-    print(res_min)
-    print(res_max)
-    olig_num = len(toAlph)
-    for x in toAlph:
-        print(x)
-    print("olig_num: " + str(olig_num))
-    if Testing:
-        print(olig_num)
+    else:
+        # Tab 2
+        pdir, ComplexID, LigResID = info
+        working_dir = pdir
+        os.chdir(pdir)
 
-    RotList, RotStruct, RotNumList = GenerateRotList(FilterFiles(Saved_Complexes))
+        # Complex to ligand, by using the residue identifier
+        Ligand_files, protein_name = ComplextoLigand(ComplexID, LigResID)
+        Ligand_files.sort()
 
-    FP_List = []
-    for x in range(len(RotNumList)):
-       # print('FP List (RotList): ' + RotList[x] + '.pdb')
-      #  print('UNK: ' + Saved_Complexes[x] + '_UNK' + str(x) + '.pdb')
-        #print('Rot Struct: ' + RotStruct[x])
-        FP_List.append(RotList[x] + '.pdb')
-    '''
-    # need the protein .pdb file
-    # Make sure the dir is correct
-    working_dir = os.path.dirname(pfile)
-    os.chdir(working_dir)
-    protein_name, Saved_Complexes = ProteintoLigListComplex(pfile)
-    Saved_Complexes.sort()
-    print("Protein name: " + protein_name)
-
-    for x in Saved_Complexes:
-        print(x)
-    # pfile just want the extention as well as the name + extension
-
-   # protein_name = os.path.basename(pfile)
-
-    # Protein name, file extension
- #   protein_name, file_ext = protein_name.rsplit('.', 1)
-
-    # Saving as a .pdb file
- #   PDBQTtoPDB(pfile, protein_name + "." + file_ext)
-    # Protein name for fingeprint portion
-  #  protein_name = protein_name + '.pdb'
 
     # For each of the values in the list
     for fprint in Type:
         # Define these variables
-        Listoflig, All_Fingerprint = Fingerprint(protein_name, Saved_Complexes, fprint)
+        Listoflig, All_Fingerprint = Fingerprint(protein_name, Ligand_files, fprint)
 
       #  SI_cutoff, I_cutoff, SPLIF_cutoff
 
+
         if fprint is "SPLIF":
             cutoff = SPLIF_cutoff
-       # elif fprint is "Interaction":
-        #    cutoff = I_cutoff
+
         else:
             cutoff = SI_cutoff
 
@@ -403,10 +420,8 @@ def Fingerprint_Wrapper(pfile, Type, PDB_code, SI_cutoff, SPLIF_cutoff):
         File_write(Listoflig, All_Fingerprint, "Fingerprint", fprint, PDB_code, working_dir)
         CreateHeatMap("Fingerprint", All_Fingerprint, Listoflig, fprint, "rocket", PDB_code, working_dir)
 
-        # Make sure the dir is correct
-        working_dir = os.path.dirname(pfile)
-        os.chdir(working_dir)
-
+    #for lig in Ligand_files:
+     #   os.remove(Ligand_files)
     print("Fingerprint finished processing.")
 
 
