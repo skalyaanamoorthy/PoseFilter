@@ -145,5 +145,5 @@ def PDBInfo_Wrapper(file):
 
 #print("running")
 #(PDBInfo_Wrapper('obj'))
-os.chdir('/home/justine/Documents/Vina_docking/Tetramers/5VA1')
-PDB_Info('ligand1_complex.pdb')
+#os.chdir('/home/justine/Documents/Vina_docking/Tetramers/5VA1')
+#PDB_Info('ligand1_complex.pdb')

@@ -118,9 +118,13 @@ def make_dialog():
         global dialog
         cmd.reinitialize()
         InfoArray = TabInfo()
+        alpha = 0
+        if form.Alignalpha.isChecked():
+            alpha = 1
+
         print("Running the oligomer script.")
 
-        OligWrapper(InfoArray, form.PDBCODE.text(), form.RMSCutoff.text())
+        OligWrapper(InfoArray, form.PDBCODE.text(), form.RMSCutoff.text(), alpha)
 
     form.Button_browse.clicked.connect(browse_filename)
     form.dirButton.clicked.connect(get_dir)

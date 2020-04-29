@@ -323,8 +323,6 @@ def ComplextoLigand(ComplexId, ResId):
     files = DirSearch(ComplexId)
     Ligands = []
 
-
-
     for complex in files:
         print("complex")
         print(complex)
@@ -346,16 +344,22 @@ def ComplextoLigand(ComplexId, ResId):
 
 
 ######################################################################################################################
+
 # Type is a list, goes through each in the list
 def Fingerprint_Wrapper(info, Type, PDB_code, SI_cutoff, SPLIF_cutoff):
     working_dir = ""
     # Tab 1, just the ligands and the protein file
+
+    # Files to clean up
+    Clean_up = []
+
     if len(info) == 2:
         pfile, LigandID = info
         working_dir = os.path.dirname(pfile)
         os.chdir(working_dir)
         protein_name = pfile
 
+        # Ligand files from the DirSearch, either .pdb or other
         Ligand_files = DirSearch(LigandID)
         for x in Ligand_files:
             print("FP")
@@ -363,8 +367,7 @@ def Fingerprint_Wrapper(info, Type, PDB_code, SI_cutoff, SPLIF_cutoff):
 
         # Ligand name, file extension
         ligand_name, file_ext = Ligand_files[0].rsplit('.', 1)
-        print("ligand name: " + ligand_name)
-        print("file ext: " + file_ext)
+
         PDBLigands = []
         if file_ext is not "pdb":
             for lig in Ligand_files:
@@ -376,7 +379,13 @@ def Fingerprint_Wrapper(info, Type, PDB_code, SI_cutoff, SPLIF_cutoff):
             print("protein pdbqt:")
             PDBQTtoPDB('protein_l', os.path.basename(pfile))
             protein_name = 'protein_l.pdb'
+
+            # Add to clean up list
+            Clean_up = PDBLigands
+            Clean_up.append(protein_name)
+
             Ligand_files = PDBLigands
+
         # need to check if the ligand files are .pdb
 
         Ligand_files.sort()
@@ -389,6 +398,11 @@ def Fingerprint_Wrapper(info, Type, PDB_code, SI_cutoff, SPLIF_cutoff):
 
         # Complex to ligand, by using the residue identifier
         Ligand_files, protein_name = ComplextoLigand(ComplexID, LigResID)
+
+        # Add to clean up list
+        Clean_up = Ligand_files
+        Clean_up.append(protein_name)
+
         Ligand_files.sort()
 
 
@@ -420,8 +434,16 @@ def Fingerprint_Wrapper(info, Type, PDB_code, SI_cutoff, SPLIF_cutoff):
         File_write(Listoflig, All_Fingerprint, "Fingerprint", fprint, PDB_code, working_dir)
         CreateHeatMap("Fingerprint", All_Fingerprint, Listoflig, fprint, "rocket", PDB_code, working_dir)
 
-    #for lig in Ligand_files:
-     #   os.remove(Ligand_files)
+    # In the case that there were complexes, we want to clean up the files that we made
+    for lig in Clean_up:
+        # Clean up files afterwards
+        print("complex clean up files")
+        for lig in Ligand_files:
+            print("remove: " + lig)
+            os.remove(lig)
+     #   print("remove: " + protein_name)
+     #   os.remove(protein_name)
+
     print("Fingerprint finished processing.")
 
 

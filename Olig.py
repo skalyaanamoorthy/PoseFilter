@@ -23,7 +23,7 @@ Testing = 0
 ######################################################################################################################
 
 # Takes an optional PDB code and uses that for labelling purposes
-def Olig_MainLoop(energy_files, PDB_code, PDB_len, cutoff, UNK_var):
+def Olig_MainLoop(energy_files, PDB_code, PDB_len, cutoff, UNK_var, alpha):
 
     global olig_num, working_dir
     print("energy files: ")
@@ -45,7 +45,7 @@ def Olig_MainLoop(energy_files, PDB_code, PDB_len, cutoff, UNK_var):
     for obj in myobjects:
         print("obj: " + obj)
 
-    RotList, RotStruct, RotNumList = GenerateRotList(myobjects[1:], UNK_var)
+    RotList, RotStruct, RotNumList = GenerateRotList(myobjects[1:], UNK_var, alpha)
     # Delete obj1
     cmd.delete('obj1')
 
@@ -211,17 +211,23 @@ def RMS_Calc(Ref_obj, OList):
 # Instead let's have an info parameter that's a list:
 # Tab 1: [pfile, ligID]
 # Tab 2: [dir, complexid, ligresid]
-def OligWrapper(info, PDB_code, cutoff):
+def OligWrapper(info, PDB_code, cutoff, alpha):
     # pfile is instead info list
     global olig_num, working_dir
     cmd.reinitialize()
   #  UNK_var = ""
+
+    InfoProtein = ""
 
     # Tab 1, protein file and ligand list
     if len(info) == 2:
         pfile, LigandID = info
         working_dir = os.path.dirname(pfile)
         os.chdir(working_dir)
+
+        # Define just the protein file
+        InfoProtein = os.path.basename(pfile)
+        #     file_ext = protein_name.rsplit('.', 1)[1]
 
         # Creates ligand and protein complexes
         Saved_Complexes, LigandFile = LigandtoComplex(pfile, LigandID)
@@ -242,11 +248,18 @@ def OligWrapper(info, PDB_code, cutoff):
         # Tab 2
         pdir, ComplexID, LigResID = info
         os.chdir(pdir)
+        working_dir = pdir
 
         # sets the residue ID
         UNK_var = LigResID
         Saved_Complexes = DirSearch(ComplexID)
         Saved_Complexes.sort()
+
+        # Need to prepare just the protein for processing
+        cmd.load(Saved_Complexes[0])
+        InfoProtein = 'OnlyProtLig.pdb'
+        LName = Saved_Complexes[0].rsplit('.', 1)[0]
+        cmd.save('OnlyProtLig.pdb', LName + ' and not resn ' + LigResID)
 
     # Preprocessing, need to make sure everything is a complex
 
@@ -257,7 +270,8 @@ def OligWrapper(info, PDB_code, cutoff):
     PDB_len = len(Saved_Complexes)
 
     # Assigns the min and max res, as well as the chain to use: A, B, C
-    res_min, res_max, toAlph = PDBInfo_Wrapper(energy_file)
+    # Should be using the protein for the PDBInfo
+    res_min, res_max, toAlph = PDBInfo_Wrapper(InfoProtein)
     olig_num = len(toAlph)
     for x in toAlph:
         print(x)
@@ -265,7 +279,16 @@ def OligWrapper(info, PDB_code, cutoff):
     if Testing:
         print(olig_num)
 
-    Olig_MainLoop(Saved_Complexes, PDB_code, PDB_len, cutoff, UNK_var)
+    Olig_MainLoop(Saved_Complexes, PDB_code, PDB_len, cutoff, UNK_var, alpha)
+
+    if len(info) == 2:
+        # Clean up files afterwards
+        print("complex clean up files")
+        for complex in Saved_Complexes:
+            print("remove: " + complex)
+            os.remove(complex)
+       # print("remove: " + protein_name)
+       # os.remove(protein_name)
 
   #  del(RotList)
     print("RMS finished processing.")

@@ -20,7 +20,7 @@ import seaborn as sns
 #global olig
 global Testing
 # Fix these.
-global chain, r_min, r_max, olig, UNK
+global chain, r_min, r_max, olig, UNK, r_alpha
 Testing = 0
 # Will be used as a switch- when it is on then we have lots of output to test, off we do not have any
 
@@ -83,7 +83,7 @@ def olig_rot(i):
 # Takes in i, and Pair_List, which is a list of numbers that should be added to the expression olig # times
 
 def olig_string(i, i_List, ref_List):
-    global chain, olig, r_min, r_max
+    global chain, olig, r_min, r_max, r_alpha
     # if dimer x = 0, 1
     # if trimer x = 0, 1, 2
     print("olig string nums: ")
@@ -94,11 +94,16 @@ def olig_string(i, i_List, ref_List):
     print(chain)
     #r_max = "60"
 
+    if r_alpha:
+        fit_string = "/CA"
+    else:
+        fit_string = "/N+C+O+CA"
+
     total_string = "pair_fit /"
     for x in range(olig):
 
         sub_string = i + "//" + chain[i_List[x]] + "/" + str(r_min) + "-" + str(r_max) +\
-                     "/N+C+O+CA, /obj1//" + chain[ref_List[x]] + "/" + str(r_min) + "-" + str(r_max) + "/N+C+O+CA"
+                     fit_string + ", /obj1//" + chain[ref_List[x]] + "/" + str(r_min) + "-" + str(r_max) + fit_string
         total_string = total_string + sub_string
 
         if x < (olig - 1):
@@ -129,11 +134,12 @@ def rotation(rot_str, i, num):
 
 #####################################################################################################################
 # Generate rotation list from the already labelled 'obj1' structure
-def GenerateRotList(objects, UNK_var):
+def GenerateRotList(objects, UNK_var, alpha):
     # Get the variables from the Preprocessing file
     #from .Olig import olig_num, toAlph, res_min, res_max
     from .Preprocessing import minofres, maxofres, ListChains, o_num
-    global r_min, r_max, chain, olig, UNK
+    global r_min, r_max, chain, olig, UNK, r_alpha
+    r_alpha = alpha
     olig = o_num
     r_min = minofres
     r_max = maxofres
@@ -484,7 +490,6 @@ def DirSearch(keyword):
         else:
             pass
 
-    all_files.sort()
     return all_files
 
 
@@ -533,3 +538,12 @@ def LigandtoComplex(pfile, keyword):
     print("Saved complexes: ")
     # Saved complexes are protein + ligand .pdb named
     return Saved_Complexes, all_files[0]
+
+##############################################################################################################
+
+import re
+
+def natural_sort(l):
+    convert = lambda text: int(text) if text.isdigit() else text.lower()
+    alphanum_key = lambda key: [ convert(c) for c in re.split('([0-9]+)', key) ]
+    return sorted(l, key = alphanum_key)
