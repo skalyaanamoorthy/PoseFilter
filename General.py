@@ -24,6 +24,8 @@ global chain, r_min, r_max, olig, UNK, r_alpha
 Testing = 0
 # Will be used as a switch- when it is on then we have lots of output to test, off we do not have any
 
+######################################################################################################################
+# Takes a parent directory and cycles through each of the folders in that directory.
 
 ######################################################################################################################
 #CreateHeatMap("Fingerprint", All_Fingerprint, Listoflig, fprint, "Greens", PDB_code)
@@ -35,7 +37,7 @@ def CreateHeatMap(variety, mol_data, Ligands, type, map_type, PDB_code, working_
     mask = np.zeros_like(mol_data)
     mask[np.triu_indices_from(mask)] = True
     with sns.axes_style("white"):
-        ax = sns.heatmap(mol_data, cmap=map_type, xticklabels= Ligands, yticklabels= Ligands, cbar=False, mask=mask, square=True, annot=True, annot_kws={'size':10})
+        ax = sns.heatmap(mol_data, cmap=map_type, xticklabels= Ligands, yticklabels= Ligands, cbar=False, mask=mask, square=True, annot=True, annot_kws={'size':8})
         Map_title = type + ' ' + PDB_code
         ax.set(title = Map_title)
         figure = ax.get_figure()
@@ -120,7 +122,7 @@ def rotation(rot_str, i, num):
     cmd.do(rot_str)
 
     # Save the rotation and the ligand
-    cmd.save(i + '_' + str(num) + 'rotation.pdb', i)
+    cmd.save(i + '_' + str(num) + 'rot.pdb', i)
 
     # Save just the ligand
     cmd.save(i + '_UNK' + str(num) + '.pdb', i + ' and resn ' + UNK)
@@ -196,7 +198,7 @@ def distComp(RMSArr, i):
 
             Lowest_RMS = i + '_UNK' + str(x)
             x_val = str(x)
-            Rot_S = i + '_' + str(x) + 'rotation.pdb'
+            Rot_S = i + '_' + str(x) + 'rot.pdb'
 
         else:
             pass
@@ -279,7 +281,7 @@ def FilterFiles(files):
     # Load files; disregard any for now that would have been output from before
     final_files = []
     for x in files:
-        if "rotation" in x:
+        if "rot" in x:
             pass
         elif "UNK" in x:
             pass
@@ -481,7 +483,7 @@ def DirSearch(keyword):
     for x in query:
         print("query:")
         print(query)
-        if "rotation" in x:
+        if "rot" in x:
             pass
         elif "UNK" in x:
             pass

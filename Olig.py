@@ -14,7 +14,7 @@ from statistics import mode
 from collections import Counter
 from pymol import cmd
 from .Preprocessing import PDBInfo_Wrapper
-from .General import GenerateRotList, LigandtoComplex, FilterFiles, GeneralSimCheck, File_write, DirSearch
+from .General import GenerateRotList, LigandtoComplex, FilterFiles, GeneralSimCheck, File_write, DirSearch, natural_sort
 
 global olig_num, working_dir, Testing
 Testing = 0
@@ -75,9 +75,13 @@ def Olig_MainLoop(energy_files, PDB_code, PDB_len, cutoff, UNK_var, alpha):
     # Check if the number is a float/int or something
     GeneralSimCheck(RotList, RotStruct, RotNumList, All_RMS, working_dir, "RMS", float(cutoff), "")
 
-    File_write(RotList, All_RMS, "RMS", "", PDB_code, working_dir)
+    RotationLabel = []
+    for rotLab in RotStruct:
+        RotationLabel.append(rotLab.replace('complex_', ''))
+
+    File_write(RotationLabel, All_RMS, "RMS", "", PDB_code, working_dir)
     # "YlGnBu"  "Greens_r"
-    CreateHeatMap("", All_RMS, RotList, "RMS", "rocket_r", PDB_code, working_dir)
+    CreateHeatMap("", All_RMS, RotationLabel, "RMS", "rocket_r", PDB_code, working_dir)
 
 
 ######################################################################################################################
@@ -219,6 +223,7 @@ def OligWrapper(info, PDB_code, cutoff, alpha):
 
     InfoProtein = ""
 
+
     # Tab 1, protein file and ligand list
     if len(info) == 2:
         pfile, LigandID = info
@@ -231,7 +236,15 @@ def OligWrapper(info, PDB_code, cutoff, alpha):
 
         # Creates ligand and protein complexes
         Saved_Complexes, LigandFile = LigandtoComplex(pfile, LigandID)
-        Saved_Complexes.sort()
+
+        # Just want the names of the ligand files in order:
+        Ligand_File_Names = DirSearch(LigandID)
+
+        # sort
+      #  Saved_Complexes.sort()
+        sc = natural_sort(Saved_Complexes)
+        Saved_Complexes = sc
+
         cmd.load(LigandFile)
 
         # Just get the ligand name and not the extension
