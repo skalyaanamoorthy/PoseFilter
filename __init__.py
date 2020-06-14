@@ -43,7 +43,7 @@ def make_dialog():
     dialog = QDialog()
 
     # populate the Window from our *.ui file which was created with the Qt Designer
-    uifile = os.path.join(os.path.dirname(__file__), 'olig_gui_tabs.ui')
+    uifile = os.path.join(os.path.dirname(__file__), 'olig_gui_tabs_edit.ui')
     global form
     form = loadUi(uifile, dialog)
 
@@ -52,6 +52,7 @@ def make_dialog():
     form.FP_SICutoff.setText("0.5")
    # form.FP_IntCutoff.setText("0.6")
     form.FP_SPLIFCutoff.setText("0.5")
+    form.Prox_val.setText("2.5")
 
     def TabInfo():
         index = QTabWidget.currentIndex(form.Mytab)
@@ -109,10 +110,14 @@ def make_dialog():
             IText.append("SInteraction")
         print(IText)
 
+        TextInteraction = [0, form.Prox_val.text()]
+        if form.Prox_check.isChecked():
+            TextInteraction[0] = 1
+
         FP_SI = form.FP_SICutoff.text()
         FP_SPLIF = form.FP_SPLIFCutoff.text()
 
-        Fingerprint_Wrapper(InfoArray, IText, form.PDBCODE.text(), FP_SI, FP_SPLIF)
+        Fingerprint_Wrapper(InfoArray, IText, form.PDBCODE.text(), FP_SI, FP_SPLIF, TextInteraction)
 
     def run():
         global dialog

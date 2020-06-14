@@ -25,9 +25,6 @@ Testing = 0
 # Will be used as a switch- when it is on then we have lots of output to test, off we do not have any
 
 ######################################################################################################################
-# Takes a parent directory and cycles through each of the folders in that directory.
-
-######################################################################################################################
 #CreateHeatMap("Fingerprint", All_Fingerprint, Listoflig, fprint, "Greens", PDB_code)
 def CreateHeatMap(variety, mol_data, Ligands, type, map_type, PDB_code, working_dir):
     path = os.path.join(working_dir, variety, type)
@@ -71,12 +68,11 @@ def olig_rot(i):
         mod_add = 1
 
          # Rotation is called
-
         RMSArr[m] = rotation(olig_string(i, iList, ref_List), i, m)
-        print(RMSArr[m])
+    #    print(RMSArr[m])
 
     # The number of rotations directly correlate to the olig_num value (tetra = 4 - 1 -> 3, tri -> 2, di -> 1)
-    print(i)
+ #   print(i)
 
     return RMSArr
 
@@ -163,9 +159,9 @@ def GenerateRotList(objects, UNK_var, alpha):
         # we need to know for later which is the lowest and corresponds to which structure
 
         rmsArr = olig_rot(i)
-        print("RMS ARRAY")
-        for x in rmsArr:
-            print(x)
+    #    print("RMS ARRAY")
+      #  for x in rmsArr:
+      #     print(x)
 
         # Removes the necessary files, calculates the lowest RMS
         New_rot, x_val, Rot_S = distComp(rmsArr, i)
@@ -207,55 +203,6 @@ def distComp(RMSArr, i):
 
     # Returns a string of a name that has the lowest RMS
     return Lowest_RMS, x_val, Rot_S
-
-####################################################################################
-# Takes in a list with some extra files that may not be ligands, only outputs the files that are of the same format
-'''
-def ListtoLig(all_files):
-    # Check the files for duplicates
-
-    ListofDup = []
-    for item in all_files:
-        res = ''.join([i for i in item if not i.isdigit()])
-        if ListofDup is None:
-            # add element and num
-
-            # add to list of duplicates
-            ListofDup.append([res, 0, [item]])
-
-        else:
-            # Check each item
-            d_count = 0
-            added_item = 0
-            for y in ListofDup:
-                if y[0] == res:
-                    # Add one to that entry
-                    ListofDup[d_count][1] = y[1] + 1
-                    ListofDup[d_count][2].append(item)
-                    added_item = 1
-                d_count += 1
-
-            if added_item == 0:
-                # add entry to listofdup
-                ListofDup.append([res, 0, [item]])
-
-    max_item = ""
-    max_num = 0
-    max_dup = 0
-    # Go through each of the items from the list and
-    dup_index = 0
-
-    for dup in ListofDup:
-        if dup[1] > max_num:
-            max_item = dup[0]
-            max_num = dup[1]
-            max_dup = dup_index
-        dup_index += 1
-
-    # returns a list of the ligands, including their extension
-    return(ListofDup[max_dup][2])
-'''
-
 
 ######################################################################################################################
 

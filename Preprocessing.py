@@ -142,8 +142,3 @@ def PDBInfo_Wrapper(file):
     maxofres = maxval
     ListChains = chains
     return minval, maxval, chains
-
-#print("running")
-#(PDBInfo_Wrapper('obj'))
-#os.chdir('/home/justine/Documents/Vina_docking/Tetramers/5VA1')
-#PDB_Info('ligand1_complex.pdb')

@@ -14,6 +14,7 @@ import numpy as np
 from .General import GenerateRotList
 from .General import CreateHeatMap
 from .General import FilterFiles, GeneralSimCheck, File_write, DirSearch, natural_sort
+from .Print2D import Print2D
 from .Preprocessing import PDBInfo_Wrapper
 
 global Testing
@@ -236,85 +237,6 @@ def PDBQTtoPDB(savename, mol):
     return save_as
 
 ######################################################################################################################
-# Fingerprint(proteinName, Listoflig, Type)
-# For the actual fingerprint input we need to take in the .pdb/.pdbqt protein file and then output the fingerprint
-# based on that
-# Take the function from .olig to
-'''
-# Takes in a pdb or a pdbqt file
-def ProteintoLigListComplex(pfile):
-    # Changes the directory
-    working_dir = os.path.dirname(pfile)
-    os.chdir(working_dir)
-
-    # pfile just want the extention as well as the name + extension
-
-    protein_name = os.path.basename(pfile)
-
-    # Protein name, file extension
-    protein_name, file_ext = protein_name.rsplit('.', 1)
-    print("Protein true name: " + protein_name)
-
-    # Saving as a .pdb file
-    print("protein save 1: " + protein_name)
-    print("protein save 2: " + protein_name + file_ext)
-    PDBQTtoPDB(protein_name, protein_name + "." + file_ext)
-
-    protein_name = protein_name + '.pdb'
-    print("Protein and pdb again: " + protein_name)
-    all_files = []
-
-    query = glob.glob('*.' + file_ext)
-
-    caught = 0
-    # len = 0
-    # Deletes the extra files
-    for x in query:
-
-        # This is the protein
-        if protein_name == x:
-            pass
-        elif "rotation" in x:
-            pass
-        else:
-            #     len += 1
-            if caught == 0:
-                energy_file = x
-            caught = 1
-            all_files.append(x)
-
-    LigandList = ListtoLig(all_files)
-    print(LigandList)
-    Saved_Complexes = [""] * len(LigandList)
-    # Goes through each ligand to make a complex
-    SNum = 0
-    testlig = LigandList[0]
-
-
-
-    for ligand in LigandList:
-        print("ligand: " + ligand)
-        lig_name = ligand.rsplit('.', 1)[0]
-        # #MakeComplex(dir, "Justlig", "lig2.pdbqt", "protein.pdbqt")
-
-        # Commenting out for now
-        print("Lig_name: " + lig_name)
-        print("Ligand: " + ligand)
-        PDBQTtoPDB(lig_name, ligand)
-
-        #   print("loading complex")
-        #   cmd.load(lig_name + '.pdb')
-
-        # These are the names of the complexes that will be iterated through the program
-        Saved_Complexes[SNum] = lig_name + ".pdb"
-        SNum += 1
-    print("Saved complexes: ")
-    print(Saved_Complexes)
-    print(protein_name)
-    return protein_name, Saved_Complexes
-
-'''
-#####################################################################################################################
 
 
 def ComplextoLigand(ComplexId, ResId):
@@ -346,7 +268,7 @@ def ComplextoLigand(ComplexId, ResId):
 ######################################################################################################################
 
 # Type is a list, goes through each in the list
-def Fingerprint_Wrapper(info, Type, PDB_code, SI_cutoff, SPLIF_cutoff):
+def Fingerprint_Wrapper(info, Type, PDB_code, SI_cutoff, SPLIF_cutoff, TextInteraction):
     working_dir = ""
     # Tab 1, just the ligands and the protein file
 
@@ -439,10 +361,20 @@ def Fingerprint_Wrapper(info, Type, PDB_code, SI_cutoff, SPLIF_cutoff):
         GeneralSimCheck(FPList, Listoflig, RotNumList, All_Fingerprint, working_dir, "Fingerprint", float(cutoff), fprint)
         # Write to a .csv file
 
+        RotationLabel = []
+        for rotLab in Ligand_Names_total:
+            RotationLabel.append(rotLab.replace('_l', ''))
 
-        File_write(natural_sort(Ligand_Names_total), All_Fingerprint, "Fingerprint", fprint, PDB_code, working_dir)
-        CreateHeatMap("Fingerprint", All_Fingerprint, natural_sort(Ligand_Names_total), fprint, "rocket", PDB_code, working_dir)
 
+        # 2D resn, and corresponding atoms
+        if TextInteraction[0] == 1:
+            x = 0
+            for Ligand in Ligand_files:
+                Print2D(Ligand, RotationLabel[x], protein_name, float(TextInteraction[1]))
+                x = x + 1
+
+        File_write(natural_sort(RotationLabel), All_Fingerprint, "Fingerprint", fprint, PDB_code, working_dir)
+        CreateHeatMap("Fingerprint", All_Fingerprint, natural_sort(RotationLabel), fprint, "rocket", PDB_code, working_dir)
     # In the case that there were complexes, we want to clean up the files that we made
     for lig in Clean_up:
         # Clean up files afterwards
@@ -452,16 +384,6 @@ def Fingerprint_Wrapper(info, Type, PDB_code, SI_cutoff, SPLIF_cutoff):
         os.remove(lig)
     print("remove: " + protein_name)
     os.remove(protein_name)
-
     print("Fingerprint finished processing.")
 
-
-
 ######################################################################################################################
-
-#Fingerprint_Wrapper('protein.pdb', 'SPLIF')
-#ProteintoLigListComplex('/home/justine/PycharmProjects/PoseFilter/Test/Trimer/protein.pdbqt')
-#Fingerprint_Wrapper('/home/justine/PycharmProjects/PoseFilter/Test/Trimer/protein.pdbqt', "SPLIF")
-
-#x =SPLIF_Fingerprint('vina_output_ligand_9_complex_1rotation.pdb', ['vina_output_ligand_9_complex_1rotation.pdb', 'vina_output_ligand_9_complex_0rotation.pdb'], '/home/justine/Documents/Vina_docking/Dimers/1FX9/1FX9/1fx9.pdb')
-#print(x)

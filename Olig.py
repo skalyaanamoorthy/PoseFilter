@@ -8,6 +8,7 @@ import fileinput
 import shutil
 import glob
 import numpy as np
+import os
 import sys
 from .General import CreateHeatMap
 from statistics import mode
@@ -85,107 +86,7 @@ def Olig_MainLoop(energy_files, PDB_code, PDB_len, cutoff, UNK_var, alpha):
 
 
 ######################################################################################################################
-'''
-# Takes the np array and then writes to file
-def RMS_analysis(All_RMS, RotList, PDB_code):
-    # store all of the rms values
-
-    f2 = open('RMS_' + PDB_code + '.csv', 'w')
-    f2.write('Root mean squared values'+'\n')
-    f2.write(' ,')
-
-    for file in RotList:
-        f2.write(file + ', ')
-
-    f2.write('\n')
-    row_t = 0
-    for row in All_RMS:
-        f2.write(RotList[row_t] + ', ')
-        for item in row:
-            f2.write(str(item) + ', ')
-        f2.write('\n')
-        row_t = row_t + 1
-'''
 ######################################################################################################################
-'''
-# Checks for similarities from a row. Saves the files to corresponding: Similar/Unique directories
-def SimCheck(RotList, RotStruct, RotNumList, All_RMS, working_dir):
-    print("RotStruct len: " + str(len(RotStruct)))
-    print("RotList len: " + str(len(RotList)))
-    cutoff = 2
-
-    for x in RotStruct:
-        print("RotStruct: " + str(x))
-
-    # Puts the Rotation structure into this new variable
-    Rot_type = [RotStruct, [0]*len(RotStruct)]
-
-    sim_file = open('Similar.csv', 'w')
-    sim_file.write('Reference, Structure, RMS, Rotation #\n')
-
-    # The first row is the name, the second is the type: 's' for similar, nothing for unique
-    # Uses the global numpy variable to check for similarities and then sorts the files.
-    x = len(RotList)-1
-    while x > 0:
-        y = x
-        while y >= 0:
-            if x == y:
-                pass
-            else:
-                if Testing:
-                    print("y val: " + str(y))
-                    print("x val: " + str(x))
-                if All_RMS[x][y] < cutoff:
-                    # Structure
-                    Rot_type[1][y] = 'u'
-                   # print(Rot_type[0][y] + " is similar")
-                    # Need to make one unique out of the set
-                    # Reference
-                    Rot_type[1][x] = 's'
-
-                    # Could now write to a file to indicate which files are similar
-                    sim_file.write(str(Rot_type[0][x]) + ', ' + str(Rot_type[0][y]) + ', ' +
-                                   str(All_RMS[x][y]) + ', ' + RotNumList[y] + '\n')
-
-                # Not similar; pass for now
-                else:
-                    pass
-
-            y = y - 1
-        x = x - 1
-    # Use this to create two new lists, sList, uList
-  #  simfinder = RotStruct
-    # Check to see if the directories exist
-    if not os.path.exists('Similar'):
-        os.makedirs('Similar')
-
-    if not os.path.exists('Unique'):
-        os.makedirs('Unique')
-
-    # Go through the structures again and add to the proper directories
-    for w in range(len(RotStruct)):
-        # Name
-        rot = str(Rot_type[0][w])
-
-        if Rot_type[1][w] == 's':
-            # Move from dir to dir
-
-            # Want a new path that has the directory similar on it
-            path_1 = os.path.join(working_dir, rot)
-            print(path_1)
-            path_2 = os.path.join(working_dir, 'Similar', rot)
-            print(path_2)
-            shutil.move(path_1, path_2)
-
-        else:
-            path_1 = os.path.join(working_dir, rot)
-            print(path_1)
-            path_2 = os.path.join(working_dir, 'Unique', rot)
-            print(path_2)
-            shutil.move(path_1, path_2)
-
-    sim_file.close()
-'''
 ######################################################################################################################
 
 # For a given object, figure out RMS values for it compared to the other objects, and then return it
@@ -215,6 +116,7 @@ def RMS_Calc(Ref_obj, OList):
 # Instead let's have an info parameter that's a list:
 # Tab 1: [pfile, ligID]
 # Tab 2: [dir, complexid, ligresid]
+@cmd.extend
 def OligWrapper(info, PDB_code, cutoff, alpha):
     # pfile is instead info list
     global olig_num, working_dir
@@ -306,7 +208,7 @@ def OligWrapper(info, PDB_code, cutoff, alpha):
   #  del(RotList)
     print("RMS finished processing.")
   #  cmd.reinitialize()
-
+cmd.extend('OligWrapper', OligWrapper)
 # Test cases
 
 #InputFileDir(r"C:\Users\Justine\PycharmProjects\Oligomer_script\Vina_docking\Dimers\Docking\1FX9\1fx9.pdbqt")
