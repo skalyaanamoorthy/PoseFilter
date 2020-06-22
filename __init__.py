@@ -86,7 +86,7 @@ def make_dialog():
 
     def fingerprint():
         cmd.reinitialize()
-        print('Run fingerprint portion.')
+     #   print('Run fingerprint portion.')
 
         InfoArray = TabInfo()
 
@@ -119,7 +119,6 @@ def make_dialog():
             alpha = 1
 
         print("Running the oligomer script.")
-
         OligWrapper(InfoArray, form.PDBCODE.text(), form.RMSCutoff.text(), alpha)
 
     form.Button_browse.clicked.connect(browse_filename)
