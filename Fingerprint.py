@@ -15,6 +15,7 @@ from .General import GenerateRotList
 from .General import CreateHeatMap
 from .General import FilterFiles, GeneralSimCheck, File_write, DirSearch, natural_sort
 from .Print2D import Print2D
+from .General import RMSInfo
 from .Preprocessing import PDBInfo_Wrapper
 
 global Testing
@@ -238,7 +239,6 @@ def PDBQTtoPDB(savename, mol):
 
 ######################################################################################################################
 
-
 def ComplextoLigand(ComplexId, ResId):
 
     # for each file
@@ -305,7 +305,6 @@ def Fingerprint_Wrapper(info, Type, PDB_code, SI_cutoff, SPLIF_cutoff, TextInter
 
             # Add to clean up list
             Clean_up = PDBLigands
-       #     Clean_up.append(protein_name)
 
             Ligand_files = PDBLigands
 
@@ -331,7 +330,6 @@ def Fingerprint_Wrapper(info, Type, PDB_code, SI_cutoff, SPLIF_cutoff, TextInter
 
         # Add to clean up list
         Clean_up = Ligand_files
-     #   Clean_up.append(protein_name)
 
         lf = natural_sort(Ligand_files)
         Ligand_files = lf
@@ -342,8 +340,7 @@ def Fingerprint_Wrapper(info, Type, PDB_code, SI_cutoff, SPLIF_cutoff, TextInter
         # Define these variables
         Listoflig, All_Fingerprint = Fingerprint(protein_name, Ligand_files, fprint)
 
-      #  SI_cutoff, I_cutoff, SPLIF_cutoff
-
+      #  SI_cutoff,SPLIF_cutoff
 
         if fprint is "SPLIF":
             cutoff = SPLIF_cutoff
@@ -352,25 +349,49 @@ def Fingerprint_Wrapper(info, Type, PDB_code, SI_cutoff, SPLIF_cutoff, TextInter
             cutoff = SI_cutoff
 
         RotNumList = ["0"] * len(Listoflig)
+        PoseObjects = []
+
         # Rotlist (minus the .pdb), Rotstruct
         FPList = []
         for el in Listoflig:
             el_name, ext = el.rsplit('.', 1)
             FPList.append(el_name)
 
-        GeneralSimCheck(FPList, Listoflig, RotNumList, All_Fingerprint, working_dir, "Fingerprint", float(cutoff), fprint)
-        # Write to a .csv file
-
         RotationLabel = []
         for rotLab in Ligand_Names_total:
             RotationLabel.append(rotLab.replace('_l', ''))
+
+        print("RotationLabels:")
+        for rot in RotationLabel:
+            print(rot)
+
+        print("FPList:")
+        for fp in FPList:
+            print(fp)
+
+        print("ligand_files")
+        for lig in Ligand_files:
+            print(lig)
+
+        RotationLabel = natural_sort(RotationLabel)
+        for index in range(len(FPList)):
+
+
+            item = RMSInfo(RotationLabel[index], "", FPList[index])
+            print(item.OrigPoseName)
+            print(item.ObjName)
+            PoseObjects.append(item)
+
+        GeneralSimCheck(PoseObjects, All_Fingerprint, working_dir, "Fingerprint", float(cutoff), fprint)
+        # Write to a .csv file
 
 
         # 2D resn, and corresponding atoms
         if TextInteraction[0] == 1:
             x = 0
-            for Ligand in Ligand_files:
-                Print2D(Ligand, RotationLabel[x], protein_name, float(TextInteraction[1]))
+            for Pose in PoseObjects:
+                print("Arguments: " + Pose.ObjName + " " + Pose.OrigPoseName + " " + protein_name + " " + str(float(TextInteraction[1])))
+                Print2D(Pose.ObjName + '.pdb', Pose.OrigPoseName, protein_name, float(TextInteraction[1]))
                 x = x + 1
 
         File_write(natural_sort(RotationLabel), All_Fingerprint, "Fingerprint", fprint, PDB_code, working_dir)
