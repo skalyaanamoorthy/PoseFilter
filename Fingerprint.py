@@ -55,8 +55,8 @@ def Fingerprint(proteinName, Listoflig, Type):
     # Setting up the array
     ligsize = len(Listoflig)
     All_Fingerprint = np.zeros((ligsize, ligsize))
-    print("prot name: ")
-    print(proteinName)
+  #  print("prot name: ")
+  #  print(proteinName)
 
     cur_row = 0
     for ref in Listoflig:
@@ -75,7 +75,7 @@ def Fingerprint(proteinName, Listoflig, Type):
         # Puts list into the corresponding row of the np array
 
         cur_row += 1
-    print(All_Fingerprint)
+  #  print(All_Fingerprint)
 
     # Ideally the create heat map would be in the wrapper
     return Listoflig, All_Fingerprint
@@ -92,13 +92,13 @@ def Fingerprint(proteinName, Listoflig, Type):
 def SPLIF_Fingerprint(ref_input, Listoflig, proteinpath):
     F_Scores = [0]*len(Listoflig)
     # Read in protein
-    print("protein path: " + proteinpath)
-    print("list of lig: ")
-    print(Listoflig)
+  #  print("protein path: " + proteinpath)
+  #  print("list of lig: ")
+  #  print(Listoflig)
  #   proteinpath = r"C:\Users\Justine\PycharmProjects\Oligomer_script\Vina_docking\Dimers\Docking\1FX9\1fx9.pdbqt"
     protein = next(oddt.toolkit.readfile('pdb', proteinpath))
-    print("splif wants to make fingerprint")
-    print(proteinpath)
+  #  print("splif wants to make fingerprint")
+  #  print(proteinpath)
     protein.protein = True
 
     # Read in and define the reference ligand
@@ -136,7 +136,7 @@ def Interaction_Fingerprint(ref_input, Listoflig, proteinpath):
 
     # Loop through each ligand in the list
     count = 0
-    print(Listoflig)
+  #  print(Listoflig)
     for ligandpath in Listoflig:
         ligand = next(oddt.toolkit.readfile('pdb', ligandpath))
         fp_query = fp.InteractionFingerprint(ligand, protein)
@@ -145,7 +145,7 @@ def Interaction_Fingerprint(ref_input, Listoflig, proteinpath):
         cur_score = fp.dice(ref, fp_query)
        # tan = fp.tanimoto(fp_query, ref)
         F_Scores[count] = cur_score
-        print(cur_score)
+  #      print(cur_score)
         count = count + 1
     return F_Scores
 
@@ -212,7 +212,7 @@ def Simple_Interaction_Fingerprint(ref_input, Listoflig, proteinpath):
 
     # Loop through each ligand in the list
     count = 0
-    print(Listoflig)
+  #  print(Listoflig)
     for ligandpath in Listoflig:
         ligand = next(oddt.toolkit.readfile('pdb', ligandpath))
         fp_query = fp.SimpleInteractionFingerprint(ligand, protein)
@@ -221,7 +221,7 @@ def Simple_Interaction_Fingerprint(ref_input, Listoflig, proteinpath):
         cur_score = fp.dice(ref, fp_query)
        # tan = fp.tanimoto(fp_query, ref)
         F_Scores[count] = cur_score
-        print(cur_score)
+   #     print(cur_score)
         count = count + 1
   #  print(F_Scores)
     # Returns a list of the fingerprint scores
@@ -246,8 +246,8 @@ def ComplextoLigand(ComplexId, ResId):
     Ligands = []
 
     for complex in files:
-        print("complex")
-        print(complex)
+    #    print("complex")
+     #   print(complex)
         cmd.load(complex)
 
         # Ligand name, file extension
@@ -284,9 +284,9 @@ def Fingerprint_Wrapper(info, Type, PDB_code, SI_cutoff, SPLIF_cutoff, TextInter
         # Ligand files from the DirSearch, either .pdb or other
         Ligand_files = DirSearch(LigandID)
         Ligand_Names_total = list(Ligand_files)
-        for x in Ligand_files:
-            print("FP")
-            print("Ligand files:" + x)
+      #  for x in Ligand_files:
+       #     print("FP")
+        #    print("Ligand files:" + x)
 
         # Ligand name, file extension
         ligand_name, file_ext = Ligand_files[0].rsplit('.', 1)
@@ -295,11 +295,11 @@ def Fingerprint_Wrapper(info, Type, PDB_code, SI_cutoff, SPLIF_cutoff, TextInter
         if file_ext is not "pdb":
             for lig in Ligand_files:
                 ligand_name, file_ext = lig.rsplit('.', 1)
-                print("ligand pdbqt")
+#                print("ligand pdbqt")
                 PDBQTtoPDB(ligand_name + '_l', lig)
                 PDBLigands.append(ligand_name + '_l.pdb')
 
-            print("protein pdbqt:")
+ #           print("protein pdbqt:")
             PDBQTtoPDB('protein_l', os.path.basename(pfile))
             protein_name = 'protein_l.pdb'
 
@@ -361,25 +361,25 @@ def Fingerprint_Wrapper(info, Type, PDB_code, SI_cutoff, SPLIF_cutoff, TextInter
         for rotLab in Ligand_Names_total:
             RotationLabel.append(rotLab.replace('_l', ''))
 
-        print("RotationLabels:")
-        for rot in RotationLabel:
-            print(rot)
+  #      print("RotationLabels:")
+   #     for rot in RotationLabel:
+    #        print(rot)
 
-        print("FPList:")
-        for fp in FPList:
-            print(fp)
+     #   print("FPList:")
+      #  for fp in FPList:
+       #     print(fp)
 
-        print("ligand_files")
-        for lig in Ligand_files:
-            print(lig)
+     #   print("ligand_files")
+      #  for lig in Ligand_files:
+       #     print(lig)
 
         RotationLabel = natural_sort(RotationLabel)
         for index in range(len(FPList)):
 
 
             item = RMSInfo(RotationLabel[index], "", FPList[index])
-            print(item.OrigPoseName)
-            print(item.ObjName)
+        #    print(item.OrigPoseName)
+        #    print(item.ObjName)
             PoseObjects.append(item)
 
         GeneralSimCheck(PoseObjects, All_Fingerprint, working_dir, "Fingerprint", float(cutoff), fprint)
@@ -390,7 +390,7 @@ def Fingerprint_Wrapper(info, Type, PDB_code, SI_cutoff, SPLIF_cutoff, TextInter
         if TextInteraction[0] == 1:
             x = 0
             for Pose in PoseObjects:
-                print("Arguments: " + Pose.ObjName + " " + Pose.OrigPoseName + " " + protein_name + " " + str(float(TextInteraction[1])))
+         #       print("Arguments: " + Pose.ObjName + " " + Pose.OrigPoseName + " " + protein_name + " " + str(float(TextInteraction[1])))
                 Print2D(Pose.ObjName + '.pdb', Pose.OrigPoseName, protein_name, float(TextInteraction[1]))
                 x = x + 1
 
@@ -399,11 +399,11 @@ def Fingerprint_Wrapper(info, Type, PDB_code, SI_cutoff, SPLIF_cutoff, TextInter
     # In the case that there were complexes, we want to clean up the files that we made
     for lig in Clean_up:
         # Clean up files afterwards
-        print("clean up files")
+      #  print("clean up files")
      #   for lig in Ligand_files:
-        print("remove: " + lig)
+      #  print("remove: " + lig)
         os.remove(lig)
-    print("remove: " + protein_name)
+   # print("remove: " + protein_name)
     os.remove(protein_name)
     print("Fingerprint finished processing.")
 

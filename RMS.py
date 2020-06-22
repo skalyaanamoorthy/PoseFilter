@@ -29,17 +29,17 @@ Testing = 0
 def Olig_MainLoop(energy_files,OriginalLigands, PDB_code, PDB_len, cutoff, UNK_var, alpha):
 
     global olig_num, working_dir
-    print("energy files: ")
-    print(energy_files)
+  #  print("energy files: ")
+  #  print(energy_files)
 
     # First, load the first file as a reference
     cmd.load(energy_files[0], 'obj1')
-    print(energy_files[0])
+  #  print(energy_files[0])
 
     fdsf = FilterFiles(energy_files)
     myobjects = cmd.get_object_list()
-    for obj in myobjects:
-        print("obj: " + obj)
+ #   for obj in myobjects:
+  #      print("obj: " + obj)
 
     RotList, RotStruct, RotNumList = GenerateRotList(myobjects[1:], UNK_var, alpha)
 
@@ -56,7 +56,6 @@ def Olig_MainLoop(energy_files,OriginalLigands, PDB_code, PDB_len, cutoff, UNK_v
     row_n = 0
     # For the designated lowest rotation, we cycle through
     for obj_x in RotList:
-        print("RotList: " + obj_x)
         # Calculates RMSList values and puts into list
         RMSList = RMS_Calc(obj_x, RotList)
 
@@ -67,11 +66,6 @@ def Olig_MainLoop(energy_files,OriginalLigands, PDB_code, PDB_len, cutoff, UNK_v
 
     # Check if the number is a float/int or something
     # RotStruct not needed
-
-    for item in RMSItemList:
-        print(item.ObjName)
-        print(item.OrigPoseName)
-        print(item.RotNum)
 
     GeneralSimCheck(RMSItemList, All_RMS, working_dir, "RMS", float(cutoff), "")
 
@@ -185,31 +179,31 @@ def OligWrapper(info, PDB_code, cutoff, alpha):
     # First, reinitialize the PyMOL window
     cmd.reinitialize()
     energy_file = Saved_Complexes[0]
-    print("energy file: " + energy_file)
+   # print("energy file: " + energy_file)
     PDB_len = len(Saved_Complexes)
 
     # Assigns the min and max res, as well as the chain to use: A, B, C
     # Should be using the protein for the PDBInfo
     res_min, res_max, toAlph = PDBInfo_Wrapper(InfoProtein)
     olig_num = len(toAlph)
-    for x in toAlph:
-        print(x)
-    print("olig_num: " + str(olig_num))
-    if Testing:
-        print(olig_num)
+  #  for x in toAlph:
+   #     print(x)
+  #  print("olig_num: " + str(olig_num))
+  #  if Testing:
+   #     print(olig_num)
 
     Olig_MainLoop(Saved_Complexes, OriginalLigands, PDB_code, PDB_len, cutoff, UNK_var, alpha)
 
     if len(info) == 2:
         # Clean up files afterwards
-        print("complex clean up files")
+      #  print("complex clean up files")
         for complex in Saved_Complexes:
-            print("remove: " + complex)
+       #     print("remove: " + complex)
             os.remove(complex)
     else:
 
         for complex in ToDelete:
-            print("remove: " + complex)
+        #    print("remove: " + complex)
             os.remove(complex)
 
         # Remove protein name

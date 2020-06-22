@@ -62,8 +62,8 @@ def PDB_Info(file):
         # Res_min, res_max
         stored.residues = []
         cmd.iterate(selector.process(label), 'stored.residues.append(resv)')
-        print("stored residues")
-        print(stored.residues)
+      #  print("stored residues")
+      #  print(stored.residues)
         val = float(stored.residues[-1] - stored.residues[0])
         minval = stored.residues[0]
         maxval = stored.residues[-1]
@@ -98,9 +98,9 @@ def PDB_Info(file):
    # print(len(ListofChains))
     chainstrings = []
     for item in ListofChains:
-        if Testing:
-            print("item 1: " + str(item[1]))
-            print("item 0: " + str(item[0]))
+     #   if Testing:
+      #      print("item 1: " + str(item[1]))
+       #     print("item 0: " + str(item[0]))
 
         if len(item[1]) > max:
             minval = item[0][0]
@@ -112,17 +112,17 @@ def PDB_Info(file):
 
             chainstrings = item[1]
 
-    if Testing:
-        print("max " + str(max))
-        print(str(maxval))
-        print(str(minval))
+  #  if Testing:
+   #     print("max " + str(max))
+    #    print(str(maxval))
+     #   print(str(minval))
     newchains =[]
     for x in chainstrings:
         newchains.append(x.split()[1])
 
-    if Testing:
-        print(chainstrings)
-        print(newchains)
+   # if Testing:
+    #    print(chainstrings)
+     #   print(newchains)
 
     cmd.delete('obj')
     global o_num, minofres, maxofres, ListChains

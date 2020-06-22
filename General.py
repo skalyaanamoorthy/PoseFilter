@@ -92,12 +92,12 @@ def olig_string(i, i_List, ref_List):
     global chain, olig, r_min, r_max, r_alpha
     # if dimer x = 0, 1
     # if trimer x = 0, 1, 2
-    print("olig string nums: ")
-    print("olig: " + str(olig))
-    print("res min: " + str(r_min))
-    print("res max: " + str(r_max))
-    print("chain: ")
-    print(chain)
+   # print("olig string nums: ")
+ #   print("olig: " + str(olig))
+ #   print("res min: " + str(r_min))
+ #   print("res max: " + str(r_max))
+ #   print("chain: ")
+ #   print(chain)
     #r_max = "60"
 
     if r_alpha:
@@ -130,11 +130,11 @@ def rotation(rot_str, i, num):
 
     # Save just the ligand
     cmd.save(i + '_UNK' + str(num) + '.pdb', i + ' and resn ' + UNK)
-    print("UNK Rotation: " + i + '_UNK' + str(num) + '.pdb')
+  #  print("UNK Rotation: " + i + '_UNK' + str(num) + '.pdb')
 
     # Calculates the RMS between the UNK and the obj1 UNK reference
     rms_val = cmd.rms_cur('obj1 and resn ' + UNK, i + ' and resn ' + UNK)
-    print("Rotation " + str(num) + " rms val: " + str(rms_val))
+  #  print("Rotation " + str(num) + " rms val: " + str(rms_val))
 
     return rms_val
 
@@ -188,7 +188,7 @@ def distComp(RMSArr, i):
     global olig
     # Find the min index and then loop through to delete the other files
     min_index = RMSArr.index(min(RMSArr))
-    print("Min index: " + str(min_index))
+ #   print("Min index: " + str(min_index))
     for x in range(olig):
 
         # Remove all of the protein + ligand complexes (rotations); maybe would not even
@@ -242,7 +242,7 @@ def FilterFiles(files):
         elif "COM" in x:
             pass
         else:
-            print(x)
+          #  print(x)
             final_files.append(x.strip('.pdb'))
             cmd.load(x)
     return final_files
@@ -282,9 +282,9 @@ def GeneralSimCheck(RMSItemList, Total_Array, working_dir, Dir_Type, cutoff, Add
             if x == y:
                 pass
             else:
-                if Testing:
-                    print("y val: " + str(y))
-                    print("x val: " + str(x))
+              #  if Testing:
+              #      print("y val: " + str(y))
+              #      print("x val: " + str(x))
 
                 if Dir_Type == "RMS":
                     Is_similar = (Total_Array[x][y] <= cutoff)
@@ -318,7 +318,7 @@ def GeneralSimCheck(RMSItemList, Total_Array, working_dir, Dir_Type, cutoff, Add
     for w in range(length):
         # Name
         rot = str(Rot_type[0][w])
-        print("rot:" + rot)
+    #    print("rot:" + rot)
 
         PoseName, PoseExt = RMSItemList[w].OrigPoseName.rsplit('.', 1)
 
@@ -327,9 +327,9 @@ def GeneralSimCheck(RMSItemList, Total_Array, working_dir, Dir_Type, cutoff, Add
 
             # Want a new path that has the directory similar on it
             path_1 = os.path.join(working_dir, rot)
-            print(path_1)
+         #   print(path_1)
             path_2 = os.path.join(Similar_path, rot)
-            print(path_2)
+         #   print(path_2)
             shutil.copy(path_1, path_2)
 
             # Rename
@@ -344,9 +344,9 @@ def GeneralSimCheck(RMSItemList, Total_Array, working_dir, Dir_Type, cutoff, Add
 
         else:
             path_1 = os.path.join(working_dir, rot)
-            print(path_1)
+        #    print(path_1)
             path_2 = os.path.join(Unique_path, rot)
-            print(path_2)
+        #    print(path_2)
             shutil.copy(path_1, path_2)
 
             # Path to copy to
@@ -360,7 +360,7 @@ def GeneralSimCheck(RMSItemList, Total_Array, working_dir, Dir_Type, cutoff, Add
 def CreateDirs(Dir_Type, Add_Type):
     # In the case of RMS
     if Add_Type == "":
-        print("Just make similar/unique in DIR")
+     #   print("Just make similar/unique in DIR")
         if not os.path.exists(Dir_Type):
             os.makedirs(Dir_Type + '/' + 'Similar')
             os.makedirs(Dir_Type + '/' + 'Unique')
@@ -374,7 +374,7 @@ def CreateDirs(Dir_Type, Add_Type):
 
     # In the case of Fingerprint
     else:
-        print("fingerprint special case")
+     #   print("fingerprint special case")
         if not os.path.exists(Dir_Type):
             os.makedirs(Dir_Type + '/' + Add_Type + '/' + 'Similar')
             os.makedirs(Dir_Type + '/' + Add_Type + '/' + 'Unique')
@@ -434,12 +434,12 @@ def DirSearch(keyword):
  #   file_ext = filewithext.rsplit('.', 1)[1]
     all_files = []
     query = glob.glob("*" + keyword + "*")
-    print("*" + keyword + "*")
-    print(query)
+   # print("*" + keyword + "*")
+   # print(query)
 
     for x in query:
-        print("query:")
-        print(query)
+     #   print("query:")
+     #   print(query)
         if "rot" in x:
             pass
         elif "UNK" in x:
@@ -460,7 +460,7 @@ def DirSearch(keyword):
 def LigandtoComplex(pfile, keyword):
     working_dir = os.path.dirname(pfile)
     os.chdir(working_dir)
-    print(working_dir)
+  #  print(working_dir)
 
     protein_name = os.path.basename(pfile)
     file_ext = protein_name.rsplit('.', 1)[1]
@@ -474,15 +474,15 @@ def LigandtoComplex(pfile, keyword):
 
     # Make the protein + ligand complexes
     for ligand in all_files:
-        print("ligand: " + ligand)
+      #  print("ligand: " + ligand)
         lig_name = ligand.rsplit('.', 1)[0]
-        print("Make complex: ")
+      #  print("Make complex: ")
         MakeComplex(lig_name + '_complex', ligand, protein_name)
 
         # These are the names of the complexes that will be iterated through the program
         Saved_Complexes[SNum] = lig_name + '_complex' + ".pdb"
         SNum += 1
-    print("Saved complexes: ")
+   # print("Saved complexes: ")
     # Saved complexes are protein + ligand .pdb named
     return Saved_Complexes, all_files[0], all_files
 
