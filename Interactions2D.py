@@ -17,16 +17,17 @@ from scipy.spatial import distance
 def InteractionCheck(proteinpath, Listoflig):
 
     dirname = os.path.dirname(proteinpath)
-    os.chdir(dirname)
+   # os.chdir(dirname)
 
     protein = next(oddt.toolkit.readfile('pdb', proteinpath))
     protein.protein = True
 
-    for ligandname in Listoflig:
+    for ligand_object in Listoflig:
+        ligandname = ligand_object.OrigPoseName
 
         Ligand_Name = ligandname.split('.')[0]
         ResReport = Ligand_Name + "_ResidueReport.csv"
-        path = os.path.join(dirname, ResReport)
+        path = os.path.join(dirname, 'Fingerprint', ResReport)
 
         file = open(path, 'w')
         file.write("Ligand interactions with protein residues\n")
@@ -38,15 +39,15 @@ def InteractionCheck(proteinpath, Listoflig):
         # Hydrophobic interactions
         p_hydroph, l_hydroph = interactions.hydrophobic_contacts(protein, ligand)
      #   if p_hydroph not []
-        InteractionsFile(p_hydroph, l_hydroph, path, 'hydrophobic contacts')
+        InteractionsFile(p_hydroph, l_hydroph, path, 'hydrophobic')
 
         # h bonds
         p_hbonds, l_hbonds, strict = interactions.hbonds(protein, ligand)
-        InteractionsFile(p_hbonds, l_hbonds, path, 'hydrogen bonds')
+        InteractionsFile(p_hbonds, l_hbonds, path, 'hydrogen bond')
 
         # halogens
         p_halogen, l_halogen, strict = interactions.halogenbonds(protein, ligand)
-        InteractionsFile(p_halogen, l_halogen, path, 'halogen bonds')
+        InteractionsFile(p_halogen, l_halogen, path, 'halogen bond')
 
         # pistacking bonds
         pi_interactions = interactions.pi_stacking(protein, ligand)
@@ -54,7 +55,7 @@ def InteractionCheck(proteinpath, Listoflig):
 
         # salt bridges
         p_salt_bridges, l_salt_bridges = interactions.salt_bridges(protein, ligand)
-        InteractionsFile(p_salt_bridges, l_salt_bridges, path, 'salt bridges')
+        InteractionsFile(p_salt_bridges, l_salt_bridges, path, 'salt bridge')
 
         # pi_cation
         p_pi_cation, l_pi_cation, strict = interactions.pi_cation(protein, ligand)
@@ -92,7 +93,7 @@ def InteractionsFile(protein, ligand, FilePath, Interaction_Name):
         file.close()
 
 
-proteinpath = '/home/justine/protein.pdb'
-ligandpaths = ['ligand1.pdb', 'ligand2.pdb', 'ligand3.pdb']
-InteractionCheck(proteinpath, ligandpaths)
+#proteinpath = '/home/justine/protein.pdb'
+#ligandpaths = ['ligand1.pdb', 'ligand2.pdb', 'ligand3.pdb']
+#InteractionCheck(proteinpath, ligandpaths)
 
