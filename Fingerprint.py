@@ -14,12 +14,11 @@ import numpy as np
 from .General import GenerateRotList
 from .General import CreateHeatMap
 from .General import FilterFiles, GeneralSimCheck, File_write, DirSearch, natural_sort
-from .Print2D import Print2D
+from .Interactions2D import InteractionCheck
 from .General import RMSInfo
 from .Preprocessing import PDBInfo_Wrapper
 
-global Testing
-Testing = 0
+
 # Will be used as a switch- when it is on then we have lots of output to test, off we do not have any
 
 #######################################################################################################
@@ -385,13 +384,11 @@ def Fingerprint_Wrapper(info, Type, PDB_code, SI_cutoff, SPLIF_cutoff, TextInter
         GeneralSimCheck(PoseObjects, All_Fingerprint, working_dir, "Fingerprint", float(cutoff), fprint)
         # Write to a .csv file
 
-
         # 2D resn, and corresponding atoms
-        if TextInteraction[0] == 1:
+        if TextInteraction == 1:
             x = 0
             for Pose in PoseObjects:
-         #       print("Arguments: " + Pose.ObjName + " " + Pose.OrigPoseName + " " + protein_name + " " + str(float(TextInteraction[1])))
-                Print2D(Pose.ObjName + '.pdb', Pose.OrigPoseName, protein_name, float(TextInteraction[1]))
+                InteractionCheck(protein_name, Pose.ObjName + '.pdb')
                 x = x + 1
 
         File_write(natural_sort(RotationLabel), All_Fingerprint, "Fingerprint", fprint, PDB_code, working_dir)

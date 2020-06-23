@@ -46,7 +46,7 @@ def make_dialog():
     form.FP_SICutoff.setText("0.5")
    # form.FP_IntCutoff.setText("0.6")
     form.FP_SPLIFCutoff.setText("0.5")
-    form.Prox_val.setText("2.5")
+  #  form.Prox_val.setText("2.5")
 
     def TabInfo():
         index = QTabWidget.currentIndex(form.Mytab)
@@ -101,9 +101,9 @@ def make_dialog():
             IText.append("SInteraction")
         print(IText)
 
-        TextInteraction = [0, form.Prox_val.text()]
+        TextInteraction = 0
         if form.Prox_check.isChecked():
-            TextInteraction[0] = 1
+            TextInteraction = 1
 
         FP_SI = form.FP_SICutoff.text()
         FP_SPLIF = form.FP_SPLIFCutoff.text()
