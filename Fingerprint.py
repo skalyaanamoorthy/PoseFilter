@@ -343,11 +343,7 @@ def Fingerprint_Wrapper(info, Type, PDB_code, SI_cutoff, SPLIF_cutoff, TextInter
 
         RotationLabel = natural_sort(RotationLabel)
         for index in range(len(FPList)):
-
-
             item = RMSInfo(RotationLabel[index], "", FPList[index])
-        #    print(item.OrigPoseName)
-        #    print(item.ObjName)
             PoseObjects.append(item)
 
         GeneralSimCheck(PoseObjects, All_Fingerprint, working_dir, "Fingerprint", float(cutoff), fprint)
@@ -358,8 +354,6 @@ def Fingerprint_Wrapper(info, Type, PDB_code, SI_cutoff, SPLIF_cutoff, TextInter
             x = 0
            # interaction_pathway = os.path.join(working_dir, 'Fingerprint')
             os.chdir(working_dir)
-            print("protein name")
-            print(protein_name)
             InteractionCheck(protein_name, PoseObjects)
 
         File_write(natural_sort(RotationLabel), All_Fingerprint, "Fingerprint", fprint, PDB_code, working_dir)
@@ -367,12 +361,8 @@ def Fingerprint_Wrapper(info, Type, PDB_code, SI_cutoff, SPLIF_cutoff, TextInter
     # In the case that there were complexes, we want to clean up the files that we made
   #  os.chdir(working_dir)
     for lig in Clean_up:
-        # Clean up files afterwards
-      #  print("clean up files")
-     #   for lig in Ligand_files:
-      #  print("remove: " + lig)
         os.remove(lig)
-   # print("remove: " + protein_name)
+
     os.remove(protein_name)
     print("Fingerprint finished processing.")
 

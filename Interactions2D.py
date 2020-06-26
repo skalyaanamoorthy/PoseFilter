@@ -32,8 +32,6 @@ def InteractionCheck(proteinpath, Listoflig):
 
     for ligand_object in Listoflig:
         ligandname = ligand_object.ObjName + '.pdb'
-        print(ligand_object.ObjName)
-        print(ligand_object.OrigPoseName)
 
         #Ligand_Name = ligandname.split('.')[0]
         ResReport = ligand_object.OrigPoseName.split('.')[0] + "_ResidueReport.csv"
@@ -80,9 +78,6 @@ def InteractionCheck(proteinpath, Listoflig):
 
 
 def InteractionsFile(protein, ligand, FilePath, Interaction_Name):
-    print(protein)
-    print("--------------")
-    print(ligand)
     # If it is not an empty array
     if len(protein) != 0:
         file = open(FilePath, 'a')

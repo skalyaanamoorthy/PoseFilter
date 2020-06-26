@@ -38,8 +38,6 @@ def Olig_MainLoop(energy_files,OriginalLigands, PDB_code, PDB_len, cutoff, UNK_v
 
     fdsf = FilterFiles(energy_files)
     myobjects = cmd.get_object_list()
- #   for obj in myobjects:
-  #      print("obj: " + obj)
 
     RotList, RotStruct, RotNumList = GenerateRotList(myobjects[1:], UNK_var, alpha)
 
@@ -162,11 +160,6 @@ def OligWrapper(info, PDB_code, cutoff, alpha):
         # Check if .pdb
 
         OriginalLigands = natural_sort(list(Saved_Complexes))
-        for lig in OriginalLigands:
-            print('lig')
-            print(lig)
-
-     #   if ('pdb' not in Complex_ext):
 
         for compl in Saved_Complexes:
             Complex_N, Complex_ext = compl.split('.')
