@@ -10,6 +10,14 @@ import sys
 import numpy as np
 from scipy.spatial import distance
 
+#  file.write(ligand[x]['atomtype'] + ', ' + protein[x]['atomtype'] + ', ' + protein[x]['resname'] + ', ' + str(protein[x]['resnum']) + ', ' + str(dst) + '\n')
+class ProtLigInfo:
+  def __init__(self, LigAtomType, ProtAtomType, ProtResName, ProtResNum, Dist):
+    self.LigAtomType = LigAtomType
+    self.ProtAtomType = ProtAtomType
+    self.ProtResName = ProtResName
+    self.ProtResNum = ProtResNum
+    self.Dist = Dist
 
 # Take the two molecules, protein and ligand and use each of those oddt modules
 
@@ -23,10 +31,12 @@ def InteractionCheck(proteinpath, Listoflig):
     protein.protein = True
 
     for ligand_object in Listoflig:
-        ligandname = ligand_object.OrigPoseName
+        ligandname = ligand_object.ObjName + '.pdb'
+        print(ligand_object.ObjName)
+        print(ligand_object.OrigPoseName)
 
-        Ligand_Name = ligandname.split('.')[0]
-        ResReport = Ligand_Name + "_ResidueReport.csv"
+        #Ligand_Name = ligandname.split('.')[0]
+        ResReport = ligand_object.OrigPoseName.split('.')[0] + "_ResidueReport.csv"
         path = os.path.join(dirname, 'Fingerprint', ResReport)
 
         file = open(path, 'w')
@@ -77,17 +87,24 @@ def InteractionsFile(protein, ligand, FilePath, Interaction_Name):
         file = open(FilePath, 'a')
         file.write("Ligand " + Interaction_Name + " interactions with protein residues\n")
         file.write('Ligand Atom Type, Residue Atom Type, Resn, Resi, Ligand to Protein Distance\n')
-        for x in range(len(protein)):
-            p_coords = protein[x]['coords']
-            print(p_coords)
-            l_coords = ligand[x]['coords']
-            print(l_coords)
-            dst = distance.euclidean(p_coords, l_coords)
-            print('distance')
-            print(dst)
+        ListOfDist = []
 
-            file.write(ligand[x]['atomtype'] + ', ' + protein[x]['atomtype'] + ', ' + protein[x]['resname'] + ', ' + str(protein[x]['resnum']) + ', ' + str(dst) + '\n')
-            x +=1
+
+        # Put everything into a list; use an object so that it is neater
+        for y in range(len(protein)):
+           # print(y)
+           # print(protein[y])
+            p_coords = protein[y]['coords']
+            l_coords = ligand[y]['coords']
+            dst = distance.euclidean(p_coords, l_coords)
+            item = ProtLigInfo(ligand[y]['atomtype'], protein[y]['atomtype'], protein[y]['resname'], str(protein[y]['resnum']), dst)
+            ListOfDist.append(item)
+
+        # Sort the list according to the distance
+        ListOfDist.sort(key=lambda z: z.Dist, reverse=False)
+
+        for residue in ListOfDist:
+            file.write(residue.LigAtomType + ', ' + residue.ProtAtomType + ', ' + residue.ProtResName + ', ' + str(residue.Dist) + '\n')
 
         file.write('\n')
         file.close()

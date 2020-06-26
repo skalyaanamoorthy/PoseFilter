@@ -1,0 +1,22 @@
+Ligand interactions with protein residues
+Ligand hydrophobic interactions with protein residues
+Ligand Atom Type, Residue Atom Type, Resn, Resi, Ligand to Protein Distance
+C.3, C.3, GLU, 5, 3.8103668689727783
+C.3, C.3, ALA, 9, 3.6997499465942383
+C.3, C.3, ALA, 9, 3.3498754501342773
+C.3, C.3, ALA, 9, 3.74778413772583
+C.3, C.3, ILE, 13, 3.7555289268493652
+C.3, C.3, ILE, 13, 3.560488224029541
+C.3, C.3, ILE, 13, 3.826784372329712
+C.3, C.3, ILE, 13, 3.4887874126434326
+C.3, C.3, ALA, 9, 3.072356700897217
+C.3, C.3, ALA, 9, 3.594869613647461
+
+Ligand hydrogen bond interactions with protein residues
+Ligand Atom Type, Residue Atom Type, Resn, Resi, Ligand to Protein Distance
+O.2, O.2, LYS, 2, 2.98614764213562
+
+Ligand salt bridge interactions with protein residues
+Ligand Atom Type, Residue Atom Type, Resn, Resi, Ligand to Protein Distance
+N.4, O.co2, GLU, 5, 3.305324077606201
+

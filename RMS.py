@@ -114,7 +114,7 @@ def OligWrapper(info, PDB_code, cutoff, alpha):
   #  UNK_var = ""
 
     InfoProtein = ""
-
+    IsComplex = 0
 
     # Tab 1, protein file and ligand list
     if len(info) == 2:
@@ -134,6 +134,7 @@ def OligWrapper(info, PDB_code, cutoff, alpha):
 
         # Just want the names of the ligand files in order:
         sc = natural_sort(Saved_Complexes)
+        ToDelete = list(sc)
         Saved_Complexes = sc
 
         cmd.load(LigandFile)
@@ -159,14 +160,25 @@ def OligWrapper(info, PDB_code, cutoff, alpha):
 
         ToDelete = []
         # Check if .pdb
-        for compl in Saved_Complexes:
-            Complex_N, Complex_ext = compl.rsplit('.', 1)
-            if ('.pdb' not in Complex_ext):
-                PDBQTtoPDB(Complex_N, compl)
-                ToDelete.append(Complex_N + '.pdb')
 
         OriginalLigands = natural_sort(list(Saved_Complexes))
-        Saved_Complexes = list(ToDelete)
+        for lig in OriginalLigands:
+            print('lig')
+            print(lig)
+
+     #   if ('pdb' not in Complex_ext):
+
+        for compl in Saved_Complexes:
+            Complex_N, Complex_ext = compl.split('.')
+            PDBQTtoPDB(Complex_N+'xyzl', compl)
+            ToDelete.append(Complex_N + 'xyzl.pdb')
+
+            # set the saved complexes as those ones
+            Saved_Complexes = list(ToDelete)
+
+        for lig2 in Saved_Complexes:
+            print("saved complex")
+            print(lig2)
 
         # Need to prepare just the protein for processing
         cmd.load(Saved_Complexes[0])
@@ -186,28 +198,19 @@ def OligWrapper(info, PDB_code, cutoff, alpha):
     # Should be using the protein for the PDBInfo
     res_min, res_max, toAlph = PDBInfo_Wrapper(InfoProtein)
     olig_num = len(toAlph)
-  #  for x in toAlph:
-   #     print(x)
-  #  print("olig_num: " + str(olig_num))
-  #  if Testing:
-   #     print(olig_num)
 
     Olig_MainLoop(Saved_Complexes, OriginalLigands, PDB_code, PDB_len, cutoff, UNK_var, alpha)
 
-    if len(info) == 2:
-        # Clean up files afterwards
-      #  print("complex clean up files")
-        for complex in Saved_Complexes:
-       #     print("remove: " + complex)
-            os.remove(complex)
-    else:
+#    else:
+    if len(info) == 3:
+        os.remove('OnlyProtLig.pdb')
 
-        for complex in ToDelete:
-        #    print("remove: " + complex)
-            os.remove(complex)
+    for complex in ToDelete:
+    #    print("remove: " + complex)
+        os.remove(complex)
 
         # Remove protein name
-        os.remove('OnlyProtLig.pdb')
+
 
     print("RMS finished processing.")
 cmd.extend('OligWrapper', OligWrapper)

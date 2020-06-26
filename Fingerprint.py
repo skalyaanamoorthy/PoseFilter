@@ -18,16 +18,20 @@ from .Interactions2D import InteractionCheck
 from .General import RMSInfo
 from .Preprocessing import PDBInfo_Wrapper
 
+'''
 
-# Will be used as a switch- when it is on then we have lots of output to test, off we do not have any
+oddt and rdkit modules were used to create the SPLIF and Interaction fingerprints. These modules were also used to
+examine the types of protein-ligand interactions that were then printed to .csv files.
+Here are the interaction functions, some of which were used: https://oddt.readthedocs.io/en/latest/_modules/oddt/interactions.html
+Here are the fingerprint functions: https://oddt.readthedocs.io/en/latest/_modules/oddt/fingerprints.html
+
+'''
 
 #######################################################################################################
 
 # Takes the np array and then writes to file
 # Takes in a LigandList, Array to write to the file, and type of fingerprint
 def Fingerprint_write(LigList, FArr, Type, PDB_code):
-
-# 'Fingerprint_SPLIF.csv'
 
     f2 = open(Type + '_' + PDB_code + '_' + '_Fingerprint.csv', 'w')
     f2.write('Fingerprint values'+'\n')
@@ -49,19 +53,16 @@ def Fingerprint_write(LigList, FArr, Type, PDB_code):
 
 # Take the protein name, list of ligands and then the type of fingerprint required (SimpleInteraction, Interaction, SPLIF)
 
-# Type is "SPLIF", "Interaction", or "Simple_Interaction"
+# Type is "SPLIF" or "Simple_Interaction"
 def Fingerprint(proteinName, Listoflig, Type):
     # Setting up the array
     ligsize = len(Listoflig)
     All_Fingerprint = np.zeros((ligsize, ligsize))
-  #  print("prot name: ")
-  #  print(proteinName)
 
     cur_row = 0
     for ref in Listoflig:
 
         # Divide by the type of fingerprint
-
         if Type == "SPLIF":
             # Fill up the row with the fingerprint data
             All_Fingerprint[cur_row, :] = SPLIF_Fingerprint(ref, Listoflig, proteinName)
@@ -74,13 +75,9 @@ def Fingerprint(proteinName, Listoflig, Type):
         # Puts list into the corresponding row of the np array
 
         cur_row += 1
-  #  print(All_Fingerprint)
 
     # Ideally the create heat map would be in the wrapper
     return Listoflig, All_Fingerprint
-
-# Give it a string to indicate the file to write to as well as the type of fingerprint
-#    Fingerprint_write(Listoflig, All_Fingerprint, FingerprintTypeString)
 
 ######################################################################################################################
 
@@ -90,14 +87,9 @@ def Fingerprint(proteinName, Listoflig, Type):
 # for each, make a fingerprint and output
 def SPLIF_Fingerprint(ref_input, Listoflig, proteinpath):
     F_Scores = [0]*len(Listoflig)
+
     # Read in protein
-  #  print("protein path: " + proteinpath)
-  #  print("list of lig: ")
-  #  print(Listoflig)
- #   proteinpath = r"C:\Users\Justine\PycharmProjects\Oligomer_script\Vina_docking\Dimers\Docking\1FX9\1fx9.pdbqt"
     protein = next(oddt.toolkit.readfile('pdb', proteinpath))
-  #  print("splif wants to make fingerprint")
-  #  print(proteinpath)
     protein.protein = True
 
     # Read in and define the reference ligand
@@ -135,16 +127,13 @@ def Interaction_Fingerprint(ref_input, Listoflig, proteinpath):
 
     # Loop through each ligand in the list
     count = 0
-  #  print(Listoflig)
     for ligandpath in Listoflig:
         ligand = next(oddt.toolkit.readfile('pdb', ligandpath))
         fp_query = fp.InteractionFingerprint(ligand, protein)
 
         # similarity score for current query
         cur_score = fp.dice(ref, fp_query)
-       # tan = fp.tanimoto(fp_query, ref)
         F_Scores[count] = cur_score
-  #      print(cur_score)
         count = count + 1
     return F_Scores
 
@@ -211,18 +200,14 @@ def Simple_Interaction_Fingerprint(ref_input, Listoflig, proteinpath):
 
     # Loop through each ligand in the list
     count = 0
-  #  print(Listoflig)
     for ligandpath in Listoflig:
         ligand = next(oddt.toolkit.readfile('pdb', ligandpath))
         fp_query = fp.SimpleInteractionFingerprint(ligand, protein)
 
         # similarity score for current query
         cur_score = fp.dice(ref, fp_query)
-       # tan = fp.tanimoto(fp_query, ref)
         F_Scores[count] = cur_score
-   #     print(cur_score)
         count = count + 1
-  #  print(F_Scores)
     # Returns a list of the fingerprint scores
     return F_Scores
 
@@ -245,8 +230,6 @@ def ComplextoLigand(ComplexId, ResId):
     Ligands = []
 
     for complex in files:
-    #    print("complex")
-     #   print(complex)
         cmd.load(complex)
 
         # Ligand name, file extension
@@ -294,11 +277,9 @@ def Fingerprint_Wrapper(info, Type, PDB_code, SI_cutoff, SPLIF_cutoff, TextInter
         if file_ext is not "pdb":
             for lig in Ligand_files:
                 ligand_name, file_ext = lig.rsplit('.', 1)
-#                print("ligand pdbqt")
                 PDBQTtoPDB(ligand_name + '_l', lig)
                 PDBLigands.append(ligand_name + '_l.pdb')
 
- #           print("protein pdbqt:")
             PDBQTtoPDB('protein_l', os.path.basename(pfile))
             protein_name = 'protein_l.pdb'
 
@@ -359,18 +340,6 @@ def Fingerprint_Wrapper(info, Type, PDB_code, SI_cutoff, SPLIF_cutoff, TextInter
         RotationLabel = []
         for rotLab in Ligand_Names_total:
             RotationLabel.append(rotLab.replace('_l', ''))
-
-  #      print("RotationLabels:")
-   #     for rot in RotationLabel:
-    #        print(rot)
-
-     #   print("FPList:")
-      #  for fp in FPList:
-       #     print(fp)
-
-     #   print("ligand_files")
-      #  for lig in Ligand_files:
-       #     print(lig)
 
         RotationLabel = natural_sort(RotationLabel)
         for index in range(len(FPList)):

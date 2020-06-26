@@ -402,10 +402,10 @@ def CreateDirs(Dir_Type, Add_Type):
 def File_write(LigList, Total_Array, Type, TypeInfo, PDB_code, working_dir):
     path = os.path.join(working_dir, Type, TypeInfo)
     os.chdir(path)
-    if TypeInfo is not "":
+    if TypeInfo != "":
         TypeInfo = TypeInfo + '_'
 
-    if PDB_code is not "":
+    if PDB_code != "":
         PDB_code = PDB_code + '_'
 
     FileName = TypeInfo + PDB_code + Type + '.csv'
