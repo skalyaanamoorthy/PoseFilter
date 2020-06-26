@@ -12,19 +12,22 @@ from pymol import cmd
 import os
 import glob
 
+"""
+
+Followed direction from the Pymol Plugins tutorial the GitHub source code:
+https://pymolwiki.org/index.php/Plugins_Tutorial
+https://github.com/Pymol-Scripts/pymol2-demo-plugin
+
+
+"""
+
 def __init_plugin__(app=None):
-    '''
-    Add an entry to the PyMOL "Plugin" menu
-    '''
     from pymol.plugins import addmenuitemqt
     addmenuitemqt('Pose Filter', run_plugin_gui)
 
 dialog = None
 
 def run_plugin_gui():
-    '''
-    Open our custom dialog
-    '''
     global dialog
 
     if dialog is None:
@@ -44,27 +47,18 @@ def make_dialog():
     # Set the initial values of the cutoff boxes
     form.RMSCutoff.setText("2.0")
     form.FP_SICutoff.setText("0.5")
-   # form.FP_IntCutoff.setText("0.6")
     form.FP_SPLIFCutoff.setText("0.5")
-  #  form.Prox_val.setText("2.5")
 
     def TabInfo():
         index = QTabWidget.currentIndex(form.Mytab)
         if index == 0:
-            print("Tab1")
             pfile = form.file_select.text()
-            print(pfile)
             keyword = form.Ligandkeyword.text()
-            print(keyword)
             InfoArray = [pfile, keyword]
         else:
-            print("Tab2")
             cur_dir = form.dir_select.text()
             complex = form.complexid.text()
             resInput = form.resInput.text()
-            print(cur_dir)
-            print(complex)
-            print(resInput)
             InfoArray = [cur_dir, complex, resInput]
 
         return InfoArray
@@ -86,7 +80,6 @@ def make_dialog():
 
     def fingerprint():
         cmd.reinitialize()
-     #   print('Run fingerprint portion.')
 
         InfoArray = TabInfo()
 
@@ -99,7 +92,6 @@ def make_dialog():
 
         if form.Simple_Interaction.isChecked() or AnyChecked == 0:
             IText.append("SInteraction")
-        print(IText)
 
         TextInteraction = 0
         if form.Prox_check.isChecked():
@@ -118,7 +110,6 @@ def make_dialog():
         if form.Alignalpha.isChecked():
             alpha = 1
 
-        print("Running the oligomer script.")
         OligWrapper(InfoArray, form.PDBCODE.text(), form.RMSCutoff.text(), alpha)
 
     form.Button_browse.clicked.connect(browse_filename)
