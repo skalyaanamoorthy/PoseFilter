@@ -48,7 +48,6 @@ def InteractionCheck(proteinpath, Listoflig):
 
         # Hydrophobic interactions
         p_hydroph, l_hydroph = interactions.hydrophobic_contacts(protein, ligand)
-     #   if p_hydroph not []
         InteractionsFile(p_hydroph, l_hydroph, path, 'hydrophobic')
 
         # h bonds
@@ -81,7 +80,9 @@ def InteractionCheck(proteinpath, Listoflig):
 
 
 def InteractionsFile(protein, ligand, FilePath, Interaction_Name):
-
+    print(protein)
+    print("--------------")
+    print(ligand)
     # If it is not an empty array
     if len(protein) != 0:
         file = open(FilePath, 'a')
@@ -92,8 +93,6 @@ def InteractionsFile(protein, ligand, FilePath, Interaction_Name):
 
         # Put everything into a list; use an object so that it is neater
         for y in range(len(protein)):
-           # print(y)
-           # print(protein[y])
             p_coords = protein[y]['coords']
             l_coords = ligand[y]['coords']
             dst = distance.euclidean(p_coords, l_coords)
@@ -104,7 +103,7 @@ def InteractionsFile(protein, ligand, FilePath, Interaction_Name):
         ListOfDist.sort(key=lambda z: z.Dist, reverse=False)
 
         for residue in ListOfDist:
-            file.write(residue.LigAtomType + ', ' + residue.ProtAtomType + ', ' + residue.ProtResName + ', ' + str(residue.Dist) + '\n')
+            file.write(residue.LigAtomType + ', ' + residue.ProtAtomType + ', ' + residue.ProtResName + ', ' + residue.ProtResNum + ', ' + str(residue.Dist) + '\n')
 
         file.write('\n')
         file.close()
