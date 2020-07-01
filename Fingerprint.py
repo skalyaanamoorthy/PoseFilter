@@ -350,6 +350,8 @@ def Fingerprint_Wrapper(info, Type, PDB_code, SI_cutoff, SPLIF_cutoff, TextInter
         CreateHeatMap("Fingerprint", All_Fingerprint, natural_sort(oldLigands), fprint, "rocket", PDB_code, working_dir)
     # In the case that there were complexes, we want to clean up the files that we made
     for lig in Clean_up:
+     #   print("lig")
+     #   print(lig)
         os.remove(lig)
 
     os.remove(protein_name)
