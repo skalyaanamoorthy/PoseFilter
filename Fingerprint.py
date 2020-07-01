@@ -227,7 +227,8 @@ def ComplextoLigand(ComplexId, ResId):
 
     # for each file
     files = DirSearch(ComplexId)
-    Ligands = []
+    newLigands = []
+
 
     for complex in files:
         cmd.load(complex)
@@ -236,7 +237,7 @@ def ComplextoLigand(ComplexId, ResId):
         l_name, file_ext = complex.rsplit('.', 1)
 
         cmd.save(l_name + '_l.pdb', l_name + ' and resn ' + ResId)
-        Ligands.append(l_name + '_l.pdb')
+        newLigands.append(l_name + '_l.pdb')
 
     # Protein file
     protein = 'protein_l.pdb'
@@ -244,7 +245,8 @@ def ComplextoLigand(ComplexId, ResId):
     ligand_name, file_ext = files[0].rsplit('.', 1)
     cmd.save('protein_l.pdb', ligand_name + ' and not resn ' + ResId)
 
-    return Ligands, protein
+    # returns the oldligands(complex), new ligands, and protein
+    return files, newLigands, protein
 
 
 ######################################################################################################################
@@ -265,7 +267,8 @@ def Fingerprint_Wrapper(info, Type, PDB_code, SI_cutoff, SPLIF_cutoff, TextInter
 
         # Ligand files from the DirSearch, either .pdb or other
         Ligand_files = DirSearch(LigandID)
-        Ligand_Names_total = list(Ligand_files)
+        oldLigands = natural_sort(list(Ligand_files))
+       # Ligand_Names_total = list(Ligand_files)
       #  for x in Ligand_files:
        #     print("FP")
         #    print("Ligand files:" + x)
@@ -305,8 +308,8 @@ def Fingerprint_Wrapper(info, Type, PDB_code, SI_cutoff, SPLIF_cutoff, TextInter
         os.chdir(pdir)
 
         # Complex to ligand, by using the residue identifier
-        Ligand_files, protein_name = ComplextoLigand(ComplexID, LigResID)
-        Ligand_Names_total = list(Ligand_files)
+        oldLigands, Ligand_files, protein_name = ComplextoLigand(ComplexID, LigResID)
+       # Ligand_Names_total = list(Ligand_files)
 
         # Add to clean up list
         Clean_up = Ligand_files
@@ -337,13 +340,13 @@ def Fingerprint_Wrapper(info, Type, PDB_code, SI_cutoff, SPLIF_cutoff, TextInter
             el_name, ext = el.rsplit('.', 1)
             FPList.append(el_name)
 
-        RotationLabel = []
-        for rotLab in Ligand_Names_total:
-            RotationLabel.append(rotLab.replace('_l', ''))
+      #  RotationLabel = []
+      #  for rotLab in Ligand_Names_total:
+      #      RotationLabel.append(rotLab.replace('_l', ''))
 
-        RotationLabel = natural_sort(RotationLabel)
+        oldLigands = natural_sort(oldLigands)
         for index in range(len(FPList)):
-            item = RMSInfo(RotationLabel[index], "", FPList[index])
+            item = RMSInfo(oldLigands[index], "", FPList[index])
             PoseObjects.append(item)
 
         GeneralSimCheck(PoseObjects, All_Fingerprint, working_dir, "Fingerprint", float(cutoff), fprint)
@@ -356,8 +359,8 @@ def Fingerprint_Wrapper(info, Type, PDB_code, SI_cutoff, SPLIF_cutoff, TextInter
             os.chdir(working_dir)
             InteractionCheck(protein_name, PoseObjects)
 
-        File_write(natural_sort(RotationLabel), All_Fingerprint, "Fingerprint", fprint, PDB_code, working_dir)
-        CreateHeatMap("Fingerprint", All_Fingerprint, natural_sort(RotationLabel), fprint, "rocket", PDB_code, working_dir)
+        File_write(natural_sort(oldLigands), All_Fingerprint, "Fingerprint", fprint, PDB_code, working_dir)
+        CreateHeatMap("Fingerprint", All_Fingerprint, natural_sort(oldLigands), fprint, "rocket", PDB_code, working_dir)
     # In the case that there were complexes, we want to clean up the files that we made
   #  os.chdir(working_dir)
     for lig in Clean_up:

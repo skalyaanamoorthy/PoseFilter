@@ -100,14 +100,22 @@ def InteractionsFile(protein, ligand, FilePath, Interaction_Name):
         # Make a list of the items that are already included
         # Resn, Resi list
         ResnResi = []
+        r0 = ListOfDist[0]
+        file.write(r0.LigAtomType + ', ' + r0.ProtAtomType + ', ' + r0.ProtResName + ', ' + r0.ProtResNum + ', ' + str(r0.Dist) + '\n')
+        ResnResi.append([r0.ProtResName, r0.ProtResNum])
+       # print("first printed")
+       # print(r0.ProtResName + " " + r0.ProtResNum)
+
         for residue in ListOfDist:
-            ResnResi_item = [residue.ProtResName, residue.ProtResNum]
+            InResnResiList = 0
             for x in ResnResi:
-                if ((residue.ProtResName == x[0]) and (str(residue.ProtResNum) == x[1])):
-                    pass
-                else:
-                    file.write(residue.LigAtomType + ', ' + residue.ProtAtomType + ', ' + residue.ProtResName + ', ' + residue.ProtResNum + ', ' + str(residue.Dist) + '\n')
-                ResnResi.append(ResnResi_item)
+                if ((residue.ProtResName == x[0]) and (residue.ProtResNum == x[1])):
+                    InResnResiList = 1
+
+            if InResnResiList == 0:
+                file.write(residue.LigAtomType + ', ' + residue.ProtAtomType + ', ' + residue.ProtResName + ', ' + residue.ProtResNum + ', ' + str(residue.Dist) + '\n')
+                ResnResi.append([residue.ProtResName, residue.ProtResNum])
+
         file.write('\n')
         file.close()
 
