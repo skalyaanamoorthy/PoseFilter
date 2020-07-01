@@ -268,10 +268,6 @@ def Fingerprint_Wrapper(info, Type, PDB_code, SI_cutoff, SPLIF_cutoff, TextInter
         # Ligand files from the DirSearch, either .pdb or other
         Ligand_files = DirSearch(LigandID)
         oldLigands = natural_sort(list(Ligand_files))
-       # Ligand_Names_total = list(Ligand_files)
-      #  for x in Ligand_files:
-       #     print("FP")
-        #    print("Ligand files:" + x)
 
         # Ligand name, file extension
         ligand_name, file_ext = Ligand_files[0].rsplit('.', 1)
@@ -292,8 +288,6 @@ def Fingerprint_Wrapper(info, Type, PDB_code, SI_cutoff, SPLIF_cutoff, TextInter
             Ligand_files = PDBLigands
 
         # need to check if the ligand files are .pdb
-
-        #Ligand_files.sort()
         lf = natural_sort(Ligand_files)
         Ligand_files = lf
 
@@ -309,7 +303,6 @@ def Fingerprint_Wrapper(info, Type, PDB_code, SI_cutoff, SPLIF_cutoff, TextInter
 
         # Complex to ligand, by using the residue identifier
         oldLigands, Ligand_files, protein_name = ComplextoLigand(ComplexID, LigResID)
-       # Ligand_Names_total = list(Ligand_files)
 
         # Add to clean up list
         Clean_up = Ligand_files
@@ -322,8 +315,6 @@ def Fingerprint_Wrapper(info, Type, PDB_code, SI_cutoff, SPLIF_cutoff, TextInter
     for fprint in Type:
         # Define these variables
         Listoflig, All_Fingerprint = Fingerprint(protein_name, Ligand_files, fprint)
-
-      #  SI_cutoff,SPLIF_cutoff
 
         if fprint is "SPLIF":
             cutoff = SPLIF_cutoff
@@ -339,10 +330,6 @@ def Fingerprint_Wrapper(info, Type, PDB_code, SI_cutoff, SPLIF_cutoff, TextInter
         for el in Listoflig:
             el_name, ext = el.rsplit('.', 1)
             FPList.append(el_name)
-
-      #  RotationLabel = []
-      #  for rotLab in Ligand_Names_total:
-      #      RotationLabel.append(rotLab.replace('_l', ''))
 
         oldLigands = natural_sort(oldLigands)
         for index in range(len(FPList)):
@@ -362,7 +349,6 @@ def Fingerprint_Wrapper(info, Type, PDB_code, SI_cutoff, SPLIF_cutoff, TextInter
         File_write(natural_sort(oldLigands), All_Fingerprint, "Fingerprint", fprint, PDB_code, working_dir)
         CreateHeatMap("Fingerprint", All_Fingerprint, natural_sort(oldLigands), fprint, "rocket", PDB_code, working_dir)
     # In the case that there were complexes, we want to clean up the files that we made
-  #  os.chdir(working_dir)
     for lig in Clean_up:
         os.remove(lig)
 
