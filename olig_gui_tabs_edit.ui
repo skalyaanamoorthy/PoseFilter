@@ -224,7 +224,7 @@
    <item row="11" column="0" colspan="3">
     <widget class="QCheckBox" name="Prox_check">
      <property name="text">
-      <string>2D protein-ligand interaction output</string>
+      <string>Protein-ligand interaction output</string>
      </property>
     </widget>
    </item>

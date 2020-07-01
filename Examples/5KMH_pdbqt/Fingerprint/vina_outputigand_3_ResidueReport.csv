@@ -1,20 +1,7 @@
 Ligand interactions with protein residues
 Ligand hydrophobic interactions with protein residues
 Ligand Atom Type, Residue Atom Type, Resn, Resi, Ligand to Protein Distance
-C.3, C.3, LEU, 1176, 3.5812902450561523
-C.3, C.3, LEU, 1176, 3.6108334064483643
-C.3, C.3, LEU, 1176, 3.6895534992218018
-C.3, C.3, LEU, 1176, 3.7332396507263184
-C.3, C.3, LEU, 1176, 3.740922451019287
-C.3, C.3, LEU, 1176, 3.743054151535034
-C.3, C.3, LEU, 1176, 3.755251169204712
-C.3, C.3, LEU, 1176, 3.8027374744415283
-C.3, C.3, LEU, 1176, 3.8134074211120605
-C.3, C.3, LEU, 1176, 3.9502878189086914
-C.3, C.3, LEU, 1176, 3.9859066009521484
 
 Ligand hydrogen bond interactions with protein residues
 Ligand Atom Type, Residue Atom Type, Resn, Resi, Ligand to Protein Distance
-N.3, O.2, LEU, 1176, 3.322965621948242
-N.3, O.2, THR, 1175, 3.336324453353882
 

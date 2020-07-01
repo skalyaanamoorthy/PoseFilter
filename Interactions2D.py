@@ -97,9 +97,17 @@ def InteractionsFile(protein, ligand, FilePath, Interaction_Name):
         # Sort the list according to the distance
         ListOfDist.sort(key=lambda z: z.Dist, reverse=False)
 
+        # Make a list of the items that are already included
+        # Resn, Resi list
+        ResnResi = []
         for residue in ListOfDist:
-            file.write(residue.LigAtomType + ', ' + residue.ProtAtomType + ', ' + residue.ProtResName + ', ' + residue.ProtResNum + ', ' + str(residue.Dist) + '\n')
-
+            ResnResi_item = [residue.ProtResName, residue.ProtResNum]
+            for x in ResnResi:
+                if ((residue.ProtResName == x[0]) and (str(residue.ProtResNum) == x[1])):
+                    pass
+                else:
+                    file.write(residue.LigAtomType + ', ' + residue.ProtAtomType + ', ' + residue.ProtResName + ', ' + residue.ProtResNum + ', ' + str(residue.Dist) + '\n')
+                ResnResi.append(ResnResi_item)
         file.write('\n')
         file.close()
 
