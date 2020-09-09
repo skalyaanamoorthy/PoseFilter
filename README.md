@@ -1,8 +1,8 @@
-#PoseFilter User Guide 
+# PoseFilter User Guide 
 
 Summary: PoseFilter is a PyMOL plugin and assists in the analysis of docked ligands through identification of unique oligomeric poses by utilizing RMSD and interaction fingerprint analysis methods.  
 
-##Installing the PoseFilter Plugin 
+## Installing the PoseFilter Plugin 
 
    1. First, open-source PyMOL must be installed. Windows: https://pymolwiki.org/index.php/Windows_Install#Open-Source_PyMOL Linux: https://pymolwiki.org/index.php/Linux_Install  Mac: https://pymolwiki.org/index.php/MAC_Install 
 
@@ -20,15 +20,15 @@ Summary: PoseFilter is a PyMOL plugin and assists in the analysis of docked liga
 
    The PoseFilter files can be obtained from this repository. Download and extract the files. Choose the installation file of “_init_.py” from the PoseFilter folder, and press “install”. 
 
-##PoseFilter Use 
+## PoseFilter Use 
 
-###GUI Input (RMS/ Interaction Fingerprint) 
+### GUI Input (RMS/ Interaction Fingerprint) 
 
 In the PyMOL window, the PoseFilter plugin can be opened from the ‘Plugins’ tab at the top of the page.
 There are currently two types of input options are available and are given as two separate tabs in the PoseFilter GUI panel.
 Please use one of these tab options at a time to choose your input files.
 
-####Tab 1 Description
+#### Tab 1 Description
 The first tab (File input - type 1) gives the option to process a
 folder that contain protein and ligand poses are separate files.
 1. Ensure that the only the protein structure and ligand pose files are available in .pdb format in this directory. 
@@ -38,7 +38,7 @@ folder that contain protein and ligand poses are separate files.
 
 Note: This option is useful if you have performed rigid receptor docking.  
 
-####Tab 2 Description 
+#### Tab 2 Description 
 The second tab (File input - type 2) allows the input of protein + ligand complex files.
 
 1. A directory containing only complex files should be selected by the user. 
@@ -46,16 +46,16 @@ The second tab (File input - type 2) allows the input of protein + ligand comple
 3. The ligand residue identifier refers to the three-letter code for the ligand residue name as available in the complex file. Eg., “LIG” or “UNK” 
 4.Users can provide a suffix name for labelling purposes. This could be the protein PDB ID, for example. This is optional and the box can be left blank. 
 
-##Parameters 
+## Parameters 
 
-###RMS Analysis 
+### RMS Analysis 
 
 1. The RMS similarity cutoff (> 0) is the value used for sorting the poses as ‘Similar’ and ‘Unique’. The default auto-filled value is 2.0 Å, and this value can be changed by the user.  
 2. The “align only α carbon” box can be checked to just align this atom for every rotation. By default, the protein backbone atoms are used for fitting the receptor for every rotation. This option is recommended when flexible/multiple receptor docking was used. 
 3. The “Calculate pose similarity with RMS” button will run the RMSD-based calculations. The outputs, RMS.csv file and RMS.png (the heatmap file) will be placed in a sub-folder named ‘RMS’. Pose files are sorted and moved to ‘Unique’ and ‘Similar’ folders based on the user defined cut-off values. There is also a ‘Similar.csv’ file that is generated in the ‘Similar’ folder, which shows the similar poses’ relationship to each other. 
 4. Depending on the number of folders available, the RMS analysis will take a minute or so, but more time with increasing poses and a larger n-mer. The RMS analysis is finished once “RMS analysis complete” is displayed in the PyMOL command window. 
 
-###Interaction Fingerprint Analysis 
+### Interaction Fingerprint Analysis 
 
 1. The Fingerprint similarity cutoff (0-1) is the value used for sorting the files as 'Similar' and 'Unique'. The default auto-filled value is 0.5, but this value can be changed by the user.  
 2. Checkboxes are available to select the type of interaction fingerprints analysis, 'Simple Interaction' and 'SPLIF'. Both or one can be selected from these options. If none are selected, the ‘Simple Interaction’ fingerprint will be generated. 
@@ -64,9 +64,9 @@ The second tab (File input - type 2) allows the input of protein + ligand comple
 5. 'Fingerprint.csv' and 'Fingerprint.png' files are generated. Pose files are sorted and moved to 'Unique' and 'Similar' folders based on the user defined cut-off value.  As mentioned before, ‘Similar.csv’ file will be generated in the ‘Similar’ folder, which shows the similar poses’ relationship to each other. 
 6. Once the button has been pressed the calculation will take a few minutes to complete. The "Fingerprint analysis complete” will be displayed in the PyMOL command window once this process has finished. 
 
-##Command Line Input 
+## Command Line Input 
 
-###RMS 
+### RMS 
 After following the installation instructions, PoseFilter can be used through the command line as well. 
 1. Type the following into the PyMOL command line:
 
@@ -84,7 +84,7 @@ After following the installation instructions, PoseFilter can be used through th
 
     `OligWrapper(['protein.pdbqt', 'complex keyword', 'residue ID'],'Output suffix',2.0,0)`
 
-###Interaction Fingerprint  
+### Interaction Fingerprint  
 1. The following must be typed into the pyMOL command line after the PoseFilter installation has been completed:
 `from pmg_tk.startup.PoseFilter import Fingerprint_Wrapper`
 2. The following command can be used to run the interaction fingerprint analysis. The arguments are the protein directory, ligand keyword, then either one or both ‘SPLIF’ and ‘SInteraction’ in the array, the output suffix, then the SPLIF and Simple interaction cutoff values. The last value is a Boolean value that contains a 1 (to include the 2D interaction output), and a 0 otherwise.  
