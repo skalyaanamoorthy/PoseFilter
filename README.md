@@ -2,9 +2,52 @@
 
 Summary: PoseFilter is a PyMOL plugin and assists in the analysis of docked ligands through identification of unique oligomeric poses by utilizing RMSD and interaction fingerprint analysis methods.  
 
+## Installing Open-Source PyMOL
+### Windows Installation
+Chocolatey can be installed, using the installation instructions on the website. This is a package manager and will help
+with the installation and next steps.
+https://chocolatey.org/install 
+
+1. Anaconda 3, version 5.2 can be installed in the command prompt (Administrator) using chocolatey:
+`choco install anaconda3 --version 5.2 `
+2. To use conda commands in the windows command prompt, pathways to Anaconda must be added to the path variable. Search
+Windows for "edit the system environment variables," under "system properties" one can choose "Environment Variables"
+select "Path" then "Edit..." and add the following paths.
+Add the Anaconda3 folder, and Anaconda3\Scripts to the path variable, which should look similar to:
+`C:\tools\Anaconda3\Scripts`
+`C:\tools\Anaconda3`
+3. Close and then open the command prompt again, selecting to "run as administrator." Typing "conda" into the command line
+will give conformation that anaconda3 was installed correctly and the paths were added. A menu with commands should appear.
+4. Create a new anaconda environment named pymol with necessary packages:
+`conda env create --file pymol.yml`
+5. Activate the anaconda environment.
+`activate pymol`
+6. Download the appropriate wheel files from the following site (link). The following shows the file names for 64 bit
+with Python 3.7. Those who use a 32 bit system would select wheel files for pymol_launcher and pymol containing 37.
+6. Download the appropriate wheel files from the following site (link). For a Windows 64 bit system with Python 3.7.
+The following wheel files should be downloaded and moved into the
+`C:/.../Anaconda3/envs/pymol` folder.
+7. Type the following into the command line of the pymol directory (modify the filename according the the wheel files used):
+`pip install --no-index --find-links="%CD%" pymol_launcher-2.1-cp37-cp37m-win_amd64.whl`
+8. Type the following into the command line:
+`pip install --upgrade --no-deps pymol-2.5.0a0-cp37-cp37m-win_amd64.whl `
+9. Open source PyMOL can now be opened through the activated anaconda directory. Type pymol into the command line to 
+open the open source program.
+10. If the command line is closed, `activate pymol` needs to be typed in again before `pymol` to open the program.
+After doing this, the paths can be added to the environment variables, as Anaconda3 was. Type `path` into the command
+prompt, and then copy and paste the links into the path environment variable. Once this is done, `pymol` can be used 
+in the command prompt to open the program.
+
+
+
+
+
 ## Installing the PoseFilter Plugin 
 
-   1. First, open-source PyMOL must be installed. Windows: https://pymolwiki.org/index.php/Windows_Install#Open-Source_PyMOL Linux: https://pymolwiki.org/index.php/Linux_Install  Mac: https://pymolwiki.org/index.php/MAC_Install 
+   1. First, open-source PyMOL must be installed.
+   Windows: https://pymolwiki.org/index.php/Windows_Install#Open-Source_PyMOL
+   Linux: https://pymolwiki.org/index.php/Linux_Install 
+   Mac: https://pymolwiki.org/index.php/MAC_Install 
 
    2. Next, Python modules ‘RDKit’ , ‘Open Drug Discovery Toolkit’, ‘Matplotlib’ (https://matplotlib.org/) and ‘Seaborn’ (https://github.com/mwaskom/seaborn) are needed. These can be installed in the command line through use of anaconda3. Ensure that anaconda3 has the most recent version of these modules. 
 
