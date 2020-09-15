@@ -8,8 +8,8 @@ import glob
 import sys
 import numpy as np
 from scipy.spatial import distance
-from .oddt_toolkit import readfile
-from .oddt_interactions import hydrophobic_contacts, hbonds, halogenbonds, salt_bridges, pi_cation, pi_stacking, pi_metal
+from .Oddt_toolkit import readfile
+from .Oddt_interactions import hydrophobic_contacts, hbonds, halogenbonds, salt_bridges, pi_cation, pi_stacking, pi_metal
 
 #  file.write(ligand[x]['atomtype'] + ', ' + protein[x]['atomtype'] + ', ' + protein[x]['resname'] + ', ' + str(protein[x]['resnum']) + ', ' + str(dst) + '\n')
 class ProtLigInfo:

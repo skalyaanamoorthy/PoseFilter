@@ -43,7 +43,7 @@ from six.moves import zip_longest
 import numpy as np
 from scipy.sparse import csr_matrix, isspmatrix_csr
 
-from oddt_interactions import *
+from Oddt_interactions import *
 
 
 __all__ = ['InteractionFingerprint',

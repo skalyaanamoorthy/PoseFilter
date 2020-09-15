@@ -4,13 +4,13 @@ from pymol import cmd
 #import fpkit.similarity as fps
 #import fpkit.filters as filters
 #import pandas as pd
-from .oddt_fingerprint import SimpleInteractionFingerprint, SPLIF, similarity_SPLIF, InteractionFingerprint, dice
+from .Oddt_fingerprint import SimpleInteractionFingerprint, SPLIF, similarity_SPLIF, InteractionFingerprint, dice
 #import os
 import numpy as np
 import glob
 import sys
 import numpy as np
-from .oddt_toolkit import readfile
+from .Oddt_toolkit import readfile
 from .General import GenerateRotList
 from .General import CreateHeatMap
 from .General import FilterFiles, GeneralSimCheck, File_write, DirSearch, natural_sort
