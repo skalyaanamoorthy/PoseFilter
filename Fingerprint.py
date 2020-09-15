@@ -4,13 +4,13 @@ from pymol import cmd
 #import fpkit.similarity as fps
 #import fpkit.filters as filters
 #import pandas as pd
-import oddt
-import oddt.fingerprints as fp
+from .oddt_fingerprint import SimpleInteractionFingerprint, SPLIF, similarity_SPLIF, InteractionFingerprint, dice
 #import os
 import numpy as np
 import glob
 import sys
 import numpy as np
+from .oddt_toolkit import readfile
 from .General import GenerateRotList
 from .General import CreateHeatMap
 from .General import FilterFiles, GeneralSimCheck, File_write, DirSearch, natural_sort
@@ -89,22 +89,29 @@ def SPLIF_Fingerprint(ref_input, Listoflig, proteinpath):
     F_Scores = [0]*len(Listoflig)
 
     # Read in protein
-    protein = next(oddt.toolkit.readfile('pdb', proteinpath))
+  #  print("protein:")
+  #  working_dir = os.path.dirname(proteinpath)
+  #  ppath = os.path.join(working_dir, proteinpath)
+  #  print(ppath)
+
+    protein = next(readfile('pdb', proteinpath))
     protein.protein = True
 
     # Read in and define the reference ligand
-    ref_ligand = next(oddt.toolkit.readfile('pdb', ref_input))
-    ref = fp.SPLIF(ref_ligand, protein)
+    print("ref input:")
+    print(ref_input)
+    ref_ligand = next(readfile('pdb', ref_input))
+    ref = SPLIF(ref_ligand, protein)
 
     # Loop through each ligand in the list
     count = 0
    # print(Listoflig)
     for ligandpath in Listoflig:
-        ligand = next(oddt.toolkit.readfile('pdb', ligandpath))
-        fp_query = fp.SPLIF(ligand, protein)
+        ligand = next(readfile('pdb', ligandpath))
+        fp_query = SPLIF(ligand, protein)
 
         # similarity score for current query
-        F_Scores[count] = fp.similarity_SPLIF(ref, fp_query, rmsd_cutoff=3.)
+        F_Scores[count] = similarity_SPLIF(ref, fp_query, rmsd_cutoff=3.)
         count = count + 1
     return F_Scores
 
@@ -118,21 +125,23 @@ def Interaction_Fingerprint(ref_input, Listoflig, proteinpath):
     F_Scores = [0]*len(Listoflig)
 
     # Read in protein
-    protein = next(oddt.toolkit.readfile('pdb', proteinpath))
+    print("protein path: ")
+    print(proteinpath)
+    protein = next(readfile('pdb', proteinpath))
     protein.protein = True
 
     # Read in and define the reference ligand
-    ref_ligand = next(oddt.toolkit.readfile('pdb', ref_input))
-    ref = fp.InteractionFingerprint(ref_ligand, protein)
+    ref_ligand = next(readfile('pdb', ref_input))
+    ref = InteractionFingerprint(ref_ligand, protein)
 
     # Loop through each ligand in the list
     count = 0
     for ligandpath in Listoflig:
-        ligand = next(oddt.toolkit.readfile('pdb', ligandpath))
-        fp_query = fp.InteractionFingerprint(ligand, protein)
+        ligand = next(readfile('pdb', ligandpath))
+        fp_query = InteractionFingerprint(ligand, protein)
 
         # similarity score for current query
-        cur_score = fp.dice(ref, fp_query)
+        cur_score = dice(ref, fp_query)
         F_Scores[count] = cur_score
         count = count + 1
     return F_Scores
@@ -191,21 +200,21 @@ def Simple_Interaction_Fingerprint(ref_input, Listoflig, proteinpath):
     F_Scores = [0]*len(Listoflig)
 
     # Read in protein
-    protein = next(oddt.toolkit.readfile('pdb', proteinpath))
+    protein = next(readfile('pdb', proteinpath))
     protein.protein = True
 
     # Read in and define the reference ligand
-    ref_ligand = next(oddt.toolkit.readfile('pdb', ref_input))
-    ref = fp.SimpleInteractionFingerprint(ref_ligand, protein)
+    ref_ligand = next(readfile('pdb', ref_input))
+    ref = SimpleInteractionFingerprint(ref_ligand, protein)
 
     # Loop through each ligand in the list
     count = 0
     for ligandpath in Listoflig:
-        ligand = next(oddt.toolkit.readfile('pdb', ligandpath))
-        fp_query = fp.SimpleInteractionFingerprint(ligand, protein)
+        ligand = next(readfile('pdb', ligandpath))
+        fp_query = SimpleInteractionFingerprint(ligand, protein)
 
         # similarity score for current query
-        cur_score = fp.dice(ref, fp_query)
+        cur_score = dice(ref, fp_query)
         F_Scores[count] = cur_score
         count = count + 1
     # Returns a list of the fingerprint scores
@@ -347,7 +356,7 @@ def Fingerprint_Wrapper(info, Type, PDB_code, SI_cutoff, SPLIF_cutoff, TextInter
             InteractionCheck(protein_name, PoseObjects)
 
         File_write(natural_sort(oldLigands), All_Fingerprint, "Fingerprint", fprint, PDB_code, working_dir)
-        CreateHeatMap("Fingerprint", All_Fingerprint, natural_sort(oldLigands), fprint, "rocket", PDB_code, working_dir)
+        CreateHeatMap("Fingerprint", All_Fingerprint, natural_sort(oldLigands), fprint, "twilight", PDB_code, working_dir)
     # In the case that there were complexes, we want to clean up the files that we made
     for lig in Clean_up:
      #   print("lig")

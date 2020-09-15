@@ -1,6 +1,7 @@
 # PoseFilter User Guide 
 
-Summary: PoseFilter is a PyMOL plugin and assists in the analysis of docked ligands through identification of unique oligomeric poses by utilizing RMSD and interaction fingerprint analysis methods.  
+Summary: PoseFilter is a PyMOL plugin and assists in the analysis of docked ligands through identification of unique
+oligomeric poses by utilizing RMSD and interaction fingerprint analysis methods.  
 
 ## Installing Open-Source PyMOL
 ### Windows Installation
@@ -22,10 +23,9 @@ will give conformation that anaconda3 was installed correctly and the paths were
 `conda env create --file pymol.yml`
 5. Activate the anaconda environment.
 `activate pymol`
-6. Download the appropriate wheel files from the following site (link). The following shows the file names for 64 bit
-with Python 3.7. Those who use a 32 bit system would select wheel files for pymol_launcher and pymol containing 37.
-6. Download the appropriate wheel files from the following site (link). For a Windows 64 bit system with Python 3.7.
-The following wheel files should be downloaded and moved into the
+6. Download the appropriate wheel files from the following site (https://www.lfd.uci.edu/~gohlke/pythonlibs/#pymol-open-source). The following shows the file names for 64 bit
+with Python 3.7. Those who use a 32 bit system would select wheel files for the 32 bit pymol_launcher and pymol containing 37.
+Move these files into your
 `C:/.../Anaconda3/envs/pymol` folder.
 7. Type the following into the command line of the pymol directory (modify the filename according the the wheel files used):
 `pip install --no-index --find-links="%CD%" pymol_launcher-2.1-cp37-cp37m-win_amd64.whl`
@@ -44,24 +44,10 @@ in the command prompt to open the program.
 
 ## Installing the PoseFilter Plugin 
 
-   1. First, open-source PyMOL must be installed.
-   Windows: https://pymolwiki.org/index.php/Windows_Install#Open-Source_PyMOL
-   Linux: https://pymolwiki.org/index.php/Linux_Install 
-   Mac: https://pymolwiki.org/index.php/MAC_Install 
-
-   2. Next, Python modules ‘RDKit’ , ‘Open Drug Discovery Toolkit’, ‘Matplotlib’ (https://matplotlib.org/) and ‘Seaborn’ (https://github.com/mwaskom/seaborn) are needed. These can be installed in the command line through use of anaconda3. Ensure that anaconda3 has the most recent version of these modules. 
-
-    conda install -c rdkit rdkit  
-
-    conda install -c oddt oddt  
-
-    conda install -c anaconda matplotlib 
-
-    conda install -c anaconda seaborn 
-
-   If not, pip (https://pip.pypa.io/en/stable/reference/pip_install/) can be installed and used to retrieve the most recent version of these modules from GitHub. 
-
-   The PoseFilter files can be obtained from this repository. Download and extract the files. Choose the installation file of “_init_.py” from the PoseFilter folder, and press “install”. 
+   1. Ensure that open-source PyMOL is installed in the conda environment (as outlined above). Appropriate toolkits are
+   outlined in the yml file, for reference. 
+   2. The PoseFilter files can be obtained from this repository. Download and extract the files. Choose the installation
+   file of “_init_.py” from the PoseFilter folder, and press “install”. 
 
 ## PoseFilter Use 
 

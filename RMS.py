@@ -73,7 +73,7 @@ def Olig_MainLoop(energy_files,OriginalLigands, PDB_code, PDB_len, cutoff, UNK_v
 
     File_write(RotationLabel, All_RMS, "RMS", "", PDB_code, working_dir)
     # "YlGnBu"  "Greens_r"
-    CreateHeatMap("", All_RMS, RotationLabel, "RMS", "rocket_r", PDB_code, working_dir)
+    CreateHeatMap("", All_RMS, RotationLabel, "RMS", "ocean_r", PDB_code, working_dir)
 
     # Remove the final rotation files at the end (others were previously removed)
     for item in RMSItemList:
