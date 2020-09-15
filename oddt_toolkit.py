@@ -80,11 +80,6 @@ from rdkit.Chem.AllChem import ComputeGasteigerCharges
 from rdkit.Chem.Pharm2D import Gobbi_Pharm2D, Generate
 from rdkit.Chem import CanonicalRankAtoms
 
-#from oddt.toolkits.common import detect_secondary_structure, canonize_ring_path
-from oddt.toolkits.extras.rdkit import (
-                                        MolToPDBQTBlock,
-                                        MolFromPDBQTBlock)
-
 
 _descDict = dict(Descriptors.descList)
 
