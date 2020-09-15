@@ -43,14 +43,7 @@ from six.moves import zip_longest
 import numpy as np
 from scipy.sparse import csr_matrix, isspmatrix_csr
 
-import oddt
-from oddt.utils import is_openbabel_molecule
-from oddt.interactions import (pi_stacking,
-                               hbond_acceptor_donor,
-                               salt_bridge_plus_minus,
-                               hydrophobic_contacts,
-                               acceptor_metal,
-                               close_contacts)
+from oddt_interactions import *
 
 
 __all__ = ['InteractionFingerprint',
@@ -401,35 +394,19 @@ def get_atom_environments(mol, root_atom_idx, depth):
         List of atoms at each respective environment depth
     """
 
-    if is_openbabel_molecule(mol):
-        envs = OrderedDict([(i, []) for i in range(depth + 1)])
-        last_depth = 0
-        for atom, current_depth in oddt.toolkits.ob.ob.OBMolAtomBFSIter(mol.OBMol,
-                                                                        root_atom_idx + 1):
-            # FIX for disconnected fragments in OB
-            if ((current_depth > depth + 1) or
-                    (last_depth > current_depth) or
-                    (last_depth == 1 and current_depth == 1)):
-                break
-            last_depth = current_depth
-            if atom.GetAtomicNum() == 1:
-                continue
-            envs[current_depth - 1].append(atom.GetIdx() - 1)
-        envs = list(envs.values())
-    else:
-        envs = [[root_atom_idx]]
-        visited = [root_atom_idx]
-        for r in range(1, depth + 1):
-            current_depth_atoms = []
-            for atom_idx in envs[r - 1]:
-                for neighbor in mol.Mol.GetAtomWithIdx(atom_idx).GetNeighbors():
-                    if neighbor.GetAtomicNum() == 1:
-                        continue
-                    n_idx = neighbor.GetIdx()
-                    if n_idx not in visited and n_idx not in current_depth_atoms:
-                        current_depth_atoms.append(n_idx)
-                        visited.append(n_idx)
-            envs.append(current_depth_atoms)
+    envs = [[root_atom_idx]]
+    visited = [root_atom_idx]
+    for r in range(1, depth + 1):
+        current_depth_atoms = []
+        for atom_idx in envs[r - 1]:
+            for neighbor in mol.Mol.GetAtomWithIdx(atom_idx).GetNeighbors():
+                if neighbor.GetAtomicNum() == 1:
+                    continue
+                n_idx = neighbor.GetIdx()
+                if n_idx not in visited and n_idx not in current_depth_atoms:
+                    current_depth_atoms.append(n_idx)
+                    visited.append(n_idx)
+        envs.append(current_depth_atoms)
     return envs
 
 
