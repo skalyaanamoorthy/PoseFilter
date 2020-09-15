@@ -31,7 +31,6 @@ class RMSInfo:
     self.OrigPoseName = OrigPoseName
     self.RotNum = RotNum
     self.ObjName = ObjName
-
 ######################################################################################################################
 #CreateHeatMap("Fingerprint", All_Fingerprint, Listoflig, fprint, "Greens", PDB_code)
 def CreateHeatMap(variety, mol_data, Ligands, type, map_type, PDB_code, working_dir):

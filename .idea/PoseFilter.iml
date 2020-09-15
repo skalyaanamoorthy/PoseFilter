@@ -2,7 +2,12 @@
 <module type="PYTHON_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
-      <excludeFolder url="file://$MODULE_DIR$/venv" />
+      <sourceFolder url="file://$MODULE_DIR$/.idea" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Examples" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Examples/5KMH_pdbqt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Examples/Dimer_complex" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Examples/Trimer_Example" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$" isTestSource="false" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.6" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
