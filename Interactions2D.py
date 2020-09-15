@@ -1,7 +1,6 @@
 import pymol
 import os
 from pymol import cmd
-import oddt
 from .oddt_interactions import *
 #import os
 import numpy as np
