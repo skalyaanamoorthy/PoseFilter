@@ -20,7 +20,8 @@ Add the Anaconda3 folder, and Anaconda3\Scripts to the path variable, which shou
 3. Close and then open the command prompt again, selecting to "run as administrator." Typing "conda" into the command line
 will give conformation that anaconda3 was installed correctly and the paths were added. A menu with commands should appear.
 4. Retrieve the Windows yml file from the GitHub repository and move it to the `...\Anaconda3\envs` directory. The file
-is used to create a new anaconda environment named pymol with necessary packages:
+is used to create a new anaconda environment named pymol with necessary packages. Open a command prompt in this directory
+(a shortcut is to type `cmd` into the address bar). In this command prompt, type the following:
 `conda env create --file pymol.yml`
 5. Activate the anaconda environment.
 `activate pymol`
