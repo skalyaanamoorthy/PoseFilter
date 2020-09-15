@@ -56,8 +56,10 @@ Ensure to run as root: https://pymolwiki.org/index.php/Linux_Install.
 
    1. Ensure that open-source PyMOL is installed in the conda environment (as outlined above). Appropriate toolkits are
    outlined in the yml file, for reference. 
-   2. The PoseFilter files can be obtained from this repository. Download and extract the files. Choose the installation
-   file of “_init_.py” from the PoseFilter folder, and press “install”. 
+   2. The PoseFilter files can be obtained from this repository. Download and extract the files.
+   3. In PyMOL, click on "Plugin" at the top bar, then "Plugin Manager." Select the tab "Install New Plugin" and then
+     under "Install from local file" select "choose file...". Find the downloaded GitHub folder and select the
+      "\_\_init\_\_.py" file from the PoseFilter folder, then "Open" and press "Okay" twice. 
 
 ## PoseFilter Use 
 
