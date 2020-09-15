@@ -1,13 +1,15 @@
 import pymol
 import os
 from pymol import cmd
-from .oddt_interactions import *
+
 #import os
 import numpy as np
 import glob
 import sys
 import numpy as np
 from scipy.spatial import distance
+from .oddt_toolkit import readfile
+from .oddt_interactions import hydrophobic_contacts, hbonds, halogenbonds, salt_bridges, pi_cation, pi_stacking, pi_metal
 
 #  file.write(ligand[x]['atomtype'] + ', ' + protein[x]['atomtype'] + ', ' + protein[x]['resname'] + ', ' + str(protein[x]['resnum']) + ', ' + str(dst) + '\n')
 class ProtLigInfo:
@@ -25,8 +27,7 @@ def InteractionCheck(proteinpath, Listoflig):
 
     dirname = os.path.dirname(proteinpath)
    # os.chdir(dirname)
-
-    protein = next(oddt.toolkit.readfile('pdb', proteinpath))
+    protein = next(readfile('pdb', proteinpath))
     protein.protein = True
 
     for ligand_object in Listoflig:
@@ -41,7 +42,7 @@ def InteractionCheck(proteinpath, Listoflig):
         file.close()
 
         # Read in and define the reference ligand
-        ligand = next(oddt.toolkit.readfile('pdb', ligandname))
+        ligand = next(readfile('pdb', ligandname))
 
         # Hydrophobic interactions
         p_hydroph, l_hydroph = hydrophobic_contacts(protein, ligand)
