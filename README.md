@@ -19,27 +19,36 @@ Add the Anaconda3 folder, and Anaconda3\Scripts to the path variable, which shou
 `C:\tools\Anaconda3`
 3. Close and then open the command prompt again, selecting to "run as administrator." Typing "conda" into the command line
 will give conformation that anaconda3 was installed correctly and the paths were added. A menu with commands should appear.
-4. Create a new anaconda environment named pymol with necessary packages:
+4. Retrieve the Windows yml file from the GitHub repository and move it to the `...\Anaconda3\envs` directory. The file
+is used to create a new anaconda environment named pymol with necessary packages:
 `conda env create --file pymol.yml`
 5. Activate the anaconda environment.
 `activate pymol`
-6. Download the appropriate wheel files from the following site (https://www.lfd.uci.edu/~gohlke/pythonlibs/#pymol-open-source). The following shows the file names for 64 bit
-with Python 3.7. Those who use a 32 bit system would select wheel files for the 32 bit pymol_launcher and pymol containing 37.
-Move these files into your
-`C:/.../Anaconda3/envs/pymol` folder.
-7. Type the following into the command line of the pymol directory (modify the filename according the the wheel files used):
-`pip install --no-index --find-links="%CD%" pymol_launcher-2.1-cp37-cp37m-win_amd64.whl`
-8. Type the following into the command line:
-`pip install --upgrade --no-deps pymol-2.5.0a0-cp37-cp37m-win_amd64.whl `
-9. Open source PyMOL can now be opened through the activated anaconda directory. Type pymol into the command line to 
+6. Open source PyMOL can now be opened through the activated anaconda directory. Type pymol into the command line to 
 open the open source program.
-10. If the command line is closed, `activate pymol` needs to be typed in again before `pymol` to open the program.
-After doing this, the paths can be added to the environment variables, as Anaconda3 was. Type `path` into the command
+7. If the command line is closed, `activate pymol` needs to be typed in again before `pymol` to open the program.
+After activating the environment, the paths can be added to the environment variables, as Anaconda3 was. Type `path` into the command
 prompt, and then copy and paste the links into the path environment variable. Once this is done, `pymol` can be used 
 in the command prompt to open the program.
 
+### Linux Installation
+1. Ensure that Anaconda3 is installed, if not then install it through the following link: https://docs.anaconda.com/anaconda/install/linux/
+2. Retrieve the Linux yml file from the GitHub repository and move it to the `...\Anaconda3\envs` directory. The file
+is used to create a new anaconda environment named pymol with necessary packages:
+`conda env create --file pymol.yml`
+3. Activate the anaconda environment:
+`source activate pymol`
+4. Launch pymol by typing `pymol` in the terminal. If an error occurs, try to install some additional requirements.
+Ensure to run as root: https://pymolwiki.org/index.php/Linux_Install.
 
 
+### MacOS Installation
+1. Ensure that Anaconda3 is installed, if not then install it through the following link: https://docs.anaconda.com/anaconda/install/mac-os/
+2. Use the following command to create an environment named pymol and to install the proper packages, using anaconda:
+`conda create --name pymol conda-forge::rdkit tpeulen::pymol-open-source conda-forge::pmw matplotlib seaborn scikit-learn `
+3. Activate the anaconda environment:
+`source activate pymol`
+4. Launch pymol by typing `pymol` in the terminal. 
 
 
 ## Installing the PoseFilter Plugin 
