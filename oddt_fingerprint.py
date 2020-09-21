@@ -223,6 +223,53 @@ def SimpleInteractionFingerprint(ligand, protein, strict=True):
 
     return IFP.flatten()
 
+def pi_stacking(mol1, mol2, cutoff=5, tolerance=30):
+    """Returns pairs of rings, which meet pi stacking criteria
+
+    Parameters
+    ----------
+    mol1, mol2 : oddt.toolkit.Molecule object
+        Molecules to compute ring pairs
+
+    cutoff : float, (default=5)
+        Distance cutoff for Pi-stacking pairs
+
+    tolerance : int, (default=30)
+        Range (+/- tolerance) from perfect direction (parallel or
+        perpendicular) in which pi-stackings are considered as strict.
+
+    Returns
+    -------
+    r1, r2 : ring_dict-type numpy array
+        Aligned arrays of rings forming pi-stacking
+
+    strict_parallel : numpy array, dtype=bool
+        Boolean array align with ring pairs, informing whether rings
+        form 'strict' parallel pi-stacking. If false, only distance cutoff is met,
+        therefore the stacking is 'crude'.
+
+    strict_perpendicular : numpy array, dtype=bool
+        Boolean array align with ring pairs, informing whether rings
+        form 'strict' perpendicular pi-stacking (T-shaped, T-face, etc.).
+        If false, only distance cutoff is met, therefore the stacking is 'crude'.
+    """
+    r1, r2 = close_contacts(mol1.ring_dict,
+                            mol2.ring_dict,
+                            cutoff,
+                            x_column='centroid',
+                            y_column='centroid')
+    if len(r1) > 0 and len(r2) > 0:
+        angle1 = angle_2v(r1['vector'], r2['vector'])
+        angle2 = angle(r1['vector'] + r1['centroid'],
+                       r1['centroid'],
+                       r2['centroid'])
+        strict_parallel = (((angle1 > 180 - tolerance) | (angle1 < tolerance)) &
+                           ((angle2 > 180 - tolerance) | (angle2 < tolerance)))
+        strict_perpendicular = (((angle1 > 90 - tolerance) & (angle1 < 90 + tolerance)) &
+                                ((angle2 > 180 - tolerance) | (angle2 < tolerance)))
+        return r1, r2, strict_parallel, strict_perpendicular
+    else:
+        return r1, r2, np.array([], dtype=bool), np.array([], dtype=bool)
 
 def fold(fp, size):
     """Folding array a to given size and cast to most compact dtype"""

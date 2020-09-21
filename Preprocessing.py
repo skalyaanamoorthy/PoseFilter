@@ -2,6 +2,7 @@ import pymol
 from pymol import cmd
 from pymol import stored
 from pymol import selector
+import copy
 import os
 import re
 import fileinput
@@ -37,11 +38,36 @@ def ChainOrder(energy_file):
             pass
     return atomList
 
+
+def CheckIdentical(totalchains):
+    chainresns = []
+    for chain in totalchains:
+        label = 'chain ' + chain
+
+        stored.residues = []
+        cmd.iterate(selector.process(label), 'stored.residues.append(resn)')
+        chainresns.append(copy.deepcopy(stored.residues))
+
+    dupchain = []
+    for x in chainresns:
+        dupchain.append(chainresns.count(x))
+
+    max_index = dupchain.index(max(dupchain))
+    finalchains = []
+    finalchains.append(totalchains[max_index])
+    indexc = 0
+    for x in range(len(chainresns)):
+        if x != max_index and chainresns[x] == chainresns[max_index]:
+            finalchains.append(totalchains[x])
+    print(finalchains)
+    return finalchains
+
+
 ######################################################################################################################
 # Protein file is chosen. Need to get the Res_min and Res_max numbers, chain labels and chain order
 # returns minval, maxval, (List of chainstrings)
 
-def PDB_Info(file):
+def PDB_Info(file, nonidentical):
     # Need to load the file so we can do things with it
     cmd.load(file, 'obj')
     # The file will be a docked protein .pdb
@@ -55,6 +81,14 @@ def PDB_Info(file):
     # For each chain, check the number of res; keep a list of the chains
     stored.residues = []
 
+    ichains = CheckIdentical(chains)
+
+    if nonidentical:
+        chains = ichains
+
+    print("identicalchains")
+    print(ichains)
+
     # Keeps a list of the identical chains
     for chain in chains:
         label = 'chain ' + chain
@@ -62,8 +96,6 @@ def PDB_Info(file):
         # Res_min, res_max
         stored.residues = []
         cmd.iterate(selector.process(label), 'stored.residues.append(resv)')
-      #  print("stored residues")
-      #  print(stored.residues)
         val = float(stored.residues[-1] - stored.residues[0])
         minval = stored.residues[0]
         maxval = stored.residues[-1]
@@ -95,12 +127,9 @@ def PDB_Info(file):
     max = 0
     minval = 0
     maxval = 0
-   # print(len(ListofChains))
+
     chainstrings = []
     for item in ListofChains:
-     #   if Testing:
-      #      print("item 1: " + str(item[1]))
-       #     print("item 0: " + str(item[0]))
 
         if len(item[1]) > max:
             minval = item[0][0]
@@ -112,17 +141,9 @@ def PDB_Info(file):
 
             chainstrings = item[1]
 
-  #  if Testing:
-   #     print("max " + str(max))
-    #    print(str(maxval))
-     #   print(str(minval))
     newchains =[]
     for x in chainstrings:
         newchains.append(x.split()[1])
-
-   # if Testing:
-    #    print(chainstrings)
-     #   print(newchains)
 
     cmd.delete('obj')
     global o_num, minofres, maxofres, ListChains
@@ -133,12 +154,14 @@ def PDB_Info(file):
     return minval, maxval, chains
 
 # Does not redo the operation; saves the past operation
-def PDBInfo_Wrapper(file):
+def PDBInfo_Wrapper(file, nonidentical):
     global ListChains, minofres, maxofres
- #   if minofres > -1:
- #       return minofres, maxofres, ListChains
-    minval, maxval, chains = PDB_Info(file)
+    minval, maxval, chains = PDB_Info(file, nonidentical)
     minofres = minval
     maxofres = maxval
     ListChains = chains
     return minval, maxval, chains
+
+#infoc = (PDB_Info('/home/justine/PycharmProjects/PoseFilter/Examples/Trimer_Example/5EIL.pdb'))
+#print(infoc)
+#CheckIdentical(infoc[2])

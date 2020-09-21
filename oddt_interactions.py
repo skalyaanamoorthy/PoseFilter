@@ -41,6 +41,7 @@ Currently following interacions are implemented:
 """
 
 import numpy as np
+from scipy.spatial.distance import cdist
 
 
 def angle(p1, p2, p3):

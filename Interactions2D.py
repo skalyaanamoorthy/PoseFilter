@@ -8,8 +8,9 @@ import glob
 import sys
 import numpy as np
 from scipy.spatial import distance
+from collections import deque
 from .oddt_toolkit import readfile
-from .oddt_interactions import hydrophobic_contacts, hbonds, halogenbonds, salt_bridges, pi_cation, pi_stacking, pi_metal
+from .oddt_interactions import hydrophobic_contacts, hbonds, halogenbonds, salt_bridges, pi_cation, pi_stacking, pi_metal, acceptor_metal
 
 #  file.write(ligand[x]['atomtype'] + ', ' + protein[x]['atomtype'] + ', ' + protein[x]['resname'] + ', ' + str(protein[x]['resnum']) + ', ' + str(dst) + '\n')
 class ProtLigInfo:
@@ -23,19 +24,19 @@ class ProtLigInfo:
 # Take the two molecules, protein and ligand and use each of those oddt modules
 
 # Protein molecule, and a list of ligands
-def InteractionCheck(proteinpath, Listoflig):
+def InteractionCheck(proteinpath, Listoflig, cur_dir):
 
-    dirname = os.path.dirname(proteinpath)
-   # os.chdir(dirname)
+    os.chdir(os.path.dirname(proteinpath))
+
     protein = next(readfile('pdb', proteinpath))
     protein.protein = True
 
     for ligand_object in Listoflig:
-        ligandname = ligand_object.ObjName + '.pdb'
+        ligandname = ligand_object.PoseNameExt
 
         #Ligand_Name = ligandname.split('.')[0]
-        ResReport = ligand_object.OrigPoseName.split('.')[0] + "_ResidueReport.csv"
-        path = os.path.join(dirname, 'Fingerprint', ResReport)
+        ResReport = ligand_object.PoseName + "_ResidueReport.csv"
+        path = os.path.join(cur_dir, 'Fingerprint', ResReport)
 
         file = open(path, 'w')
         file.write("Ligand interactions with protein residues\n")
@@ -69,8 +70,8 @@ def InteractionCheck(proteinpath, Listoflig):
         InteractionsFile(p_pi_cation, l_pi_cation, path, 'pi cation')
 
         # acceptor_metal bonds
-        p_acceptor_metal, acceptor_metal, strict = acceptor_metal(protein, ligand)
-        InteractionsFile(p_acceptor_metal, acceptor_metal, path, 'acceptor metal')
+        p_acceptor_metal_a, acceptor_metal_a, strict = acceptor_metal(protein, ligand)
+        InteractionsFile(p_acceptor_metal_a, acceptor_metal_a, path, 'acceptor metal')
 
         # pi_metal bonds
         p_pi_metal, l_pi_metal, strict = pi_metal(protein, ligand)
@@ -82,7 +83,7 @@ def InteractionsFile(protein, ligand, FilePath, Interaction_Name):
     if len(protein) != 0:
         file = open(FilePath, 'a')
         file.write("Ligand " + Interaction_Name + " interactions with protein residues\n")
-        file.write('Ligand Atom Type, Residue Atom Type, Resn, Resi, Ligand to Protein Distance\n')
+        file.write('Ligand Atom Type, Residue Atom Type, Resn, Resi, Ligand to Protein Distance (Angstrom)\n')
         ListOfDist = []
 
 
@@ -90,8 +91,10 @@ def InteractionsFile(protein, ligand, FilePath, Interaction_Name):
         for y in range(len(protein)):
             p_coords = protein[y]['coords']
             l_coords = ligand[y]['coords']
+
             dst = distance.euclidean(p_coords, l_coords)
-            item = ProtLigInfo(ligand[y]['atomtype'], protein[y]['atomtype'], protein[y]['resname'], str(protein[y]['resnum']), dst)
+            item = ProtLigInfo(ligand[y]['atomtype'], protein[y]['atomtype'],
+                               protein[y]['resname'], str(protein[y]['resnum']), dst)
             ListOfDist.append(item)
 
         # Sort the list according to the distance
@@ -101,7 +104,8 @@ def InteractionsFile(protein, ligand, FilePath, Interaction_Name):
         # Resn, Resi list
         ResnResi = []
         r0 = ListOfDist[0]
-        file.write(r0.LigAtomType + ', ' + r0.ProtAtomType + ', ' + r0.ProtResName + ', ' + r0.ProtResNum + ', ' + str(r0.Dist) + '\n')
+        file.write(r0.LigAtomType + ', ' + r0.ProtAtomType + ', ' + r0.ProtResName + ', ' + r0.ProtResNum + ', ' +
+                   str(round(r0.Dist, 2)) + '\n')
         ResnResi.append([r0.ProtResName, r0.ProtResNum])
        # print("first printed")
        # print(r0.ProtResName + " " + r0.ProtResNum)
@@ -113,7 +117,8 @@ def InteractionsFile(protein, ligand, FilePath, Interaction_Name):
                     InResnResiList = 1
 
             if InResnResiList == 0:
-                file.write(residue.LigAtomType + ', ' + residue.ProtAtomType + ', ' + residue.ProtResName + ', ' + residue.ProtResNum + ', ' + str(residue.Dist) + '\n')
+                file.write(residue.LigAtomType + ', ' + residue.ProtAtomType + ', ' + residue.ProtResName + ', '
+                           + residue.ProtResNum + ', ' + str(round(residue.Dist, 2)) + '\n')
                 ResnResi.append([residue.ProtResName, residue.ProtResNum])
 
         file.write('\n')

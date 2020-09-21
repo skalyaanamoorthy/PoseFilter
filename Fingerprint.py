@@ -13,7 +13,7 @@ import numpy as np
 from .oddt_toolkit import readfile
 from .General import GenerateRotList
 from .General import CreateHeatMap
-from .General import FilterFiles, GeneralSimCheck, File_write, DirSearch, natural_sort
+from .General import GeneralSimCheck, File_write
 from .Interactions2D import InteractionCheck
 from .General import RMSInfo
 from .Preprocessing import PDBInfo_Wrapper
@@ -55,16 +55,21 @@ def Fingerprint_write(LigList, FArr, Type, PDB_code):
 
 # Type is "SPLIF" or "Simple_Interaction"
 def Fingerprint(proteinName, Listoflig, Type):
+    print("List of Lig: ")
+    print(Listoflig)
+
     # Setting up the array
     ligsize = len(Listoflig)
     All_Fingerprint = np.zeros((ligsize, ligsize))
 
     cur_row = 0
     for ref in Listoflig:
-
+        print("Type: ")
+        print(Type)
         # Divide by the type of fingerprint
         if Type == "SPLIF":
             # Fill up the row with the fingerprint data
+            # FIXME change this from protein.pdb to the proper name
             All_Fingerprint[cur_row, :] = SPLIF_Fingerprint(ref, Listoflig, proteinName)
 
         elif Type == "Interaction":
@@ -87,12 +92,6 @@ def Fingerprint(proteinName, Listoflig, Type):
 # for each, make a fingerprint and output
 def SPLIF_Fingerprint(ref_input, Listoflig, proteinpath):
     F_Scores = [0]*len(Listoflig)
-
-    # Read in protein
-  #  print("protein:")
-  #  working_dir = os.path.dirname(proteinpath)
-  #  ppath = os.path.join(working_dir, proteinpath)
-  #  print(ppath)
 
     protein = next(readfile('pdb', proteinpath))
     protein.protein = True
@@ -124,9 +123,8 @@ def SPLIF_Fingerprint(ref_input, Listoflig, proteinpath):
 def Interaction_Fingerprint(ref_input, Listoflig, proteinpath):
     F_Scores = [0]*len(Listoflig)
 
-    # Read in protein
-    print("protein path: ")
-    print(proteinpath)
+ #   working_dir = os.path.dirname(proteinpath)
+ #   ppath = os.path.join(working_dir, proteinpath)
     protein = next(readfile('pdb', proteinpath))
     protein.protein = True
 
@@ -145,53 +143,6 @@ def Interaction_Fingerprint(ref_input, Listoflig, proteinpath):
         F_Scores[count] = cur_score
         count = count + 1
     return F_Scores
-
-######################################################################################################################
-
-# Takes in a list with some extra files that may not be ligands, only outputs the files that are of the same format
-def ListtoLig(all_files):
-    # Check the files for duplicates
-
-    ListofDup = []
-    for item in all_files:
-        res = ''.join([i for i in item if not i.isdigit()])
-        if ListofDup is None:
-            # add element and num
-
-            # add to list of duplicates
-            ListofDup.append([res, 0, [item]])
-
-        else:
-            # Check each item
-            d_count = 0
-            added_item = 0
-            for y in ListofDup:
-                if y[0] == res:
-                    # Add one to that entry
-                    ListofDup[d_count][1] = y[1] + 1
-                    ListofDup[d_count][2].append(item)
-                    added_item = 1
-                d_count += 1
-
-            if added_item == 0:
-                # add entry to listofdup
-                ListofDup.append([res, 0, [item]])
-
-    max_item = ""
-    max_num = 0
-    max_dup = 0
-    # Go through each of the items from the list and
-    dup_index = 0
-
-    for dup in ListofDup:
-        if dup[1] > max_num:
-            max_item = dup[0]
-            max_num = dup[1]
-            max_dup = dup_index
-        dup_index += 1
-
-    # returns a list of the ligands, including their extension
-    return(ListofDup[max_dup][2])
 
 ######################################################################################################################
 
@@ -222,108 +173,17 @@ def Simple_Interaction_Fingerprint(ref_input, Listoflig, proteinpath):
 
 ######################################################################################################################
 
-def PDBQTtoPDB(savename, mol):
-    cmd.load(mol)
-    save_as = savename + ".pdb"
-    mol_s = mol.rsplit(".", 1)[0]
-    cmd.save(save_as, mol_s)
-    # returns the name of the newly made pdb file
-    return save_as
-
-######################################################################################################################
-
-def ComplextoLigand(ComplexId, ResId):
-
-    # for each file
-    files = DirSearch(ComplexId)
-    newLigands = []
-
-
-    for complex in files:
-        cmd.load(complex)
-
-        # Ligand name, file extension
-        l_name, file_ext = complex.rsplit('.', 1)
-
-        cmd.save(l_name + '_l.pdb', l_name + ' and resn ' + ResId)
-        newLigands.append(l_name + '_l.pdb')
-
-    # Protein file
-    protein = 'protein_l.pdb'
-    # Ligand name, file extension
-    ligand_name, file_ext = files[0].rsplit('.', 1)
-    cmd.save('protein_l.pdb', ligand_name + ' and not resn ' + ResId)
-
-    # returns the oldligands(complex), new ligands, and protein
-    return files, newLigands, protein
-
-
-######################################################################################################################
-
 # Type is a list, goes through each in the list
-def Fingerprint_Wrapper(info, Type, PDB_code, SI_cutoff, SPLIF_cutoff, TextInteraction):
-    working_dir = ""
-    # Tab 1, just the ligands and the protein file
-
-    # Files to clean up
-    Clean_up = []
-
-    if len(info) == 2:
-        pfile, LigandID = info
-        working_dir = os.path.dirname(pfile)
-        os.chdir(working_dir)
-        protein_name = pfile
-
-        # Ligand files from the DirSearch, either .pdb or other
-        Ligand_files = DirSearch(LigandID)
-        oldLigands = natural_sort(list(Ligand_files))
-
-        # Ligand name, file extension
-        ligand_name, file_ext = Ligand_files[0].rsplit('.', 1)
-
-        PDBLigands = []
-        if file_ext is not "pdb":
-            for lig in Ligand_files:
-                ligand_name, file_ext = lig.rsplit('.', 1)
-                PDBQTtoPDB(ligand_name + '_l', lig)
-                PDBLigands.append(ligand_name + '_l.pdb')
-
-            PDBQTtoPDB('protein_l', os.path.basename(pfile))
-            protein_name = 'protein_l.pdb'
-
-            # Add to clean up list
-            Clean_up = PDBLigands
-
-            Ligand_files = PDBLigands
-
-        # need to check if the ligand files are .pdb
-        lf = natural_sort(Ligand_files)
-        Ligand_files = lf
-
-        LigFiles = natural_sort(Ligand_files)
-        Ligand_files = LigFiles
-
-    else:
-        # Tab 2
-
-        pdir, ComplexID, LigResID = info
-        working_dir = pdir
-        os.chdir(pdir)
-
-        # Complex to ligand, by using the residue identifier
-        oldLigands, Ligand_files, protein_name = ComplextoLigand(ComplexID, LigResID)
-
-        # Add to clean up list
-        Clean_up = Ligand_files
-
-        lf = natural_sort(Ligand_files)
-        Ligand_files = lf
-
+def Fingerprint_Wrapper(files, Type, PDB_code, SI_cutoff, SPLIF_cutoff, TextInteraction, cur_dir, pname):
+    ligand_path = os.path.join(cur_dir, "PDBLigand")
+    protein_path = os.path.join(cur_dir, "PDBLigand", pname)
 
     # For each of the values in the list
     for fprint in Type:
+        os.chdir(ligand_path)
+
         # Define these variables
-        Listoflig, All_Fingerprint = Fingerprint(protein_name, Ligand_files, fprint)
+        Listoflig, All_Fingerprint = Fingerprint(pname, files, fprint)
 
         if fprint is "SPLIF":
             cutoff = SPLIF_cutoff
@@ -331,39 +191,29 @@ def Fingerprint_Wrapper(info, Type, PDB_code, SI_cutoff, SPLIF_cutoff, TextInter
         else:
             cutoff = SI_cutoff
 
-        RotNumList = ["0"] * len(Listoflig)
         PoseObjects = []
 
-        # Rotlist (minus the .pdb), Rotstruct
-        FPList = []
-        for el in Listoflig:
-            el_name, ext = el.rsplit('.', 1)
-            FPList.append(el_name)
-
-        oldLigands = natural_sort(oldLigands)
-        for index in range(len(FPList)):
-            item = RMSInfo(oldLigands[index], "", FPList[index])
+        for index in range(len(files)):
+            # PoseName, PoseNameExt, RotNum
+            item = RMSInfo(files[index].split('.')[0], files[index], "")
             PoseObjects.append(item)
 
-        GeneralSimCheck(PoseObjects, All_Fingerprint, working_dir, "Fingerprint", float(cutoff), fprint)
+        os.chdir(cur_dir)
+        print("current dir")
+        print(cur_dir)
+        GeneralSimCheck(PoseObjects, All_Fingerprint, cur_dir, "Fingerprint", float(cutoff), fprint)
         # Write to a .csv file
 
         # 2D resn, and corresponding atoms
         if TextInteraction == 1:
             x = 0
            # interaction_pathway = os.path.join(working_dir, 'Fingerprint')
-            os.chdir(working_dir)
-            InteractionCheck(protein_name, PoseObjects)
+            os.chdir(cur_dir)
+            InteractionCheck(protein_path, PoseObjects, cur_dir)
+        os.chdir(cur_dir)
+        File_write(files, All_Fingerprint, "Fingerprint", fprint, PDB_code, cur_dir)
+        CreateHeatMap("Fingerprint", All_Fingerprint, files, fprint, "rocket", PDB_code, cur_dir)
 
-        File_write(natural_sort(oldLigands), All_Fingerprint, "Fingerprint", fprint, PDB_code, working_dir)
-        CreateHeatMap("Fingerprint", All_Fingerprint, natural_sort(oldLigands), fprint, "twilight", PDB_code, working_dir)
-    # In the case that there were complexes, we want to clean up the files that we made
-    for lig in Clean_up:
-     #   print("lig")
-     #   print(lig)
-        os.remove(lig)
-
-    os.remove(protein_name)
     print("Fingerprint finished processing.")
 
 ######################################################################################################################

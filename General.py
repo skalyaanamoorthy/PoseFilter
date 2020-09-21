@@ -25,12 +25,13 @@ Testing = 0
 # Will be used as a switch- when it is on then we have lots of output to test, off we do not have any
 
 class RMSInfo:
-  def __init__(self, OrigPoseName, RotNum, ObjName):
+  def __init__(self, PoseName, PoseNameExt, RotNum):
     #RotStruct is pose1_complex_0rot.pdb
     #RotList is pose1_complex_UNK0
-    self.OrigPoseName = OrigPoseName
+    self.PoseName = PoseName
+    self.PoseNameExt = PoseNameExt
     self.RotNum = RotNum
-    self.ObjName = ObjName
+
 ######################################################################################################################
 #CreateHeatMap("Fingerprint", All_Fingerprint, Listoflig, fprint, "Greens", PDB_code)
 def CreateHeatMap(variety, mol_data, Ligands, type, map_type, PDB_code, working_dir):
@@ -129,11 +130,10 @@ def rotation(rot_str, i, num):
 
     # Save just the ligand
     cmd.save(i + '_UNK' + str(num) + '.pdb', i + ' and resn ' + UNK)
-  #  print("UNK Rotation: " + i + '_UNK' + str(num) + '.pdb')
+    #  print("UNK Rotation: " + i + '_UNK' + str(num) + '.pdb')
 
     # Calculates the RMS between the UNK and the obj1 UNK reference
     rms_val = cmd.rms_cur('obj1 and resn ' + UNK, i + ' and resn ' + UNK)
-  #  print("Rotation " + str(num) + " rms val: " + str(rms_val))
 
     return rms_val
 
@@ -166,9 +166,6 @@ def GenerateRotList(objects, UNK_var, alpha):
         # we need to know for later which is the lowest and corresponds to which structure
 
         rmsArr = olig_rot(i)
-    #    print("RMS ARRAY")
-      #  for x in rmsArr:
-      #     print(x)
 
         # Removes the necessary files, calculates the lowest RMS
         New_rot, x_val, Rot_S = distComp(rmsArr, i)
@@ -255,7 +252,7 @@ def GeneralSimCheck(RMSItemList, Total_Array, working_dir, Dir_Type, cutoff, Add
     length = len(RMSItemList)
     RotListPDB = []
     for item in RMSItemList:
-        RotListPDB.append(item.ObjName + '.pdb')
+        RotListPDB.append(item.PoseNameExt)
 
     Rot_type = [RotListPDB, [0]*length]
 
@@ -281,14 +278,13 @@ def GeneralSimCheck(RMSItemList, Total_Array, working_dir, Dir_Type, cutoff, Add
             if x == y:
                 pass
             else:
-              #  if Testing:
-              #      print("y val: " + str(y))
-              #      print("x val: " + str(x))
 
                 if Dir_Type == "RMS":
                     Is_similar = (Total_Array[x][y] <= cutoff)
+                    our_dir = os.path.join(working_dir, "PDBComplex")
                 else:
                     Is_similar = (Total_Array[x][y] >= cutoff)
+                    our_dir = os.path.join(working_dir, "PDBLigand")
 
                 if Is_similar:
                # if Total_Array[x][y] <= cutoff:
@@ -298,11 +294,11 @@ def GeneralSimCheck(RMSItemList, Total_Array, working_dir, Dir_Type, cutoff, Add
                     # Need to make one unique out of the set
                     # Reference
                     Rot_type[1][x] = 'u'
-                    PoseName_x, PoseExt = RMSItemList[x].OrigPoseName.rsplit('.', 1)
-                    PoseName_y, PoseExt = RMSItemList[y].OrigPoseName.rsplit('.', 1)
+                    PoseName_x = RMSItemList[x].PoseName
+                    PoseName_y = RMSItemList[y].PoseName
 
                     # Could now write to a file to indicate which files are similar
-                    sim_file.write(PoseName_x  + ', ' + PoseName_y + ', ' +
+                    sim_file.write(PoseName_x + ', ' + PoseName_y + ', ' +
                                    str(Total_Array[x][y]) + ', ' + RMSItemList[y].RotNum + '\n')
 
                 # Not similar; pass for now
@@ -319,16 +315,16 @@ def GeneralSimCheck(RMSItemList, Total_Array, working_dir, Dir_Type, cutoff, Add
         rot = str(Rot_type[0][w])
     #    print("rot:" + rot)
 
-        PoseName, PoseExt = RMSItemList[w].OrigPoseName.rsplit('.', 1)
+        PoseName = RMSItemList[w].PoseName
 
         if Rot_type[1][w] == 's':
             # Move from dir to dir
 
             # Want a new path that has the directory similar on it
-            path_1 = os.path.join(working_dir, rot)
-         #   print(path_1)
+            path_1 = os.path.join(our_dir, rot)
+
             path_2 = os.path.join(Similar_path, rot)
-         #   print(path_2)
+
             shutil.copy(path_1, path_2)
 
             # Rename
@@ -338,14 +334,17 @@ def GeneralSimCheck(RMSItemList, Total_Array, working_dir, Dir_Type, cutoff, Add
             else:
                 rot_add = ''
 
+            PoseExt = 'pdb'
+
             path_3 = os.path.join(Similar_path, PoseName + rot_add + RMSItemList[w].RotNum + '.' + PoseExt)
             os.rename(path_2, path_3)
 
         else:
-            path_1 = os.path.join(working_dir, rot)
-        #    print(path_1)
+            PoseExt = 'pdb'
+            path_1 = os.path.join(our_dir, rot)
+
             path_2 = os.path.join(Unique_path, rot)
-        #    print(path_2)
+
             shutil.copy(path_1, path_2)
 
             # Path to copy to
@@ -420,7 +419,8 @@ def File_write(LigList, Total_Array, Type, TypeInfo, PDB_code, working_dir):
     for row in Total_Array:
         f2.write(LigList[row_t] + ', ')
         for item in row:
-            f2.write(str(item) + ', ')
+            # Round to two decimal places
+            f2.write(str(round(item, 2)) + ', ')
         f2.write('\n')
         row_t = row_t + 1
    # Make sure the dir is correct
@@ -450,41 +450,6 @@ def DirSearch(keyword):
 
     return all_files
 
-######################################################################################################################
-# Directory must have one protein file (specified) and multiple ligand files
-# Takes the protein .pdb/.pdbqt file and then finds the appropriate ligand files of that extension
-# outputs the ligand files in a list format.
-
-#Proteintoliglist
-def LigandtoComplex(pfile, keyword):
-    working_dir = os.path.dirname(pfile)
-    os.chdir(working_dir)
-  #  print(working_dir)
-
-    protein_name = os.path.basename(pfile)
-    file_ext = protein_name.rsplit('.', 1)[1]
-    all_files = DirSearch(keyword)
-
-    #   LigandList = ListtoLig(all_files)
-    #  print(LigandList)
-    Saved_Complexes = [""] * len(all_files)
-    # Goes through each ligand to make a complex
-    SNum = 0
-
-    # Make the protein + ligand complexes
-    for ligand in all_files:
-      #  print("ligand: " + ligand)
-        lig_name = ligand.rsplit('.', 1)[0]
-      #  print("Make complex: ")
-        MakeComplex(lig_name + '_complex', ligand, protein_name)
-
-        # These are the names of the complexes that will be iterated through the program
-        Saved_Complexes[SNum] = lig_name + '_complex' + ".pdb"
-        SNum += 1
-   # print("Saved complexes: ")
-    # Saved complexes are protein + ligand .pdb named
-    return Saved_Complexes, all_files[0], all_files
-
 ##############################################################################################################
 
 import re
@@ -493,3 +458,7 @@ def natural_sort(l):
     convert = lambda text: int(text) if text.isdigit() else text.lower()
     alphanum_key = lambda key: [ convert(c) for c in re.split('([0-9]+)', key) ]
     return sorted(l, key = alphanum_key)
+
+#os.chdir('/home/justine/PycharmProjects/PoseFilter/Examples/Trimer_Example')
+#objects = 'pose1.pdb, pose2.pdb, pose3.pdb'
+#GenerateRotList(objects, "UNK", 0)

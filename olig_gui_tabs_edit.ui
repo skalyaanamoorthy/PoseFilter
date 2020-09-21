@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1228</width>
-    <height>803</height>
+    <width>1268</width>
+    <height>815</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -77,13 +77,6 @@
        <string>File input-type 2</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_3">
-       <item row="0" column="0" colspan="2">
-        <widget class="QLabel" name="label_7">
-         <property name="text">
-          <string>Input ligand-bound complex files in PDB format.</string>
-         </property>
-        </widget>
-       </item>
        <item row="1" column="0">
         <widget class="QLabel" name="label_4">
          <property name="text">
@@ -91,15 +84,15 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
-        <widget class="QLineEdit" name="dir_select"/>
-       </item>
-       <item row="1" column="2">
-        <widget class="QPushButton" name="dirButton">
+       <item row="0" column="0" colspan="2">
+        <widget class="QLabel" name="label_7">
          <property name="text">
-          <string>Select directory</string>
+          <string>Input ligand-bound complex files in PDB format.</string>
          </property>
         </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="dir_select"/>
        </item>
        <item row="2" column="0">
         <widget class="QLabel" name="label_5">
@@ -111,6 +104,20 @@
        <item row="2" column="1">
         <widget class="QLineEdit" name="complexid"/>
        </item>
+       <item row="1" column="2">
+        <widget class="QPushButton" name="dirButton">
+         <property name="text">
+          <string>Select directory</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="label_9">
+         <property name="text">
+          <string>Optional crystal structure complex:</string>
+         </property>
+        </widget>
+       </item>
        <item row="3" column="0">
         <widget class="QLabel" name="label_6">
          <property name="text">
@@ -118,8 +125,18 @@
          </property>
         </widget>
        </item>
+       <item row="5" column="1">
+        <widget class="QLineEdit" name="crystal_structure"/>
+       </item>
        <item row="3" column="1">
         <widget class="QLineEdit" name="resInput"/>
+       </item>
+       <item row="5" column="2">
+        <widget class="QPushButton" name="crystal_structure_b">
+         <property name="text">
+          <string>Select file</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -256,6 +273,13 @@
      </property>
     </widget>
    </item>
+   <item row="4" column="5">
+    <widget class="QCheckBox" name="Nonchains">
+     <property name="text">
+      <string>Nonidentical chains</string>
+     </property>
+    </widget>
+   </item>
   </layout>
   <zorder>close_button</zorder>
   <zorder>label_3</zorder>
@@ -279,6 +303,7 @@
   <zorder>Prox_check</zorder>
   <zorder>Fingerprint_button</zorder>
   <zorder>line_4</zorder>
+  <zorder>Nonidenticalchains</zorder>
  </widget>
  <resources/>
  <connections/>

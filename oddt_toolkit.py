@@ -58,18 +58,17 @@ import gzip
 from base64 import b64encode
 from itertools import combinations
 import warnings
-
+from scipy.spatial.distance import cdist
 from six import BytesIO, PY3
 import numpy as np
 from sklearn.utils.deprecation import deprecated
-
 import rdkit
 from rdkit import Chem
 from rdkit.Chem import AllChem, Draw
 from rdkit.Chem.Draw import rdMolDraw2D
 from rdkit.Chem import Descriptors
 from rdkit import RDConfig
-
+from collections import deque
 import rdkit.DataStructs
 import rdkit.Chem.MACCSkeys
 import rdkit.Chem.AtomPairs.Pairs
@@ -673,7 +672,7 @@ class Molecule(object):
                       ('radius', np.float32),
                       ('charge', np.float32),
                       ('atomicnum', np.int8),
-                      ('atomtype', 'U5' if PY3 else 'a5'),
+                      ('atomtype', 'U16' if PY3 else 'a16'),
                       ('hybridization', np.int8),
                       ('neighbors_id', np.int16, max_neighbors),
                       ('neighbors', np.float32, (max_neighbors, 3)),
@@ -711,7 +710,7 @@ class Molecule(object):
             coords = atom.coords
             atomtype = (atom.Atom.GetProp("_TriposAtomType")
                         if atom.Atom.HasProp("_TriposAtomType")
-                        else _sybyl_atom_type(atom.Atom))
+                        else _sybyl_translated_type(atom.Atom))
             if self.protein:
                 residue = atom.Atom.GetMonomerInfo()
             else:
@@ -1896,6 +1895,149 @@ def _sybyl_atom_type(atom):
         sybyl = atom_symbol
     return sybyl
 
+
+# Mol2 Atom typing
+def _sybyl_translated_type(atom):
+    """ Asign sybyl atom type
+    Reference #1: http://www.tripos.com/mol2/atom_types.html
+    Reference #2: http://chemyang.ccnu.edu.cn/ccb/server/AIMMS/mol2.pdf
+    """
+    sybyl = None
+    atom_symbol = atom.GetSymbol()
+    atomic_num = atom.GetAtomicNum()
+    hyb = atom.GetHybridization()-1  # -1 since 1 = sp, 2 = sp1 etc
+    hyb = min(hyb, 3)
+    degree = atom.GetDegree()
+    aromtic = atom.GetIsAromatic()
+
+    # define groups for atom types
+    guanidine = '[NX3,NX2]([!O,!S])!@C(!@[NX3,NX2]([!O,!S]))!@[NX3,NX2]([!O,!S])'  # strict
+    # guanidine = '[NX3]([!O])([!O])!:C!:[NX3]([!O])([!O])' # corina compatible
+    # guanidine = '[NX3]!@C(!@[NX3])!@[NX3,NX2]'
+    # guanidine = '[NX3]C([NX3])=[NX2]'
+    # guanidine = '[NX3H1,NX2,NX3H2]C(=[NH1])[NH2]' # previous
+    #
+
+    if atomic_num == 6:
+        if aromtic:
+            sybyl = 'C (aromatic)'
+        elif degree == 3 and _atom_matches_smarts(atom, guanidine):
+            sybyl = 'C'
+        else:
+            sybyl = atom_symbol + ' (sp' + str(hyb) + ')'
+    elif atomic_num == 7:
+        if aromtic:
+            sybyl = 'N (aromatic)'
+        elif _atom_matches_smarts(atom, 'C(=[O,S])-N'):
+            sybyl = 'N (amide)'
+        elif degree == 3 and _atom_matches_smarts(atom, '[$(N!-*),$([NX3H1]-*!-*)]'):
+            sybyl = 'N (trigonal)'
+        elif _atom_matches_smarts(atom, guanidine):  # guanidine has N.pl3
+            sybyl = 'N (trigonal)'
+        elif degree == 4 or hyb == 3 and atom.GetFormalCharge():
+            sybyl = 'N (quaternary)'
+        else:
+            sybyl = atom_symbol + ' (sp' + str(hyb) + ')'
+    elif atomic_num == 8:
+        # http://www.daylight.com/dayhtml_tutorials/languages/smarts/smarts_examples.html
+        if degree == 1 and _atom_matches_smarts(atom, '[CX3](=O)[OX1H0-]'):
+            sybyl = 'O (carboxyl)'
+        elif degree == 2 and not aromtic:  # Aromatic Os are sp2
+            sybyl = 'O (sp3)'
+        else:
+            sybyl = 'O (sp2)'
+    elif atomic_num == 16:
+        # http://www.daylight.com/dayhtml_tutorials/languages/smarts/smarts_examples.html
+        if degree == 3 and _atom_matches_smarts(atom, '[$([#16X3]=[OX1]),$([#16X3+][OX1-])]'):
+            sybyl = 'S (sulfoxide)'
+        # https://github.com/rdkit/rdkit/blob/master/Data/FragmentDescriptors.csv
+        elif _atom_matches_smarts(atom, 'S(=,-[OX1;+0,-1])(=,-[OX1;+0,-1])(-[#6])-[#6]'):
+            sybyl = 'S (sulfone)'
+        else:
+            sybyl = atom_symbol + ' (sp' + str(hyb) + ')'
+    elif atomic_num == 15 and hyb == 3:
+        sybyl = atom_symbol + ' (sp' + str(hyb) + ')'
+
+    if not sybyl:
+        sybyl = atom_symbol
+    return sybyl
+
+
+def _atom_matches_smarts(atom, smarts):
+    idx = atom.GetIdx()
+    patt = Chem.MolFromSmarts(smarts)
+    for m in atom.GetOwningMol().GetSubstructMatches(patt):
+        if idx in m:
+            return True
+    return False
+
+def dihedral(p1, p2, p3, p4):
+    """Returns an dihedral angle from a series of 4 points.
+    Dihedral is returned in degrees.
+    Function distingishes clockwise and antyclockwise dihedrals.
+
+    Parameters
+    ----------
+    p1, p2, p3, p4 : numpy arrays, shape = [n_points, n_dimensions]
+        Quadruplets of points in n-dimensional space, aligned in rows.
+
+    Returns
+    -------
+    angles : numpy array, shape = [n_points]
+        Series of angles in degrees
+    """
+    v12 = (p1 - p2)/np.linalg.norm(p1 - p2)
+    v23 = (p2 - p3)/np.linalg.norm(p2 - p3)
+    v34 = (p3 - p4)/np.linalg.norm(p3 - p4)
+    c1 = np.cross(v12, v23)
+    c2 = np.cross(v23, v34)
+    out = angle_2v(c1, c2)
+    # check clockwise and anticlockwise
+    n1 = c1 / np.linalg.norm(c1)
+    mask = (n1 * v34).sum(axis=-1) > 0
+    if len(mask.shape) == 0:
+        if mask:
+            out = -out
+    else:
+        out[mask] = -out[mask]
+    return out
+
+
+def distance(x, y):
+    """Computes distance between each pair of points from x and y.
+
+    Parameters
+    ----------
+    x : numpy arrays, shape = [n_x, 3]
+        Array of poinds in 3D
+
+    y : numpy arrays, shape = [n_y, 3]
+        Array of poinds in 3D
+
+    Returns
+    -------
+    dist_matrix : numpy arrays, shape = [n_x, n_y]
+        Distance matrix
+    """
+    return cdist(x, y)
+
+def angle_2v(v1, v2):
+    """Returns an angle between two vecors.Angle is returned in degrees.
+
+    Parameters
+    ----------
+    v1,v2 : numpy arrays, shape = [n_vectors, n_dimensions]
+        Pairs of vectors in n-dimensional space, aligned in rows.
+
+    Returns
+    -------
+    angles : numpy array, shape = [n_vectors]
+        Series of angles in degrees
+    """
+    # better than np.dot(v1, v2), multiple vectors can be applied
+    dot = (v1 * v2).sum(axis=-1)
+    norm = np.linalg.norm(v1, axis=-1) * np.linalg.norm(v2, axis=-1)
+    return np.degrees(np.arccos(np.clip(dot/norm, -1, 1)))
 
 def MolToPDBQTBlock(mol, flexible=True, addHs=False, computeCharges=False):
     """Write RDKit Molecule to a PDBQT block

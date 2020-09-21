@@ -1,7 +1,9 @@
 from __future__ import absolute_import
 from __future__ import print_function
-from .RMS import OligWrapper
+from .RMS import CreateRMS
 from .Fingerprint import Fingerprint_Wrapper
+from .General import natural_sort
+from .Input_Organization import InputFileSort, DirSearch
 from PyQt5.uic import loadUi
 import sys
 from pymol.Qt import QtWidgets
@@ -23,7 +25,7 @@ https://github.com/Pymol-Scripts/pymol2-demo-plugin
 
 def __init_plugin__(app=None):
     from pymol.plugins import addmenuitemqt
-    addmenuitemqt('Pose Filter', run_plugin_gui)
+    addmenuitemqt('PoseFilter', run_plugin_gui)
 
 dialog = None
 
@@ -49,25 +51,40 @@ def make_dialog():
     form.FP_SICutoff.setText("0.5")
     form.FP_SPLIFCutoff.setText("0.5")
 
-    def TabInfo():
+    def FileGeneration():
         index = QTabWidget.currentIndex(form.Mytab)
         if index == 0:
             pfile = form.file_select.text()
             keyword = form.Ligandkeyword.text()
-            InfoArray = [pfile, keyword]
+            folder_dir = os.path.dirname(pfile)
+            os.chdir(folder_dir)
+            all_files = DirSearch(keyword, "") # including the crystal structure
+            pname = os.path.basename(pfile).split('.')[0] + '.pdb'
+            UNK, pdb_files = InputFileSort(all_files, "ligand", folder_dir, pfile, "", pname)
+            return pdb_files, UNK, folder_dir, pname
+
         else:
-            cur_dir = form.dir_select.text()
+            folder_dir = form.dir_select.text()
             complex = form.complexid.text()
             resInput = form.resInput.text()
-            InfoArray = [cur_dir, complex, resInput]
-
-        return InfoArray
+            crystal_struct = form.crystal_structure.text()
+            crystal_keyword = os.path.basename(crystal_struct).split('.')[0]
+            os.chdir(folder_dir)
+            all_files = DirSearch(complex, crystal_keyword)
+            pname = "protein1.pdb"
+            UNK, pdb_files = InputFileSort(all_files, "complex", folder_dir, "", resInput, pname)
+            return pdb_files, UNK, folder_dir, pname
 
     # callback for the "Browse" button
     def browse_filename():
         QFilename = QFileDialog.getOpenFileName(None, "Choose a protein file...")
         # Change the text in the form
         form.file_select.setText(QFilename[0])
+
+    def browse_crystalstructure():
+        QFilename = QFileDialog.getOpenFileName(None, "Choose a crystal structure...")
+        # Change the text in the crystal structure portion of the form
+        form.crystal_structure.setText(QFilename[0])
 
     # getting a directory
     def get_dir():
@@ -80,8 +97,6 @@ def make_dialog():
 
     def fingerprint():
         cmd.reinitialize()
-
-        InfoArray = TabInfo()
 
         AnyChecked = 0
         IText = []
@@ -99,21 +114,29 @@ def make_dialog():
 
         FP_SI = form.FP_SICutoff.text()
         FP_SPLIF = form.FP_SPLIFCutoff.text()
-
-        Fingerprint_Wrapper(InfoArray, IText, form.PDBCODE.text(), FP_SI, FP_SPLIF, TextInteraction)
+        files, UNK, cur_dir, pname = FileGeneration()
+        files = natural_sort(files)
+        Fingerprint_Wrapper(files, IText, form.PDBCODE.text(), FP_SI, FP_SPLIF, TextInteraction, cur_dir, pname)
 
     def run():
         global dialog
         cmd.reinitialize()
-        InfoArray = TabInfo()
+       # InfoArray = TabInfo()
         alpha = 0
         if form.Alignalpha.isChecked():
             alpha = 1
+        nonidentical = 0
+        if form.Nonchains.isChecked():
+            nonidentical = 1
 
-        OligWrapper(InfoArray, form.PDBCODE.text(), form.RMSCutoff.text(), alpha)
+        files, UNK, cur_dir, pname = FileGeneration()
+        files = natural_sort(files)
+        CreateRMS(files, form.PDBCODE.text(), form.RMSCutoff.text(), UNK, alpha, nonidentical, cur_dir, pname)
 
     form.Button_browse.clicked.connect(browse_filename)
     form.dirButton.clicked.connect(get_dir)
+    form.dirButton.clicked.connect(get_dir)
+    form.crystal_structure_b.clicked.connect(browse_crystalstructure)
 
     # Oligomer portion is initiated
     form.Docking_analysis.clicked.connect(run)
