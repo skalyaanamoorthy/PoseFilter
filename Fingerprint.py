@@ -212,7 +212,7 @@ def Fingerprint_Wrapper(files, Type, PDB_code, SI_cutoff, SPLIF_cutoff, TextInte
             InteractionCheck(protein_path, PoseObjects, cur_dir)
         os.chdir(cur_dir)
         File_write(files, All_Fingerprint, "Fingerprint", fprint, PDB_code, cur_dir)
-        CreateHeatMap("Fingerprint", All_Fingerprint, files, fprint, "rocket", PDB_code, cur_dir)
+        CreateHeatMap("Fingerprint", All_Fingerprint, files, fprint, "mako", PDB_code, cur_dir)
 
     print("Fingerprint finished processing.")
 

@@ -68,7 +68,10 @@ def make_dialog():
             complex = form.complexid.text()
             resInput = form.resInput.text()
             crystal_struct = form.crystal_structure.text()
-            crystal_keyword = os.path.basename(crystal_struct).split('.')[0]
+            if crystal_struct != "":
+                crystal_keyword = os.path.basename(crystal_struct).split('.')[0]
+            else:
+                crystal_keyword = ""
             os.chdir(folder_dir)
             all_files = DirSearch(complex, crystal_keyword)
             pname = "protein1.pdb"
@@ -92,7 +95,7 @@ def make_dialog():
 
         if filedir:
             form.dir_select.setText(filedir)
-            print(filedir)
+           # print(filedir)
 
 
     def fingerprint():
@@ -135,7 +138,7 @@ def make_dialog():
 
     form.Button_browse.clicked.connect(browse_filename)
     form.dirButton.clicked.connect(get_dir)
-    form.dirButton.clicked.connect(get_dir)
+  #  form.dirButton.clicked.connect(get_dir)
     form.crystal_structure_b.clicked.connect(browse_crystalstructure)
 
     # Oligomer portion is initiated
