@@ -38,11 +38,13 @@ def CreateHeatMap(variety, mol_data, Ligands, type, map_type, PDB_code, working_
     path = os.path.join(working_dir, variety, type)
     os.chdir(path)
 
+    mol_data_round = np.around(mol_data, decimals=2)
+
     sns.set()
-    mask = np.zeros_like(mol_data)
-    mask[np.triu_indices_from(mask)] = True
+    mask = np.zeros_like(mol_data_round)
+    mask[np.triu_indices_from(mask,1)] = True
     with sns.axes_style("white"):
-        ax = sns.heatmap(mol_data, cmap=map_type, xticklabels= Ligands, yticklabels= Ligands, cbar=False, mask=mask, square=True, annot=True, annot_kws={'size':8})
+        ax = sns.heatmap(mol_data_round, cmap=map_type, xticklabels= Ligands, yticklabels= Ligands, cbar=False, mask=mask, square=True, annot=True, annot_kws={'size':8})
         Map_title = type + ' ' + PDB_code
         ax.set(title = Map_title)
         figure = ax.get_figure()
