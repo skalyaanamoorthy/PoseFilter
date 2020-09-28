@@ -69,7 +69,7 @@ Please use one of these tab options at a time to choose your input files.
 
 
 #### Tab 1 Description
-![Input Type 1](https://raw.githubusercontent.com/justinecwilliams/PoseFilter/GUITab1.jpg)
+![Input Type 1](https://raw.githubusercontent.com/justinecwilliams/PoseFilter/master/GUITab1.jpg)
 
 The first tab (File input - type 1) gives the option to process a
 folder that contain protein and ligand poses as separate files.
@@ -83,7 +83,7 @@ the keyword “pose” should be used in the “Ligand filename identifier” bo
 This is optional and the box can be left blank.
 
 #### Tab 2 Description
-![Input Type 2](https://raw.githubusercontent.com/justinecwilliams/PoseFilter/GUITab2.jpg)
+![Input Type 2](https://raw.githubusercontent.com/justinecwilliams/PoseFilter/master/GUITab2.jpg)
 
 The second tab (File input - type 2) allows the input of protein + ligand complex files.
 
