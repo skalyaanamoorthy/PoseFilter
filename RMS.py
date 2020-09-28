@@ -114,5 +114,5 @@ def RMS_Calc(Ref_obj, OList):
 
 ###############################################################################################################
 
-    print("RMS finished processing.")
+  #  print("RMS finished processing.")
 cmd.extend('CreateRMS', CreateRMS)

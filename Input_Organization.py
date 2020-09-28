@@ -8,6 +8,9 @@ from pymol import stored
 from pymol import selector
 from shutil import copyfile
 from pymol import cmd
+from .General import natural_sort
+from .RMS import CreateRMS
+from .Fingerprint import Fingerprint_Wrapper
 import glob
 
 def DirSearch(keyword, crystalstruct):
@@ -36,6 +39,7 @@ def DirSearch(keyword, crystalstruct):
 
 
 # Takes the ligand file name and the protein
+
 def MakeComplex(ligand, proteinpath):
     cmd.load(ligand)
     cmd.load(proteinpath)
@@ -82,6 +86,59 @@ def InputFileSort (filelist, type, maindir, pdir, ResId, pname):
     else:
         pdbfiles = ComplexFileSort(filelist, maindir, Ligand_path, Complex_path, ResId, pname)
         return ResId, pdbfiles
+
+
+@cmd.extend
+def LigandRMSProcess(pfile, keyword, label, RMS_Cutoff, alpha, nonidentical):
+    folder_dir = os.path.dirname(pfile)
+    os.chdir(folder_dir)
+    all_files = DirSearch(keyword, "")  # including the crystal structure
+    pname = os.path.basename(pfile).split('.')[0] + '.pdb'
+    UNK, pdb_files = InputFileSort(all_files, "ligand", folder_dir, pfile, "", pname)
+
+    # pdb_files, UNK, folder_dir, pname
+    files = natural_sort(pdb_files)
+    CreateRMS(files, label, RMS_Cutoff, UNK, alpha, nonidentical, folder_dir, pname)
+
+@cmd.extend
+def ComplexRMSProcess(folder_dir, keyword, label, resInput, crystal_struct, RMS_Cutoff, alpha, nonidentical):
+    if crystal_struct != "":
+        crystal_keyword = os.path.basename(crystal_struct).split('.')[0]
+    else:
+        crystal_keyword = ""
+    os.chdir(folder_dir)
+    all_files = DirSearch(keyword, crystal_keyword)
+    pname = "protein1.pdb"
+    UNK, pdb_files = InputFileSort(all_files, "complex", folder_dir, "", resInput, pname)
+    files = natural_sort(pdb_files)
+    CreateRMS(files, label, RMS_Cutoff, UNK, alpha, nonidentical, folder_dir, pname)
+
+@cmd.extend
+def LigandFP(pfile, keyword, label, FPList, FP_SI, FP_SPLIF, TextInteraction):
+    folder_dir = os.path.dirname(pfile)
+    os.chdir(folder_dir)
+    all_files = DirSearch(keyword, "")  # including the crystal structure
+    pname = os.path.basename(pfile).split('.')[0] + '.pdb'
+    UNK, pdb_files = InputFileSort(all_files, "ligand", folder_dir, pfile, "", pname)
+
+    files = natural_sort(pdb_files)
+    Fingerprint_Wrapper(files, FPList, label, FP_SI, FP_SPLIF, TextInteraction, folder_dir, pname)
+
+@cmd.extend
+def ComplexFP(folder_dir, complex, label, resInput, crystal_struct, FPList, FP_SI, FP_SPLIF, TextInteraction):
+
+    if crystal_struct != "":
+        crystal_keyword = os.path.basename(crystal_struct).split('.')[0]
+    else:
+        crystal_keyword = ""
+    os.chdir(folder_dir)
+    all_files = DirSearch(complex, crystal_keyword)
+    pname = "protein1.pdb"
+    UNK, pdb_files = InputFileSort(all_files, "complex", folder_dir, "", resInput, pname)
+
+    files = natural_sort(pdb_files)
+    Fingerprint_Wrapper(files, FPList, label, FP_SI, FP_SPLIF, TextInteraction, folder_dir, pname)
+
 
 
 def LigandFileSort(filelist, maindir, Ligand_path, Complex_path, ppath):
@@ -148,9 +205,6 @@ def LigandFileSort(filelist, maindir, Ligand_path, Complex_path, ppath):
     # switch to the complex directory
 
     os.chdir(Complex_path)
-   # print(Complex_path)
-   # print("dealing with complex files")
-   # print(pdbfiles)
     for ligand in pdbfiles:
 
         # new complex path
@@ -237,12 +291,7 @@ def ComplexFileSort(filelist, maindir, Ligand_path, Complex_path, ResId, pname):
     return pdbfiles
 
 
-#filelist = ['1fx9_01.mol2', 'pose2.mol2', 'pose3.mol2']
-#os.chdir("/home/justine/PycharmProjects/Complex")
-
-#print(InputFileSort(DirSearch("vina", ""), "complex", "/home/justine/PycharmProjects/PoseFilter/Examples/Dimer_Example", "", "UNK", "protein1.pdb"))
-
-#cur_dir = "/home/justine/PycharmProjects/PoseFilter/Examples/Trimer_Example"
-#os.chdir(cur_dir)
-
-#InputFileSort((DirSearch("pose", ""), "ligand", cur_dir, "", ""))
+cmd.extend(LigandRMSProcess, "LigandRMSProcess")
+cmd.extend(ComplexRMSProcess, "ComplexRMSProcess")
+cmd.extend(ComplexFP, "ComplexFP")
+cmd.extend(LigandFP, "LigandFP")
