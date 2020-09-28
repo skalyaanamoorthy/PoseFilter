@@ -1,0 +1,11 @@
+Ligand interactions with protein residues
+Ligand hydrophobic interactions with protein residues
+Ligand Atom Numbering, Residue Atom Numbering,Resn, Resi, Ligand to Protein Distance (Angstrom)
+C10, C2754, ARG, 282, 3.56
+
+Ligand hydrogen bond interactions with protein residues
+Ligand Atom Numbering, Residue Atom Numbering,Resn, Resi, Ligand to Protein Distance (Angstrom)
+O9, Oalpha3968, LEU, 126, 3.18
+O2, N4520, ARG, 180, 3.47
+O5, N2749, ARG, 282, 3.48
+

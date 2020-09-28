@@ -1,5 +1,5 @@
 Ligand interactions with protein residues
 Ligand hydrophobic interactions with protein residues
-Ligand Atom Type, Residue Atom Type, Resn, Resi, Ligand to Protein Distance (Angstrom)
-C (sp3), C (sp3), LEU, 1176, 3.32
+Ligand Atom Numbering, Residue Atom Numbering,Resn, Resi, Ligand to Protein Distance (Angstrom)
+C24, C3240, LEU, 1176, 3.32
 

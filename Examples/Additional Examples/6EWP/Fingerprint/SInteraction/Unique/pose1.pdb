@@ -1,0 +1,39 @@
+HETATM    1  O1 AP6G A 701     -98.289  71.150   8.049  0.50 33.48           O  
+HETATM    2  C2 AP6G A 701     -98.705  70.779   6.745  0.50 33.70           C  
+HETATM    3  C3 AP6G A 701     -97.689  69.891   6.056  0.50 34.17           C  
+HETATM    4  O4 AP6G A 701     -96.811  69.372   7.041  0.50 36.02           O  
+HETATM    5  C5 AP6G A 701     -95.460  69.774   6.776  0.50 39.29           C  
+HETATM    6  C6 AP6G A 701     -94.740  70.219   8.050  0.50 41.28           C  
+HETATM    7  O7 AP6G A 701     -94.160  69.104   8.730  0.50 44.59           O  
+HETATM    8  C8 AP6G A 701     -93.154  68.456   7.947  0.50 47.72           C  
+HETATM    9  C9 AP6G A 701     -91.765  68.961   8.337  0.50 50.27           C  
+HETATM   10  O10AP6G A 701     -90.885  67.855   8.560  0.50 53.17           O  
+HETATM   11  C11AP6G A 701     -91.575  66.678   8.974  0.50 54.19           C  
+HETATM   12  C12AP6G A 701     -90.896  66.102  10.213  0.50 55.44           C  
+HETATM   13  O13AP6G A 701     -90.606  64.714  10.021  0.50 57.26           O  
+HETATM   14  C14AP6G A 701     -90.739  63.990  11.245  0.50 58.30           C  
+HETATM   15  C15AP6G A 701     -91.220  64.902  12.373  0.50 60.15           C  
+HETATM   16  O16AP6G A 701     -91.696  64.145  13.489  0.50 62.43           O  
+HETATM   17  C17AP6G A 701     -91.107  62.842  13.578  0.50 63.79           C  
+HETATM   18  C18AP6G A 701     -90.093  62.784  14.726  0.50 63.43           C  
+HETATM   19  O19AP6G A 701     -90.697  63.079  15.994  0.50 62.93           O  
+CONECT    1    2
+CONECT    2    1    3
+CONECT    3    2    4
+CONECT    4    3    5
+CONECT    5    4    6
+CONECT    6    5    7
+CONECT    7    6    8
+CONECT    8    7    9
+CONECT    9    8   10
+CONECT   10    9   11
+CONECT   11   10   12
+CONECT   12   11   13
+CONECT   13   12   14
+CONECT   14   13   15
+CONECT   15   14   16
+CONECT   16   15   17
+CONECT   17   16   18
+CONECT   18   17   19
+CONECT   19   18
+END

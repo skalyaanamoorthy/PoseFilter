@@ -1,0 +1,9 @@
+Ligand interactions with protein residues
+Ligand hydrogen bond interactions with protein residues
+Ligand Atom Numbering, Residue Atom Numbering,Resn, Resi, Ligand to Protein Distance (Angstrom)
+O13, Oalpha768, SER, 157, 2.93
+O5, Nalpha600, TRP, 141, 3.06
+O10, Nalpha105, ARG, 90, 3.26
+O10, Oalpha286, ALA, 110, 3.35
+O10, Oalpha73, GLU, 87, 3.38
+

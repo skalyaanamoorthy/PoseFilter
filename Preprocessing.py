@@ -45,9 +45,9 @@ def CheckIdentical(totalchains):
     for chain in totalchains:
         label = 'chain ' + chain
 
-        reslabel = []
-        cmd.iterate(selector.process(label), 'reslabel.append(resn)')
-        chainresns.append(reslabel)
+        stored.residues = []
+        cmd.iterate(selector.process(label), 'stored.residues.append(resn)')
+        chainresns.append(stored.residues)
 
     dupchain = []
     for x in chainresns:

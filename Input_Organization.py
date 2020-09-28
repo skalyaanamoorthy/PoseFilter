@@ -66,7 +66,7 @@ def toPDB(FullMolPath):
 
 def InputFileSort (filelist, type, maindir, pdir, ResId, pname):
     # working_dir = os.getcwd()
-    print("inputfilesort")
+   # print("inputfilesort")
 
     Ligand_path = os.path.join(maindir, 'PDBLigand')
     Complex_path = os.path.join(maindir, 'PDBComplex')
@@ -77,7 +77,7 @@ def InputFileSort (filelist, type, maindir, pdir, ResId, pname):
     if not os.path.exists(Complex_path):
             os.makedirs(Complex_path)
 
-    print("type")
+  #  print("type")
 
     if type == "ligand":
         UNK_var, pdbfiles = LigandFileSort(filelist, maindir, Ligand_path, Complex_path, pdir)
@@ -149,11 +149,11 @@ def ComplexFP(folder_dir, complex, label, resInput, crystal_struct, FPList, FP_S
 def LigandFileSort(filelist, maindir, Ligand_path, Complex_path, ppath):
     # Check the first entry of the list for the type.
     # If the type is pdb then just copy over
-    print("ligand file sort")
+   # print("ligand file sort")
 
     for file in filelist:
-        print("file")
-        print(file)
+    #    print("file")
+    #    print(file)
         # Splits on the '.' into the name and ext
         file_name, file_ext = file.split('.')
 
@@ -167,10 +167,10 @@ def LigandFileSort(filelist, maindir, Ligand_path, Complex_path, ppath):
     copyfile(ppath, New_ppath)
 
     # Check if pdb, if it isn't, make pdb and delete other file
-    print("pfile base name")
+  #  print("pfile base name")
 
     pfilewext = os.path.basename(ppath)
-    print(pfilewext)
+  #  print(pfilewext)
 
     pfile, pext = pfilewext.split('.')
     if pext != 'pdb':
@@ -231,11 +231,11 @@ def LigandFileSort(filelist, maindir, Ligand_path, Complex_path, ppath):
 def ComplexFileSort(filelist, maindir, Ligand_path, Complex_path, ResId, pname):
     # Check the first entry of the list for the type.
     # If the type is pdb then just copy over
-    print("complex file sort")
+  #  print("complex file sort")
 
     for file in filelist:
-        print("file!")
-        print(file)
+   #     print("file!")
+   #     print(file)
         # Splits on the '.' into the name and ext
         file_name, file_ext = file.split('.')
 

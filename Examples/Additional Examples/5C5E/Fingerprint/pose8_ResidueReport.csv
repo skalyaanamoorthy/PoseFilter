@@ -1,0 +1,15 @@
+Ligand interactions with protein residues
+Ligand hydrophobic interactions with protein residues
+Ligand Atom Numbering, Residue Atom Numbering,Resn, Resi, Ligand to Protein Distance (Angstrom)
+C10, C5729, LYS, 515, 3.42
+C25, C3692, GLN, 97, 3.79
+
+Ligand hydrogen bond interactions with protein residues
+Ligand Atom Numbering, Residue Atom Numbering,Resn, Resi, Ligand to Protein Distance (Angstrom)
+O13, N3694, GLN, 97, 3.12
+O7, O5698, VAL, 512, 3.14
+O11, Nalpha2082, GLN, 214, 3.24
+O7, Oalpha2071, ASN, 213, 3.37
+O9, N3774, HIS, 105, 3.41
+O11, O3667, LYS, 95, 3.49
+

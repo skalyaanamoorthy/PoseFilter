@@ -1,10 +1,10 @@
 Ligand interactions with protein residues
 Ligand hydrophobic interactions with protein residues
-Ligand Atom Type, Residue Atom Type, Resn, Resi, Ligand to Protein Distance (Angstrom)
-C (sp3), C (sp3), LEU, 1176, 3.58
-C (sp3), C (sp3), THR, 1206, 3.69
+Ligand Atom Numbering, Residue Atom Numbering,Resn, Resi, Ligand to Protein Distance (Angstrom)
+C12, C6840, LEU, 1176, 3.58
+C14, Calpha7098, THR, 1206, 3.69
 
 Ligand hydrogen bond interactions with protein residues
-Ligand Atom Type, Residue Atom Type, Resn, Resi, Ligand to Protein Distance (Angstrom)
-N (sp3), O (sp2), THR, 1175, 3.49
+Ligand Atom Numbering, Residue Atom Numbering,Resn, Resi, Ligand to Protein Distance (Angstrom)
+N0, O3230, THR, 1175, 3.49
 

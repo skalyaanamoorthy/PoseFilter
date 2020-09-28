@@ -1,0 +1,89 @@
+REMARK VINA RESULT:      -4.3     14.241     17.296
+REMARK  32 active torsions:
+REMARK  status: ('A' for Active; 'I' for Inactive)
+REMARK    1  A    between atoms: C2@A_3  and  C3@A_5 
+REMARK    2  A    between atoms: C2@B_4  and  C3@B_6 
+REMARK    3  A    between atoms: C3@A_5  and  O4@A_7 
+REMARK    4  A    between atoms: C3@B_6  and  O4@B_8 
+REMARK    5  A    between atoms: O4@A_7  and  C5@A_9 
+REMARK    6  A    between atoms: O4@B_8  and  C5@B_10 
+REMARK    7  A    between atoms: C5@A_9  and  C6@A_11 
+REMARK    8  A    between atoms: C5@B_10  and  C6@B_12 
+REMARK    9  A    between atoms: C6@A_11  and  O7@A_13 
+REMARK   10  A    between atoms: C6@B_12  and  O7@B_14 
+REMARK   11  A    between atoms: O7@A_13  and  C8@A_15 
+REMARK   12  A    between atoms: O7@B_14  and  C8@B_16 
+REMARK   13  A    between atoms: C8@A_15  and  C9@A_17 
+REMARK   14  A    between atoms: C8@B_16  and  C9@B_18 
+REMARK   15  A    between atoms: C9@A_17  and  O10@A_19 
+REMARK   16  A    between atoms: C9@B_18  and  O10@B_20 
+REMARK   17  A    between atoms: O10@A_19  and  C11@A_21 
+REMARK   18  A    between atoms: O10@B_20  and  C11@B_22 
+REMARK   19  A    between atoms: C11@A_21  and  C12@A_23 
+REMARK   20  A    between atoms: C11@B_22  and  C12@B_24 
+REMARK   21  A    between atoms: C12@A_23  and  O13@A_25 
+REMARK   22  A    between atoms: C12@B_24  and  O13@B_26 
+REMARK   23  A    between atoms: O13@A_25  and  C14@A_27 
+REMARK   24  A    between atoms: O13@B_26  and  C14@B_28 
+REMARK   25  A    between atoms: C14@A_27  and  C15@A_29 
+REMARK   26  A    between atoms: C14@B_28  and  C15@B_30 
+REMARK   27  A    between atoms: C15@A_29  and  O16@A_31 
+REMARK   28  A    between atoms: C15@B_30  and  O16@B_32 
+REMARK   29  A    between atoms: O16@A_31  and  C17@A_33 
+REMARK   30  A    between atoms: O16@B_32  and  C17@B_34 
+REMARK   31  A    between atoms: C17@A_33  and  C18@A_35 
+REMARK   32  A    between atoms: C17@B_34  and  C18@B_36 
+ROOT
+HETATM    1  O10AP6G A 701     -87.040  53.719  15.535  0.50 53.17    -0.349 OA
+ENDROOT
+BRANCH   1   2
+HETATM    2  C9 AP6G A 701     -86.792  55.019  14.991  0.50 50.27     0.174 C 
+BRANCH   2   3
+HETATM    3  C8 AP6G A 701     -87.845  55.356  13.937  0.50 47.72     0.174 C 
+BRANCH   3   4
+HETATM    4  O7 AP6G A 701     -87.926  54.316  12.959  0.50 44.59    -0.349 OA
+BRANCH   4   5
+HETATM    5  C6 AP6G A 701     -88.991  54.527  12.030  0.50 41.28     0.174 C 
+BRANCH   5   6
+HETATM    6  C5 AP6G A 701     -88.531  54.264  10.596  0.50 39.29     0.174 C 
+BRANCH   6   7
+HETATM    7  O4 AP6G A 701     -89.631  53.947   9.732  0.50 36.02    -0.349 OA
+BRANCH   7   8
+HETATM    8  C3 AP6G A 701     -90.446  52.940  10.309  0.50 34.17     0.178 C 
+BRANCH   8   9
+HETATM    9  C2 AP6G A 701     -89.924  51.591   9.861  0.50 33.70     0.214 C 
+HETATM   10  O1 AP6G A 701     -90.440  50.532  10.652  0.50 33.48    -0.218 OA
+ENDBRANCH   8   9
+ENDBRANCH   7   8
+ENDBRANCH   6   7
+ENDBRANCH   5   6
+ENDBRANCH   4   5
+ENDBRANCH   3   4
+ENDBRANCH   2   3
+ENDBRANCH   1   2
+BRANCH   1  11
+HETATM   11  C11AP6G A 701     -86.135  53.379  16.583  0.50 54.19     0.174 C 
+BRANCH  11  12
+HETATM   12  C12AP6G A 701     -85.098  52.391  16.056  0.50 55.44     0.174 C 
+BRANCH  12  13
+HETATM   13  O13AP6G A 701     -85.225  51.134  16.727  0.50 57.26    -0.349 OA
+BRANCH  13  14
+HETATM   14  C14AP6G A 701     -86.469  50.508  16.408  0.50 58.30     0.174 C 
+BRANCH  14  15
+HETATM   15  C15AP6G A 701     -86.383  48.993  16.588  0.50 60.15     0.174 C 
+BRANCH  15  16
+HETATM   16  O16AP6G A 701     -85.271  48.627  17.409  0.50 62.43    -0.349 OA
+BRANCH  16  17
+HETATM   17  C17AP6G A 701     -85.255  47.235  17.748  0.50 63.79     0.178 C 
+BRANCH  17  18
+HETATM   18  C18AP6G A 701     -86.143  46.964  18.967  0.50 63.43     0.214 C 
+HETATM   19  O19AP6G A 701     -85.915  47.911  20.022  0.50 62.93    -0.218 OA
+ENDBRANCH  17  18
+ENDBRANCH  16  17
+ENDBRANCH  15  16
+ENDBRANCH  14  15
+ENDBRANCH  13  14
+ENDBRANCH  12  13
+ENDBRANCH  11  12
+ENDBRANCH   1  11
+TORSDOF 32

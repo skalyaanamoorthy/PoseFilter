@@ -57,8 +57,8 @@ def Fingerprint_write(LigList, FArr, Type, PDB_code):
 
 # Type is "SPLIF" or "Simple_Interaction"
 def Fingerprint(proteinName, Listoflig, Type):
-    print("List of Lig: ")
-    print(Listoflig)
+  #  print("List of Lig: ")
+  #  print(Listoflig)
 
     # Setting up the array
     ligsize = len(Listoflig)
@@ -66,8 +66,8 @@ def Fingerprint(proteinName, Listoflig, Type):
 
     cur_row = 0
     for ref in Listoflig:
-        print("Type: ")
-        print(Type)
+      #  print("Type: ")
+      #  print(Type)
         # Divide by the type of fingerprint
         if Type == "SPLIF":
             # Fill up the row with the fingerprint data
@@ -95,8 +95,8 @@ def SPLIF_Fingerprint(ref_input, Listoflig, proteinpath):
     protein.protein = True
 
     # Read in and define the reference ligand
-    print("ref input:")
-    print(ref_input)
+  #  print("ref input:")
+  #  print(ref_input)
     ref_ligand = next(oddt.toolkit.readfile('pdb', ref_input))
     ref = fp.SPLIF(ref_ligand, protein)
 
@@ -168,8 +168,8 @@ def Fingerprint_Wrapper(files, Type, PDB_code, SI_cutoff, SPLIF_cutoff, TextInte
             PoseObjects.append(item)
 
         os.chdir(cur_dir)
-        print("current dir")
-        print(cur_dir)
+      #  print("current dir")
+      #  print(cur_dir)
         GeneralSimCheck(PoseObjects, All_Fingerprint, cur_dir, "Fingerprint", float(cutoff), fprint)
         # Write to a .csv file
 
