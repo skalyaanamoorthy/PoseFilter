@@ -1,0 +1,57 @@
+HETATM    1  PA  GDP C 601     -39.340  18.311   9.214  0.50 41.01           P  
+HETATM    2  PB  GDP C 601     -40.922  17.311  11.227  0.50 27.18           P  
+HETATM    3  C5' GDP C 601     -36.802  18.357  10.140  0.50 54.39           C  
+HETATM    4  O5' GDP C 601     -37.755  18.053   9.091  0.50 52.80           O  
+HETATM    5  C4' GDP C 601     -35.598  19.060   9.520  0.50 52.90           C  
+HETATM    6  O4' GDP C 601     -34.445  18.573  10.229  0.50 55.90           O  
+HETATM    7  C3' GDP C 601     -35.420  18.660   8.058  0.50 52.36           C  
+HETATM    8  O3' GDP C 601     -35.430  19.793   7.152  0.50 44.58           O  
+HETATM    9  C2' GDP C 601     -34.136  17.813   8.089  0.50 52.45           C  
+HETATM   10  O2' GDP C 601     -33.392  17.854   6.866  0.50 55.03           O  
+HETATM   11  C1' GDP C 601     -33.377  18.292   9.326  0.50 55.48           C  
+HETATM   12  N1  GDP C 601     -28.478  16.251   9.538  0.50 72.14           N  
+HETATM   13  O1A GDP C 601     -39.669  19.635   9.824  0.50 45.88           O1-
+HETATM   14  O1B GDP C 601     -40.430  18.217  12.301  0.50 38.23           O  
+HETATM   15  C2  GDP C 601     -28.920  17.308   8.833  0.50 71.01           C  
+HETATM   16  N2  GDP C 601     -28.022  17.957   8.056  0.50 72.05           N  
+HETATM   17  O2A GDP C 601     -39.985  18.147   7.886  0.50 40.49           O  
+HETATM   18  O2B GDP C 601     -42.060  17.941  10.493  0.50 37.49           O1-
+HETATM   19  N3  GDP C 601     -30.217  17.742   8.872  0.50 65.72           N  
+HETATM   20  O3A GDP C 601     -39.750  17.128  10.180  0.50 45.47           O  
+HETATM   21  O3B GDP C 601     -41.249  15.981  11.817  0.50 37.09           O  
+HETATM   22  C4  GDP C 601     -31.147  17.109   9.633  0.50 61.69           C  
+HETATM   23  C5  GDP C 601     -30.704  15.949  10.422  0.50 59.40           C  
+HETATM   24  C6  GDP C 601     -29.285  15.541  10.331  0.50 67.63           C  
+HETATM   25  O6  GDP C 601     -28.843  14.569  10.968  0.50 67.31           O  
+HETATM   26  N7  GDP C 601     -31.772  15.510  11.086  0.50 57.51           N  
+HETATM   27  C8  GDP C 601     -32.813  16.314  10.754  0.50 58.78           C  
+HETATM   28  N9  GDP C 601     -32.455  17.264   9.883  0.50 57.39           N  
+CONECT    1   13   17   20    4
+CONECT    2   14   18   21   20
+CONECT    3    4    5
+CONECT    4    3    1
+CONECT    5    3    6    7
+CONECT    6    5   11
+CONECT    7    5    8    9
+CONECT    8    7
+CONECT    9    7   10   11
+CONECT   10    9
+CONECT   11    6    9   28
+CONECT   12   15   24
+CONECT   13    1
+CONECT   14    2
+CONECT   15   12   16   19
+CONECT   16   15
+CONECT   17    1
+CONECT   18    2
+CONECT   19   15   22
+CONECT   20    1    2
+CONECT   21    2
+CONECT   22   19   23   28
+CONECT   23   22   24   26
+CONECT   24   23   12   25
+CONECT   25   24
+CONECT   26   23   27
+CONECT   27   26   28
+CONECT   28   11   22   27
+END

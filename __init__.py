@@ -11,6 +11,7 @@ from pymol.Qt.utils import getSaveFileNameWithExt
 from PyQt5.QtWidgets import QDialog, QFileDialog, QTabWidget
 from PyQt5.QtCore import *
 from pymol import cmd
+from .Input_Organization import LigandRMSProcess, ComplexRMSProcess, LigandFP, ComplexFP
 import os
 import glob
 
@@ -26,6 +27,8 @@ https://github.com/Pymol-Scripts/pymol2-demo-plugin
 def __init_plugin__(app=None):
     from pymol.plugins import addmenuitemqt
     addmenuitemqt('PoseFilter', run_plugin_gui)
+
+   # cmd.extend(LigandRMSProcess, "LigandRMSProcess")
 
 dialog = None
 

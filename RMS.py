@@ -24,7 +24,7 @@ Testing = 0
 ######################################################################################################################
 # Takes an optional PDB code and uses that for labelling purposes
 # Should be able to get the files from the directory main_dir/PDBComplex
-@cmd.extend
+
 def CreateRMS(files, PDB_code, cutoff, UNK_var, alpha, nonidentical, cur_dir, pname):
 
     global olig_num, working_dir
@@ -115,4 +115,3 @@ def RMS_Calc(Ref_obj, OList):
 ###############################################################################################################
 
   #  print("RMS finished processing.")
-cmd.extend('CreateRMS', CreateRMS)

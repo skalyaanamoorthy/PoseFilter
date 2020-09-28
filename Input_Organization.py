@@ -3,11 +3,11 @@
 
 # The file list may consist of pdb or other types of files
 # type is either "ligand" or 0 or "complex" or 1"
+from pymol import cmd
 import os
 from pymol import stored
 from pymol import selector
 from shutil import copyfile
-from pymol import cmd
 from .General import natural_sort
 from .RMS import CreateRMS
 from .Fingerprint import Fingerprint_Wrapper
@@ -87,9 +87,9 @@ def InputFileSort (filelist, type, maindir, pdir, ResId, pname):
         pdbfiles = ComplexFileSort(filelist, maindir, Ligand_path, Complex_path, ResId, pname)
         return ResId, pdbfiles
 
-
 @cmd.extend
 def LigandRMSProcess(pfile, keyword, label, RMS_Cutoff, alpha, nonidentical):
+    cmd.reinitialize()
     folder_dir = os.path.dirname(pfile)
     os.chdir(folder_dir)
     all_files = DirSearch(keyword, "")  # including the crystal structure
@@ -102,6 +102,7 @@ def LigandRMSProcess(pfile, keyword, label, RMS_Cutoff, alpha, nonidentical):
 
 @cmd.extend
 def ComplexRMSProcess(folder_dir, keyword, label, resInput, crystal_struct, RMS_Cutoff, alpha, nonidentical):
+    cmd.reinitialize()
     if crystal_struct != "":
         crystal_keyword = os.path.basename(crystal_struct).split('.')[0]
     else:
@@ -111,10 +112,13 @@ def ComplexRMSProcess(folder_dir, keyword, label, resInput, crystal_struct, RMS_
     pname = "protein1.pdb"
     UNK, pdb_files = InputFileSort(all_files, "complex", folder_dir, "", resInput, pname)
     files = natural_sort(pdb_files)
+   # print(files)
+   # print(UNK)
     CreateRMS(files, label, RMS_Cutoff, UNK, alpha, nonidentical, folder_dir, pname)
 
 @cmd.extend
 def LigandFP(pfile, keyword, label, FPList, FP_SI, FP_SPLIF, TextInteraction):
+    cmd.reinitialize()
     folder_dir = os.path.dirname(pfile)
     os.chdir(folder_dir)
     all_files = DirSearch(keyword, "")  # including the crystal structure
@@ -126,6 +130,7 @@ def LigandFP(pfile, keyword, label, FPList, FP_SI, FP_SPLIF, TextInteraction):
 
 @cmd.extend
 def ComplexFP(folder_dir, complex, label, resInput, crystal_struct, FPList, FP_SI, FP_SPLIF, TextInteraction):
+    cmd.reinitialize()
 
     if crystal_struct != "":
         crystal_keyword = os.path.basename(crystal_struct).split('.')[0]
@@ -291,7 +296,7 @@ def ComplexFileSort(filelist, maindir, Ligand_path, Complex_path, ResId, pname):
     return pdbfiles
 
 
-cmd.extend(LigandRMSProcess, "LigandRMSProcess")
-cmd.extend(ComplexRMSProcess, "ComplexRMSProcess")
-cmd.extend(ComplexFP, "ComplexFP")
-cmd.extend(LigandFP, "LigandFP")
+cmd.extend('LigandRMSProcess', LigandRMSProcess)
+cmd.extend('ComplexRMSProcess', ComplexRMSProcess)
+cmd.extend('ComplexFP', ComplexFP)
+cmd.extend('LigandFP', LigandFP)

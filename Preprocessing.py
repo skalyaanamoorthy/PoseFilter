@@ -40,17 +40,20 @@ def ChainOrder(energy_file):
 
 
 def CheckIdentical(totalchains):
+   # cmd.reinitialize()
     chainresns = []
     for chain in totalchains:
         label = 'chain ' + chain
 
-        stored.residues = []
-        cmd.iterate(selector.process(label), 'stored.residues.append(resn)')
-        chainresns.append(copy.deepcopy(stored.residues))
+        reslabel = []
+        cmd.iterate(selector.process(label), 'reslabel.append(resn)')
+        chainresns.append(reslabel)
 
     dupchain = []
     for x in chainresns:
         dupchain.append(chainresns.count(x))
+       # print(chainresns)
+        print(chainresns.count(x))
 
     max_index = dupchain.index(max(dupchain))
     finalchains = []
@@ -80,7 +83,7 @@ def PDB_Info(file, nonidentical):
     # Chain order; go through .pdb and get the order
     # For each chain, check the number of res; keep a list of the chains
     stored.residues = []
-
+    print(chains)
     ichains = CheckIdentical(chains)
 
     if nonidentical:
@@ -92,6 +95,7 @@ def PDB_Info(file, nonidentical):
     # Keeps a list of the identical chains
     for chain in chains:
         label = 'chain ' + chain
+        print(label + 'chain')
 
         # Res_min, res_max
         stored.residues = []
@@ -162,6 +166,6 @@ def PDBInfo_Wrapper(file, nonidentical):
     ListChains = chains
     return minval, maxval, chains
 
-#infoc = (PDB_Info('/home/justine/PycharmProjects/PoseFilter/Examples/Trimer_Example/5EIL.pdb'))
+#infoc = (PDB_Info('/home/justine/PycharmProjects/PoseFilter/Examples/6ewp/6ewp.pdbqt', 1))
 #print(infoc)
 #CheckIdentical(infoc[2])
