@@ -67,9 +67,9 @@ There are currently two types of input options are available and are given as tw
 PoseFilter GUI panel.
 Please use one of these tab options at a time to choose your input files.
 
-#### Tab 1 Description
 
-![Input Type 1](https://github.com/justinecwilliams/PoseFilter/GUITab1.jpg)
+#### Tab 1 Description
+![Input Type 1](https://raw.githubusercontent.com/justinecwilliams/PoseFilter/GUITab1.jpg)
 
 The first tab (File input - type 1) gives the option to process a
 folder that contain protein and ligand poses as separate files.
@@ -82,9 +82,8 @@ the keyword “pose” should be used in the “Ligand filename identifier” bo
 4. Users can provide an output suffix for labelling purposes. This could be the protein PDB ID, for example.
 This is optional and the box can be left blank.
 
-#### Tab 2 Description 
-
-![Input Type 2](https://github.com/justinecwilliams/PoseFilter/GUITab2.jpg)
+#### Tab 2 Description
+![Input Type 2](https://raw.githubusercontent.com/justinecwilliams/PoseFilter/GUITab2.jpg)
 
 The second tab (File input - type 2) allows the input of protein + ligand complex files.
 
