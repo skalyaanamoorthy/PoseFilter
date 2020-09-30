@@ -1,0 +1,7 @@
+Fingerprint values
+ ,pose1.pdb, pose2.pdb, pose3.pdb, pose4.pdb, pose5.pdb, 
+pose1.pdb, 1.0, 0.77, 0.75, 0.71, 0.49, 
+pose2.pdb, 0.77, 1.0, 0.85, 0.78, 0.5, 
+pose3.pdb, 0.75, 0.85, 1.0, 0.78, 0.43, 
+pose4.pdb, 0.71, 0.78, 0.78, 1.0, 0.55, 
+pose5.pdb, 0.49, 0.5, 0.43, 0.55, 1.0, 

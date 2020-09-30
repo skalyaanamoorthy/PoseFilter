@@ -26,17 +26,17 @@ Testing = 0
 # Should be able to get the files from the directory main_dir/PDBComplex
 
 def CreateRMS(files, PDB_code, cutoff, UNK_var, alpha, nonidentical, cur_dir, pname):
-
+    print(files)
     global olig_num, working_dir
     working_dir = cur_dir
     protein_path = os.path.join(cur_dir, "PDBLigand", pname)
 
     res_min, res_max, toAlph = PDBInfo_Wrapper(protein_path, nonidentical)
     olig_num = len(toAlph)
-    print("res min : " + str(res_min))
-    print("res max : " + str(res_max))
-    print("to alpha ")
-    print(toAlph)
+  #  print("res min : " + str(res_min))
+  #  print("res max : " + str(res_max))
+  #  print("to alpha ")
+  #  print(toAlph)
 
 
     # First, load the first file as a reference

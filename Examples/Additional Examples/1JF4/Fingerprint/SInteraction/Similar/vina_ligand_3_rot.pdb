@@ -1,0 +1,87 @@
+HETATM    1  CAA HEM A 148     -25.278  -9.101  25.623  1.00 19.59           C  
+HETATM    2  CAB HEM A 148     -29.578 -10.478  16.990  1.00 15.24           C  
+HETATM    3  CAC HEM A 148     -29.816  -2.823  18.105  1.00 17.51           C  
+HETATM    4  CAD HEM A 148     -25.593  -3.687  24.886  1.00 12.86           C  
+HETATM    5  NA  HEM A 148     -26.605  -8.268  22.151  1.00 13.88           N  
+HETATM    6  CBA HEM A 148     -23.776  -9.255  25.772  1.00 31.97           C  
+HETATM    7  CBB HEM A 148     -29.063 -10.260  15.650  1.00 15.41           C  
+HETATM    8  CBC HEM A 148     -29.882  -1.605  18.899  1.00 22.56           C  
+HETATM    9  CBD HEM A 148     -24.080  -3.917  24.939  1.00 15.48           C  
+HETATM   10  NB  HEM A 148     -27.981  -8.708  19.792  1.00 13.06           N  
+HETATM   11  CGA HEM A 148     -23.268 -10.546  26.410  1.00 38.78           C  
+HETATM   12  CGD HEM A 148     -23.571  -4.430  26.272  1.00 16.81           C  
+HETATM   13  ND  HEM A 148     -27.035  -5.537  21.911  1.00 11.97           N  
+HETATM   14  CHA HEM A 148     -25.909  -6.600  23.779  1.00 12.79           C  
+HETATM   15  CHB HEM A 148     -26.928 -10.456  21.110  1.00 14.03           C  
+HETATM   16  CHC HEM A 148     -29.507  -7.678  18.193  1.00 14.68           C  
+HETATM   17  CHD HEM A 148     -28.059  -3.785  20.573  1.00 11.42           C  
+HETATM   18  CMA HEM A 148     -25.765 -11.609  23.713  1.00 16.75           C  
+HETATM   19  CMB HEM A 148     -27.887 -12.405  18.899  1.00 11.97           C  
+HETATM   20  CMC HEM A 148     -31.076  -5.279  16.869  1.00 15.35           C  
+HETATM   21  CMD HEM A 148     -26.975  -1.832  22.733  1.00 12.06           C  
+HETATM   22  C1A HEM A 148     -26.057  -7.905  23.360  1.00 13.87           C  
+HETATM   23  C1B HEM A 148     -27.607 -10.019  19.995  1.00 14.21           C  
+HETATM   24  C1C HEM A 148     -29.390  -6.373  18.627  1.00 12.26           C  
+HETATM   25  C1D HEM A 148     -27.332  -4.219  21.651  1.00 11.83           C  
+HETATM   26  O1A HEM A 148     -24.081 -11.393  26.792  1.00 41.39           O  
+HETATM   27  O1D HEM A 148     -23.896  -5.551  26.639  1.00 19.28           O  
+HETATM   28  C2A HEM A 148     -25.720  -9.070  24.159  1.00 18.04           C  
+HETATM   29  C2B HEM A 148     -28.151 -10.900  18.987  1.00 14.05           C  
+HETATM   30  C2C HEM A 148     -30.037  -5.242  17.990  1.00 15.15           C  
+HETATM   31  C2D HEM A 148     -26.841  -3.348  22.681  1.00 12.69           C  
+HETATM   32  O2A HEM A 148     -22.049 -10.711  26.497  1.00 42.18           O  
+HETATM   33  O2D HEM A 148     -22.870  -3.695  26.960  1.00 20.24           O  
+HETATM   34  C3A HEM A 148     -25.983 -10.143  23.375  1.00 15.63           C  
+HETATM   35  C3B HEM A 148     -28.912 -10.118  18.162  1.00 15.80           C  
+HETATM   36  C3C HEM A 148     -29.556  -4.118  18.573  1.00 14.87           C  
+HETATM   37  C3D HEM A 148     -26.242  -4.140  23.589  1.00 11.87           C  
+HETATM   38  C4A HEM A 148     -26.516  -9.645  22.144  1.00 15.24           C  
+HETATM   39  C4B HEM A 148     -28.821  -8.768  18.700  1.00 14.44           C  
+HETATM   40  C4C HEM A 148     -28.651  -4.589  19.627  1.00 12.44           C  
+HETATM   41  C4D HEM A 148     -26.366  -5.490  23.108  1.00 11.45           C  
+HETATM   42  NC  HEM A 148     -28.546  -5.971  19.637  1.00 12.45           N  
+HETATM   43 FE   HEM A 148     -27.346  -7.106  20.761  1.00 11.27          Fe  
+CONECT    1    6   28
+CONECT    2    7   35
+CONECT    3    8   36
+CONECT    4    9   37
+CONECT    5   22   38   43
+CONECT    6    1   11
+CONECT    7    2
+CONECT    8    3
+CONECT    9    4   12
+CONECT   10   23   39   43
+CONECT   11    6   26   32
+CONECT   12    9   27   33
+CONECT   13   25   41   43
+CONECT   14   22   41
+CONECT   15   23   38
+CONECT   16   24   39
+CONECT   17   25   40
+CONECT   18   34
+CONECT   19   29
+CONECT   20   30
+CONECT   21   31
+CONECT   22    5   14   28
+CONECT   23   10   15   29
+CONECT   24   16   30   42
+CONECT   25   13   17   31
+CONECT   26   11
+CONECT   27   12
+CONECT   28   22    1   34
+CONECT   29   19   23   35
+CONECT   30   20   24   36
+CONECT   31   21   25   37
+CONECT   32   11
+CONECT   33   12
+CONECT   34   18   28   38
+CONECT   35   29    2   39
+CONECT   36    3   30   40
+CONECT   37   31    4   41
+CONECT   38    5   15   34
+CONECT   39   10   16   35
+CONECT   40   17   36   42
+CONECT   41   13   14   37
+CONECT   42   24   40   43
+CONECT   43    5   10   13   42
+END
