@@ -139,13 +139,6 @@ def InteractionsFile(protein, ligand, FilePath, Interaction_Name):
                 l_atomicnum = ligand[y]['atomicnum']
                 p_atomicnum = protein[y]['atomicnum']
 
-             #   if protein[y]['isalpha']:
-             #       p_atomsym = ANumtoASym(p_atomicnum, os.path.dirname(__file__)) + 'A'
-             #   elif protein[y]['isbeta']:
-            #        p_atomsym = ANumtoASym(p_atomicnum, os.path.dirname(__file__)) + 'B'
-             #   else:
-             #       p_atomsym = ANumtoASym(p_atomicnum, os.path.dirname(__file__))
-
                 p_atomsym = ANumtoASym(p_atomicnum, os.path.dirname(__file__))
 
                 p_id = protein[y]['id']

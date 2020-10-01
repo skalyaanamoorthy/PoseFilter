@@ -1,13 +1,14 @@
 # PoseFilter User Guide 
 
-Summary: PoseFilter is a PyMOL plugin and assists in the analysis of docked ligands through identification of unique
+PoseFilter is a PyMOL plugin and assists in the analysis of docked ligands through identification of unique
 oligomeric poses by utilizing RMSD and interaction fingerprint analysis methods.  
 
 ## Installing Open-Source PyMOL
 ### Windows Installation
 
-1. Anaconda 3 can be installed from the website: `https://www.anaconda.com/products/individual`. During installation, if
-anaconda is added to the path, allowing for the `conda` keyword to be used in the command prompt, step 2 may be skipped.
+1. Anaconda 3 can be installed from the website: `https://www.anaconda.com/products/individual`. During GUI installation,
+if anaconda is added to the path (through the checkbox), allowing for the `conda` keyword to be used in the command
+prompt, step 2 may be skipped.
 2. To use conda commands in the Windows command prompt, pathways to Anaconda must be added to the path variable. Search
 Windows for "edit the system environment variables," under "system properties" one can choose "Environment Variables"
 select "Path" then "Edit..." and add the following paths.
@@ -15,11 +16,9 @@ Add the Anaconda3 folder, and Anaconda3\Scripts to the path variable, which shou
 `C:\tools\Anaconda3\Scripts`
 `C:\tools\Anaconda3`
 3. Close and then open the command prompt again, selecting to "run as administrator." Typing "conda" into the command line
-will give conformation that anaconda3 was installed correctly and the paths were added. A menu with commands should appear.
-4. Retrieve the Windows yml file from the GitHub repository and move it to the `...\Anaconda3\envs` directory. The file
-is used to create a new anaconda environment named pymol with necessary packages. Open a command prompt in this directory
-(a shortcut is to type `cmd` into the address bar). In this command prompt, type the following:
-`conda env create --file pymol.yml`
+will give conformation that Anaconda3 was installed correctly and the paths were added. A menu with commands should appear.
+4. In this command prompt, type the following:
+`conda create -n pymol python=3.7 rdkit matplotlib seaborn pip numpy conda-forge::pmw conda-forge::oddt=0.7 tpeulen::pymol-open-source scikit-learn  `
 5. Activate the anaconda environment.
 `activate pymol`
 6. Open source PyMOL can now be opened through the activated anaconda directory. Type pymol into the command line to 
@@ -29,21 +28,21 @@ After activating the environment, the paths can be added to the environment vari
 prompt, and then copy and paste the links into the path environment variable. Once this is done, `pymol` can be used 
 in the command prompt to open the program.
 
+
 ### Linux Installation
-1. Ensure that Anaconda3 is installed, if not then install it through the following link: https://docs.anaconda.com/anaconda/install/linux/
-2. Retrieve the Linux yml file from the GitHub repository and move it to the `...\Anaconda3\envs` directory. The file
-is used to create a new anaconda environment named pymol with necessary packages:
-`conda env create --file pymol.yml`
-3. Activate the anaconda environment:
+1. Ensure that Anaconda3 is installed, if not then install it through the following link:
+https://docs.anaconda.com/anaconda/install/linux/
+`conda create -n pymol python=3.7 rdkit matplotlib seaborn pip numpy conda-forge::pmw conda-forge::oddt=0.7 tpeulen::pymol-open-source scikit-learn`
+2. Activate the anaconda environment:
 `source activate pymol`
-4. Launch pymol by typing `pymol` in the terminal. If an error occurs, try to install some additional requirements.
+3. Launch pymol by typing `pymol` in the terminal. If an error occurs, try to install some additional requirements.
 Ensure to run as root: https://pymolwiki.org/index.php/Linux_Install.
 
 
 ### MacOS Installation
 1. Ensure that Anaconda3 is installed, if not then install it through the following link: https://docs.anaconda.com/anaconda/install/mac-os/
 2. Use the following command to create an environment named pymol and to install the proper packages, using anaconda:
-`conda create --name pymol conda-forge::rdkit tpeulen::pymol-open-source conda-forge::pmw matplotlib seaborn scikit-learn `
+`conda create -n pymol python=3.7 rdkit matplotlib seaborn pip numpy conda-forge::pmw conda-forge::oddt=0.7 tpeulen::pymol-open-source scikit-learn `
 3. Activate the anaconda environment:
 `source activate pymol`
 4. Launch pymol by typing `pymol` in the terminal. 
@@ -51,8 +50,7 @@ Ensure to run as root: https://pymolwiki.org/index.php/Linux_Install.
 
 ## Installing the PoseFilter Plugin 
 
-   1. Ensure that open-source PyMOL is installed in the conda environment (as outlined above). Appropriate toolkits are
-   outlined in the yml file, for reference. 
+   1. Ensure that open-source PyMOL is installed in the conda environment (as outlined above).
    2. The PoseFilter files can be obtained from this repository. Download and extract the files.
    3. In PyMOL, click on "Plugin" at the top bar, then "Plugin Manager." Select the tab "Install New Plugin" and then
      under "Install from local file" select "choose file...". Find the downloaded GitHub folder and select the
@@ -66,7 +64,6 @@ In the PyMOL window, the PoseFilter plugin can be opened from the ‘Plugins’ 
 There are currently two types of input options are available and are given as two separate tabs in the
 PoseFilter GUI panel.
 Please use one of these tab options at a time to choose your input files.
-
 
 #### Tab 1 Description
 ![Input Type 1](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/GUITab1.jpg)
@@ -133,6 +130,18 @@ analysis output, which is placed in a sub-folder named ‘Fingerprint’.
 generated in the ‘Similar’ folder, which shows the similar poses’ relationship to each other. 
 6. Once the button has been pressed the calculation will take a few minutes to complete. The "Fingerprint analysis
 complete” will be displayed in the PyMOL command window once this process has finished. 
+
+## Example Files
+
+Files in the example folder were prepared using AutoDock Vina, Schrodinger Maestro was used for preprocessing for files
+  contained in the "Additional Examples" folder. These files can be run with the PoseFilter plugin.
+  
+  Run with tab option 1: Trimer and tetramer examples; files except 1JF4 in "Additional Examples" folder
+  
+  Run with tab option 2: Dimer; 1JF4 (from "Additional Example" folder), which can also be run with the "crystal.pdb"
+  file, containing the pose from the PDB database crystal structure.
+Other 
+
 
 ## Command Line Input 
 

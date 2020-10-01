@@ -1,8 +1,0 @@
-RMS values
- ,ligand_0rot.pdb, vina_ligand_1_0rot.pdb, vina_ligand_2_0rot.pdb, vina_ligand_3_0rot.pdb, vina_ligand_4_0rot.pdb, vina_ligand_5_0rot.pdb, 
-ligand_0rot.pdb, 0.0, 32.37, 32.69, 32.97, 33.35, 32.7, 
-vina_ligand_1_0rot.pdb, 32.37, 0.0, 6.87, 6.4, 7.87, 7.76, 
-vina_ligand_2_0rot.pdb, 32.69, 6.87, 0.0, 3.49, 9.15, 5.39, 
-vina_ligand_3_0rot.pdb, 32.97, 6.4, 3.49, 0.0, 9.82, 6.95, 
-vina_ligand_4_0rot.pdb, 33.35, 7.87, 9.15, 9.82, 0.0, 8.65, 
-vina_ligand_5_0rot.pdb, 32.7, 7.76, 5.39, 6.95, 8.65, 0.0, 
