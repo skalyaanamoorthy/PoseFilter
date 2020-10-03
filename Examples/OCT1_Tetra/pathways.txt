@@ -1,5 +1,0 @@
-vina
-"C:\Users\Justine\PycharmProjects\Pymol-script-repo\modules\autodock_vina\autodock_vina_1_1_2_win32\vina.exe" --config conf.txt --log results.txt
-
-vina_split
-"C:\Users\Justine\PycharmProjects\Pymol-script-repo\modules\autodock_vina\autodock_vina_1_1_2_win32\vina_split.exe" --input vina_output.pdbqt

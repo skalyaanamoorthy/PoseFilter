@@ -1,0 +1,44 @@
+REMARK VINA RESULT:      -2.9     16.529     17.776
+REMARK  8 active torsions:
+REMARK  status: ('A' for Active; 'I' for Inactive)
+REMARK    1  A    between atoms: N_1  and  C5_9 
+REMARK    2  A    between atoms: N_1  and  C7_12 
+REMARK    3  A    between atoms: N_1  and  C2_4 
+REMARK    4  A    between atoms: C1_2  and  C2_4 
+REMARK    5  A    between atoms: C2_4  and  C3_5 
+REMARK    6  A    between atoms: C2_4  and  C4_7 
+REMARK    7  A    between atoms: C5_9  and  C6_10 
+REMARK    8  A    between atoms: C7_12  and  C8_13 
+ROOT
+HETATM    1  N   BTB B 401      90.256  76.653  27.563  1.00  8.94    -0.361 N 
+ENDROOT
+BRANCH   1   2
+HETATM    2  C5  BTB B 401      89.252  75.738  28.142  1.00  8.62     0.133 C 
+BRANCH   2   3
+HETATM    3  C6  BTB B 401      88.524  76.431  29.292  1.00  8.59     0.206 C 
+HETATM    4  O6  BTB B 401      87.125  76.417  29.068  1.00  8.83    -0.219 OA
+ENDBRANCH   2   3
+ENDBRANCH   1   2
+BRANCH   1   5
+HETATM    5  C7  BTB B 401      90.108  78.066  27.979  1.00  9.09     0.133 C 
+BRANCH   5   6
+HETATM    6  C8  BTB B 401      89.525  78.921  26.853  1.00  8.85     0.206 C 
+HETATM    7  O8  BTB B 401      90.508  79.258  25.887  1.00  9.27    -0.219 OA
+ENDBRANCH   5   6
+ENDBRANCH   1   5
+BRANCH   1   8
+HETATM    8  C2  BTB B 401      91.612  76.106  27.325  1.00  8.64     0.153 C 
+BRANCH   8   9
+HETATM    9  C1  BTB B 401      92.686  77.013  27.935  1.00  8.44     0.207 C 
+HETATM   10  O1  BTB B 401      93.236  76.463  29.123  1.00  8.22    -0.219 OA
+ENDBRANCH   8   9
+BRANCH   8  11
+HETATM   11  C3  BTB B 401      91.865  76.051  25.818  1.00  8.31     0.207 C 
+HETATM   12  O3  BTB B 401      92.915  76.909  25.387  1.00  7.68    -0.219 OA
+ENDBRANCH   8  11
+BRANCH   8  13
+HETATM   13  C4  BTB B 401      91.789  74.705  27.913  1.00  8.73     0.207 C 
+HETATM   14  O4  BTB B 401      92.444  73.825  27.011  1.00  9.08    -0.219 OA
+ENDBRANCH   8  13
+ENDBRANCH   1   8
+TORSDOF 8
