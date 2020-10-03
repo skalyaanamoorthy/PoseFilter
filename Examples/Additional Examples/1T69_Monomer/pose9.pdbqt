@@ -1,0 +1,53 @@
+REMARK VINA RESULT:      -5.9      5.255      7.770
+REMARK  8 active torsions:
+REMARK  status: ('A' for Active; 'I' for Inactive)
+REMARK       I    between atoms: N1_3  and  C1_4 
+REMARK    1  A    between atoms: C1_4  and  C2_5 
+REMARK    2  A    between atoms: C2_5  and  C3_6 
+REMARK    3  A    between atoms: C3_6  and  C4_7 
+REMARK    4  A    between atoms: C4_7  and  C5_8 
+REMARK    5  A    between atoms: C5_8  and  C6_9 
+REMARK    6  A    between atoms: C6_9  and  C7_10 
+REMARK    7  A    between atoms: C7_10  and  C8_11 
+REMARK       I    between atoms: C8_11  and  N2_13 
+REMARK    8  A    between atoms: N2_13  and  C9_14 
+ROOT
+HETATM    1  C7  SHH A 379      28.230  -6.262 -16.958  1.00 72.73     0.103 C 
+ENDROOT
+BRANCH   1   2
+HETATM    2  C6  SHH A 379      27.615  -7.369 -16.114  1.00 72.54     0.009 C 
+BRANCH   2   3
+HETATM    3  C5  SHH A 379      26.106  -7.196 -16.010  1.00 72.63     0.000 C 
+BRANCH   3   4
+HETATM    4  C4  SHH A 379      25.548  -6.226 -17.045  1.00 72.15     0.000 C 
+BRANCH   4   5
+HETATM    5  C3  SHH A 379      24.490  -5.347 -16.390  1.00 72.15     0.009 C 
+BRANCH   5   6
+HETATM    6  C2  SHH A 379      24.604  -3.878 -16.781  1.00 71.82     0.105 C 
+BRANCH   6   7
+HETATM    7  C1  SHH A 379      25.787  -3.233 -16.083  1.00 71.70     0.243 C 
+HETATM    8  O2  SHH A 379      26.044  -3.391 -14.897  1.00 70.89    -0.271 OA
+HETATM    9  N1  SHH A 379      26.554  -2.473 -16.842  1.00 71.79    -0.201 N 
+HETATM   10  O1  SHH A 379      27.771  -2.454 -16.637  1.00 71.87    -0.086 OA
+HETATM   11  HN1 SHH A 379      26.144  -1.918 -17.579  1.00  0.00     0.200 HD
+ENDBRANCH   6   7
+ENDBRANCH   5   6
+ENDBRANCH   4   5
+ENDBRANCH   3   4
+ENDBRANCH   2   3
+ENDBRANCH   1   2
+BRANCH   1  12
+HETATM   12  C8  SHH A 379      29.170  -5.446 -16.103  1.00 74.00     0.222 C 
+HETATM   13  O3  SHH A 379      30.320  -5.222 -16.460  1.00 74.06    -0.273 OA
+HETATM   14  N2  SHH A 379      28.627  -4.972 -14.976  1.00 74.85    -0.327 N 
+HETATM   15  HN2 SHH A 379      27.658  -4.687 -14.964  1.00  0.00     0.169 HD
+BRANCH  14  16
+HETATM   16  C9  SHH A 379      29.241  -4.813 -13.778  1.00 74.37     0.034 A 
+HETATM   17  C10 SHH A 379      29.069  -3.588 -13.116  1.00 74.01     0.029 A 
+HETATM   18  C11 SHH A 379      29.678  -3.362 -11.881  1.00 73.75     0.002 A 
+HETATM   19  C12 SHH A 379      30.466  -4.363 -11.314  1.00 74.63     0.000 A 
+HETATM   20  C13 SHH A 379      30.648  -5.586 -11.981  1.00 74.80     0.002 A 
+HETATM   21  C14 SHH A 379      30.043  -5.814 -13.217  1.00 73.59     0.029 A 
+ENDBRANCH  14  16
+ENDBRANCH   1  12
+TORSDOF 8

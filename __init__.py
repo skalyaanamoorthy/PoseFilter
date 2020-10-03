@@ -103,6 +103,8 @@ def make_dialog():
 
     def fingerprint():
         cmd.reinitialize()
+        cmd.do('set retain_order,1')
+       # cmd.do('set pdb_retain_ids,1')
 
         AnyChecked = 0
         IText = []
@@ -127,6 +129,8 @@ def make_dialog():
     def run():
         global dialog
         cmd.reinitialize()
+        cmd.do('set retain_order,1')
+       # cmd.do('set pdb_retain_ids,1')
        # InfoArray = TabInfo()
         alpha = 0
         if form.Alignalpha.isChecked():

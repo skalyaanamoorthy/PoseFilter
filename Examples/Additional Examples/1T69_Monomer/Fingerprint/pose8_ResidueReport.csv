@@ -1,0 +1,12 @@
+Ligand interactions with protein residues
+Ligand hydrophobic interactions with protein residues
+Ligand Atom Numbering, Residue Atom Numbering,Resn, Resi, Ligand to Protein Distance (Angstrom)
+C16, C CB1845, PHE, 208, 3.67
+C19, C CE21293, PHE, 152, 3.72
+C5, C CE1836, TYR, 100, 3.98
+
+Ligand hydrogen bond interactions with protein residues
+Ligand Atom Numbering, Residue Atom Numbering,Resn, Resi, Ligand to Protein Distance (Angstrom)
+O7, N CE182, LYS, 33, 2.8
+O9, O CZ838, TYR, 100, 2.83
+

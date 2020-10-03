@@ -10,6 +10,7 @@ from pymol import selector
 from shutil import copyfile
 from .General import natural_sort
 from .RMS import CreateRMS
+from .RMS import CreateRMS
 from .Fingerprint import Fingerprint_Wrapper
 import glob
 
@@ -41,6 +42,7 @@ def DirSearch(keyword, crystalstruct):
 # Takes the ligand file name and the protein
 
 def MakeComplex(ligand, proteinpath):
+  #  cmd.do('set retain_order,1')
     cmd.load(ligand)
     cmd.load(proteinpath)
     protein_name = os.path.basename(proteinpath)
@@ -54,6 +56,7 @@ def MakeComplex(ligand, proteinpath):
 
 # Also specify the directory that will be used for the saving
 def toPDB(FullMolPath):
+   # cmd.do('set retain_order,1')
     cmd.load(FullMolPath)
     basename = os.path.basename(FullMolPath)
     name, ext = basename.split('.')
@@ -90,6 +93,9 @@ def InputFileSort (filelist, type, maindir, pdir, ResId, pname):
 @cmd.extend
 def LigandRMSProcess(pfile, keyword, label, RMS_Cutoff, alpha, nonidentical):
     cmd.reinitialize()
+   # cmd.do('set retain_order,1')
+   # cmd.do('set pdb_retain_ids,1')
+
     folder_dir = os.path.dirname(pfile)
     os.chdir(folder_dir)
     all_files = DirSearch(keyword, "")  # including the crystal structure
@@ -103,6 +109,9 @@ def LigandRMSProcess(pfile, keyword, label, RMS_Cutoff, alpha, nonidentical):
 @cmd.extend
 def ComplexRMSProcess(folder_dir, keyword, label, resInput, crystal_struct, RMS_Cutoff, alpha, nonidentical):
     cmd.reinitialize()
+   # cmd.do('set retain_order,1')
+  #  cmd.do('set pdb_retain_ids,1')
+
     if crystal_struct != "":
         crystal_keyword = os.path.basename(crystal_struct).split('.')[0]
     else:
@@ -150,6 +159,7 @@ def LigandFileSort(filelist, maindir, Ligand_path, Complex_path, ppath):
     # Check the first entry of the list for the type.
     # If the type is pdb then just copy over
    # print("ligand file sort")
+   # cmd.do('set retain_order,1')
 
     for file in filelist:
     #    print("file")
@@ -232,6 +242,7 @@ def ComplexFileSort(filelist, maindir, Ligand_path, Complex_path, ResId, pname):
     # Check the first entry of the list for the type.
     # If the type is pdb then just copy over
   #  print("complex file sort")
+  #  cmd.do('set retain_order,1')
 
     for file in filelist:
    #     print("file!")
@@ -278,6 +289,7 @@ def ComplexFileSort(filelist, maindir, Ligand_path, Complex_path, ResId, pname):
 
     for complex in pdbfiles:
         # copy the file over
+     #   cmd.do('set retain_order,1')
         new_complex_path = os.path.join(Complex_path, complex)
         new_ligand_path = os.path.join(Ligand_path, complex)
 

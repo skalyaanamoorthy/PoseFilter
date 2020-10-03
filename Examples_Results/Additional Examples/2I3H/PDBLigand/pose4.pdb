@@ -1,29 +1,29 @@
 HETATM    1  N   BTB B 401      86.670  77.436   8.330  1.00  8.94           N  
-HETATM    2  C1  BTB B 401      87.345  75.314   7.229  1.00  8.44           C  
-HETATM    3  O1  BTB B 401      86.977  75.040   5.884  1.00  8.22           O  
-HETATM    4  C2  BTB B 401      87.670  76.796   7.444  1.00  8.64           C  
-HETATM    5  C3  BTB B 401      89.042  76.868   8.115  1.00  8.31           C  
-HETATM    6  O3  BTB B 401      89.778  75.653   8.034  1.00  7.68           O  
-HETATM    7  C4  BTB B 401      87.749  77.467   6.071  1.00  8.73           C  
-HETATM    8  O4  BTB B 401      88.856  78.350   5.971  1.00  9.08           O  
-HETATM    9  C5  BTB B 401      87.181  78.171   9.504  1.00  8.62           C  
-HETATM   10  C6  BTB B 401      86.901  79.664   9.342  1.00  8.59           C  
-HETATM   11  O6  BTB B 401      88.011  80.311   8.746  1.00  8.83           O  
-HETATM   12  C7  BTB B 401      85.439  78.008   7.739  1.00  9.09           C  
-HETATM   13  C8  BTB B 401      84.225  77.119   8.005  1.00  8.85           C  
-HETATM   14  O8  BTB B 401      83.757  77.254   9.338  1.00  9.27           O  
-CONECT    1    4    9   12
-CONECT    2    3    4
-CONECT    3    2
-CONECT    4    1    2    5    7
-CONECT    5    4    6
-CONECT    6    5
-CONECT    7    4    8
-CONECT    8    7
-CONECT    9    1   10
-CONECT   10    9   11
-CONECT   11   10
-CONECT   12    1   13
-CONECT   13   12   14
+HETATM    2  C5  BTB B 401      87.181  78.171   9.504  1.00  8.62           C  
+HETATM    3  C6  BTB B 401      86.901  79.664   9.342  1.00  8.59           C  
+HETATM    4  O6  BTB B 401      88.011  80.311   8.746  1.00  8.83           O  
+HETATM    5  C7  BTB B 401      85.439  78.008   7.739  1.00  9.09           C  
+HETATM    6  C8  BTB B 401      84.225  77.119   8.005  1.00  8.85           C  
+HETATM    7  O8  BTB B 401      83.757  77.254   9.338  1.00  9.27           O  
+HETATM    8  C2  BTB B 401      87.670  76.796   7.444  1.00  8.64           C  
+HETATM    9  C1  BTB B 401      87.345  75.314   7.229  1.00  8.44           C  
+HETATM   10  O1  BTB B 401      86.977  75.040   5.884  1.00  8.22           O  
+HETATM   11  C3  BTB B 401      89.042  76.868   8.115  1.00  8.31           C  
+HETATM   12  O3  BTB B 401      89.778  75.653   8.034  1.00  7.68           O  
+HETATM   13  C4  BTB B 401      87.749  77.467   6.071  1.00  8.73           C  
+HETATM   14  O4  BTB B 401      88.856  78.350   5.971  1.00  9.08           O  
+CONECT    1    2    5    8
+CONECT    2    1    3
+CONECT    3    2    4
+CONECT    4    3
+CONECT    5    1    6
+CONECT    6    5    7
+CONECT    7    6
+CONECT    8    1    9   11   13
+CONECT    9    8   10
+CONECT   10    9
+CONECT   11    8   12
+CONECT   12   11
+CONECT   13    8   14
 CONECT   14   13
 END

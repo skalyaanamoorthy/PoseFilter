@@ -1,6 +1,11 @@
 Ligand interactions with protein residues
 Ligand hydrophobic interactions with protein residues
 Ligand Atom Numbering, Residue Atom Numbering,Resn, Resi, Ligand to Protein Distance (Angstrom)
-C24, C6840, LEU, 1176, 3.42
-C27, CB7098, THR, 1206, 3.68
+C 7, CA 6839, LEU, 1176, 3.52
+C 28, O 7100, THR, 1206, 3.67
+C 26, CB 7134, ILE, 1210, 3.89
+
+Ligand halogen bond interactions with protein residues
+Ligand Atom Numbering, Residue Atom Numbering,Resn, Resi, Ligand to Protein Distance (Angstrom)
+Br 30, CA 5023, MET, 1174, 3.76
 

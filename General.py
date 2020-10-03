@@ -124,7 +124,7 @@ def olig_string(i, i_List, ref_List):
 # Does rotation, makes the rot structures
 def rotation(rot_str, i, num):
     global UNK
-    cmd.do('set retain_order,1')
+ #   cmd.do('set retain_order,1')
     cmd.do(rot_str)
 
     # Save the rotation and the ligand
@@ -183,12 +183,13 @@ def GenerateRotList(objects, UNK_var, alpha):
 
 # Takes the RMS 1D Array: outputs the Lowest_RMS value (float), x_val (string), and Rotation file name (string)
 def distComp(RMSArr, i):
+
     global olig
+  #  cmd.do('set retain_order,1')
     # Find the min index and then loop through to delete the other files
     min_index = RMSArr.index(min(RMSArr))
  #   print("Min index: " + str(min_index))
     for x in range(olig):
-
         # Remove all of the protein + ligand complexes (rotations); maybe would not even
         # Save those to begin with (rotation function)
         #os.remove(i + '_' + str(x) + 'rotation.pdb')
@@ -214,6 +215,7 @@ def distComp(RMSArr, i):
 # Since this is for the olig function we want to make complexes with the ligand and protein files
 def MakeComplex(savename, ligand, protein):
   #  os.chdir(dir)
+   # cmd.do('set retain_order,1')
     cmd.load(ligand)
     cmd.load(protein)
     save_as = savename + ".pdb"
@@ -231,6 +233,7 @@ def MakeComplex(savename, ligand, protein):
 # Loads the appropriate files
 def FilterFiles(files):
     # Load files; disregard any for now that would have been output from before
+  #  cmd.do('set retain_order,1')
     final_files = []
     for x in files:
         if "rot" in x:

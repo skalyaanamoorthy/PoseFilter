@@ -1,0 +1,110 @@
+REMARK VINA RESULT:      -6.2      3.322      4.594
+REMARK  24 active torsions:
+REMARK  status: ('A' for Active; 'I' for Inactive)
+REMARK    1  A    between atoms: C1_1  and  O1_2 
+REMARK    2  A    between atoms: C1_1  and  C2_3 
+REMARK    3  A    between atoms: O1_2  and  C11_17 
+REMARK    4  A    between atoms: C2_3  and  O2_4 
+REMARK    5  A    between atoms: C2_3  and  C3_5 
+REMARK    6  A    between atoms: O2_4  and  P2_12 
+REMARK    7  A    between atoms: C3_5  and  O3_6 
+REMARK    8  A    between atoms: O3_6  and  C31_7 
+REMARK    9  A    between atoms: C31_7  and  C32_8 
+REMARK   10  A    between atoms: P2_12  and  O23_16 
+REMARK   11  A    between atoms: C11_17  and  C12_18 
+REMARK   12  A    between atoms: C12_18  and  C13_19 
+REMARK   13  A    between atoms: C13_19  and  C14_20 
+REMARK   14  A    between atoms: C14_20  and  C15_21 
+REMARK   15  A    between atoms: C15_21  and  C16_22 
+REMARK   16  A    between atoms: C16_22  and  C17_23 
+REMARK   17  A    between atoms: C17_23  and  C18_24 
+REMARK   18  A    between atoms: C18_24  and  C19_25 
+REMARK   19  A    between atoms: C19_25  and  C20_26 
+REMARK   20  A    between atoms: C20_26  and  C21_27 
+REMARK   21  A    between atoms: C21_27  and  C22_28 
+REMARK   22  A    between atoms: C22_28  and  C23_29 
+REMARK   23  A    between atoms: C23_29  and  C24_30 
+REMARK   24  A    between atoms: C24_30  and  C25_31 
+ROOT
+HETATM    1  O1  MJI A 193      33.196  31.885  29.193  1.00 54.38    -0.389 OA
+ENDROOT
+BRANCH   1   2
+HETATM    2  C1  MJI A 193      32.254  31.051  28.581  1.00 50.86     0.202 C 
+BRANCH   2   3
+HETATM    3  C2  MJI A 193      31.328  30.525  29.639  1.00 53.83     0.182 C 
+BRANCH   3   4
+HETATM    4  O2  MJI A 193      32.036  30.214  30.846  1.00 57.91    -0.280 OA
+BRANCH   4   5
+HETATM    5  P2  MJI A 193      32.375  28.695  31.236  1.00 60.69     0.408 P 
+HETATM    6  O21 MJI A 193      32.039  27.806  30.054  1.00 70.11    -0.624 OA
+HETATM    7  O22 MJI A 193      31.753  28.377  32.567  1.00 47.51    -0.624 OA
+BRANCH   5   8
+HETATM    8  O23 MJI A 193      33.970  28.717  31.361  1.00 61.97    -0.295 OA
+HETATM    9  C2P MJI A 193      34.552  28.325  32.620  1.00 41.47     0.216 C 
+ENDBRANCH   5   8
+ENDBRANCH   4   5
+ENDBRANCH   3   4
+BRANCH   3  10
+HETATM   10  C3  MJI A 193      30.303  31.588  29.957  1.00 54.37     0.202 C 
+BRANCH  10  11
+HETATM   11  O3  MJI A 193      30.188  32.378  28.793  1.00 56.99    -0.380 OA
+BRANCH  11  12
+HETATM   12  C31 MJI A 193      29.759  33.676  29.125  1.00 46.70     0.285 C 
+BRANCH  12  13
+HETATM   13  C32 MJI A 193      30.908  34.607  28.935  1.00 44.67     0.408 C 
+HETATM   14  F31 MJI A 193      30.527  35.890  28.991  1.00157.91    -0.169 F 
+HETATM   15  F32 MJI A 193      31.503  34.429  27.753  1.00 52.59    -0.169 F 
+HETATM   16  F33 MJI A 193      31.853  34.432  29.867  1.00 53.78    -0.169 F 
+ENDBRANCH  12  13
+ENDBRANCH  11  12
+ENDBRANCH  10  11
+ENDBRANCH   3  10
+ENDBRANCH   2   3
+ENDBRANCH   1   2
+BRANCH   1  17
+HETATM   17  C11 MJI A 193      34.490  31.714  28.676  1.00 55.88     0.167 C 
+BRANCH  17  18
+HETATM   18  C12 MJI A 193      35.501  32.409  29.567  1.00 50.42     0.026 C 
+BRANCH  18  19
+HETATM   19  C13 MJI A 193      36.753  32.722  28.769  1.00 52.30     0.002 C 
+BRANCH  19  20
+HETATM   20  C14 MJI A 193      37.343  34.071  29.142  1.00 52.07     0.000 C 
+BRANCH  20  21
+HETATM   21  C15 MJI A 193      36.260  34.929  29.785  1.00 39.88     0.000 C 
+BRANCH  21  22
+HETATM   22  C16 MJI A 193      35.845  36.027  28.819  1.00 47.55     0.000 C 
+BRANCH  22  23
+HETATM   23  C17 MJI A 193      34.425  35.773  28.336  1.00 45.13     0.000 C 
+BRANCH  23  24
+HETATM   24  C18 MJI A 193      33.910  36.992  27.586  1.00 34.18     0.000 C 
+BRANCH  24  25
+HETATM   25  C19 MJI A 193      33.558  38.091  28.584  1.00 39.32     0.000 C 
+BRANCH  25  26
+HETATM   26  C20 MJI A 193      34.226  39.397  28.159  1.00 43.63     0.000 C 
+BRANCH  26  27
+HETATM   27  C21 MJI A 193      35.099  39.147  26.940  1.00 39.94     0.000 C 
+BRANCH  27  28
+HETATM   28  C22 MJI A 193      34.818  40.194  25.867  1.00 29.61     0.000 C 
+BRANCH  28  29
+HETATM   29  C23 MJI A 193      33.510  39.791  25.179  1.00 19.73     0.000 C 
+BRANCH  29  30
+HETATM   30  C24 MJI A 193      33.916  38.885  24.020  1.00 24.01    -0.000 C 
+BRANCH  30  31
+HETATM   31  C25 MJI A 193      32.671  38.671  23.166  1.00 21.02    -0.005 C 
+HETATM   32  C26 MJI A 193      31.703  39.830  23.349  1.00 46.64     0.005 C 
+ENDBRANCH  30  31
+ENDBRANCH  29  30
+ENDBRANCH  28  29
+ENDBRANCH  27  28
+ENDBRANCH  26  27
+ENDBRANCH  25  26
+ENDBRANCH  24  25
+ENDBRANCH  23  24
+ENDBRANCH  22  23
+ENDBRANCH  21  22
+ENDBRANCH  20  21
+ENDBRANCH  19  20
+ENDBRANCH  18  19
+ENDBRANCH  17  18
+ENDBRANCH   1  17
+TORSDOF 24

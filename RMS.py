@@ -30,7 +30,7 @@ def CreateRMS(files, PDB_code, cutoff, UNK_var, alpha, nonidentical, cur_dir, pn
     global olig_num, working_dir
     working_dir = cur_dir
     protein_path = os.path.join(cur_dir, "PDBLigand", pname)
-
+   # cmd.do('set retain_order,1')
     res_min, res_max, toAlph = PDBInfo_Wrapper(protein_path, nonidentical)
     olig_num = len(toAlph)
   #  print("res min : " + str(res_min))
@@ -41,6 +41,8 @@ def CreateRMS(files, PDB_code, cutoff, UNK_var, alpha, nonidentical, cur_dir, pn
 
     # First, load the first file as a reference
     cmd.reinitialize()
+    cmd.do('set retain_order,1')
+  #  cmd.do('set pdb_retain_ids,1')
 
     os.chdir(os.path.join(cur_dir, "PDBComplex"))
 

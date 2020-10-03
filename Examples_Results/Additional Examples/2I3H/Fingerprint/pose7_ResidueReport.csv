@@ -1,8 +1,8 @@
 Ligand interactions with protein residues
 Ligand hydrogen bond interactions with protein residues
 Ligand Atom Numbering, Residue Atom Numbering,Resn, Resi, Ligand to Protein Distance (Angstrom)
-O10, N697, CYS, 151, 3.04
-O7, N704, GLN, 152, 3.09
-O2, O445, PHE, 126, 3.26
-O7, O695, GLY, 150, 3.33
+O 4, N 698, CYS, 151, 3.04
+O 14, N 705, GLN, 152, 3.09
+O 10, O 446, PHE, 126, 3.26
+O 14, O 696, GLY, 150, 3.33
 

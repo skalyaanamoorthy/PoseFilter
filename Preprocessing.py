@@ -72,6 +72,7 @@ def CheckIdentical(totalchains):
 
 def PDB_Info(file, nonidentical):
     # Need to load the file so we can do things with it
+  #  cmd.do('set retain_order,1')
     cmd.load(file, 'obj')
     # The file will be a docked protein .pdb
     chains = ChainOrder(file)

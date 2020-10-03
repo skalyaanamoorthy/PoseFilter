@@ -13,7 +13,10 @@ import oddt.interactions as interactions
 import numpy as np
 from rdkit import Chem
 from scipy.spatial import distance
-global Calpha, Cbeta
+from rdkit.Chem.rdmolfiles import MolToMolFile
+global proteinpath, molpath
+from oddt.toolkits.rdk import Outputfile
+import shutil
 
 """ Note that the elementlist.csv file is from https://sciencenotes.org/list-elements-atomic-number/ 
 """
@@ -27,30 +30,44 @@ class ProtLigInfo:
     self.ProtResNum = ProtResNum
     self.Dist = Dist
 
-# Take the two molecules, protein and ligand and use each of those oddt modules
 
-def FindCACB(proteinpath):
+def FindPymolType(AtomID):
+    global proteinpath
+    pbase = os.path.basename(proteinpath)
+    pname = pbase.split('.')[0]
+  #  print(molpath)
     cmd.load(proteinpath)
-    # cmd.select("crystal and n. CB")
-    pname = os.path.basename(proteinpath)
-    namenoext = pname.split('.')[0]
-   # cmd.select(pname + " and n. CA", 'sele')
-    stored.idA =[]
-    cmd.iterate(selector.process(namenoext + " and n. CA"), 'stored.idA.append(ID)')
+    stored.name = []
+    cmd.iterate(selector.process(pname + " and id " + str(AtomID)), 'stored.name.append(name)')
+    cmd.delete(pname)
 
-    stored.idB = []
-    cmd.iterate(selector.process(namenoext + " and n. CB"), 'stored.idB.append(ID)')
-    return stored.idA, stored.idB
+    if stored.name == []:
+        return ""
+    else:
+        return stored.name[0]
 
 
 # Protein molecule, and a list of ligands
-def InteractionCheck(proteinpath, Listoflig, cur_dir):
-    global Calpha, Cbeta
-    Calpha, Cbeta = FindCACB(proteinpath)
+def InteractionCheck(ppath, Listoflig, cur_dir):
+    global proteinpath
+    proteinpath = ppath
     os.chdir(os.path.dirname(proteinpath))
+#    pname = os.path.basename(proteinpath)
 
-    protein = next(oddt.toolkit.readfile('pdb', proteinpath))
+    protein = next(oddt.toolkit.readfile('pdb', proteinpath, sanitize=False, removeHs=False, cleanupSubstructures=False))
     protein.protein = True
+
+    # Making a new file with the proper numbering
+   # proteinfile = pname.split('.')[0] + '_mol.pdb'
+  #  of = Outputfile(format='pdb', filename=molfile, overwrite=True)
+  #  of.write(protein)
+
+   # destination = os.path.join(cur_dir, 'Fingerprint', pname)
+   # current = os.path.join(cur_dir, 'PDBLigand', pname)
+ #   molpath = destination
+
+   # shutil.move(current, destination)
+
 
     for ligand_object in Listoflig:
         ligandname = ligand_object.PoseNameExt
@@ -65,7 +82,8 @@ def InteractionCheck(proteinpath, Listoflig, cur_dir):
         file.close()
 
         # Read in and define the reference ligand
-        ligand = next(oddt.toolkit.readfile('pdb', ligandname))
+        ligand = next(oddt.toolkit.readfile('pdb', ligandname, sanitize=False, removeHs=False, cleanupSubstructures=False))
+
 
         # Hydrophobic interactions
         p_hydroph, l_hydroph = interactions.hydrophobic_contacts(protein, ligand)
@@ -103,7 +121,7 @@ def InteractionCheck(proteinpath, Listoflig, cur_dir):
 
 def InteractionsFile(protein, ligand, FilePath, Interaction_Name):
     # If it is not an empty array
-    global Calpha, Cbeta
+    global proteinpath
     if len(protein) != 0:
 
         OneLine = 0
@@ -133,24 +151,18 @@ def InteractionsFile(protein, ligand, FilePath, Interaction_Name):
                 p_coords = protein[y]['coords']
                 l_coords = ligand[y]['coords']
 
-                # want the atomic number, and then convert to symbol later.
-                # For AA, want isbeta, isalpha
-
                 l_atomicnum = ligand[y]['atomicnum']
                 p_atomicnum = protein[y]['atomicnum']
 
                 p_atomsym = ANumtoASym(p_atomicnum, os.path.dirname(__file__))
 
-                p_id = protein[y]['id']
-                if p_id in Calpha:
-                    p_atomsym = p_atomsym + 'A'
-                elif p_id in Cbeta:
-                    p_atomsym = p_atomsym + 'B'
+                # To adjust for the 0 versus 1 indexing
+                p_atomsym = FindPymolType(protein[y]['id']+1)
 
                 l_atomsym = ANumtoASym(l_atomicnum, os.path.dirname(__file__))
 
-                l_type = str(l_atomsym) + str(ligand[y]['id'])
-                p_type = str(p_atomsym) + str(protein[y]['id'])
+                l_type = str(l_atomsym) + ' ' + str(ligand[y]['id']+1)
+                p_type = str(p_atomsym) + ' ' +str(protein[y]['id']+1)
 
                 dst = distance.euclidean(p_coords, l_coords)
                 item = ProtLigInfo(l_type, p_type, protein[y]['resname'], str(protein[y]['resnum']), dst)
@@ -209,4 +221,3 @@ def ANumtoASym(ANum, dirname):
 #proteinpath = '/home/justine/protein.pdb'
 #ligandpaths = ['ligand1.pdb', 'ligand2.pdb', 'ligand3.pdb']
 #InteractionCheck(proteinpath, ligandpaths)
-

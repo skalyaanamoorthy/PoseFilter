@@ -1,0 +1,15 @@
+receptor = 5kmh.pdbqt
+ligand = ligand.pdbqt
+
+out = vina_output
+log = results.txt
+
+center_x = -1.524
+center_y = 31.079
+center_z = 23.887
+
+size_x = 16
+size_y = 16
+size_z = 16
+
+exhaustiveness = 10
