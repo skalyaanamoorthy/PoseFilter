@@ -35,8 +35,8 @@ def DirSearch(keyword, crystalstruct):
                 all_files.append(x)
             else:
                 pass
-
-    return all_files
+    files = natural_sort(all_files)
+    return files
 
 
 # Takes the ligand file name and the protein
@@ -84,11 +84,13 @@ def InputFileSort (filelist, type, maindir, pdir, ResId, pname):
 
     if type == "ligand":
         UNK_var, pdbfiles = LigandFileSort(filelist, maindir, Ligand_path, Complex_path, pdir)
-        return UNK_var, pdbfiles
+        files = natural_sort(pdbfiles)
+        return UNK_var, files
 
     else:
         pdbfiles = ComplexFileSort(filelist, maindir, Ligand_path, Complex_path, ResId, pname)
-        return ResId, pdbfiles
+        files = natural_sort(pdbfiles)
+        return ResId, files
 
 @cmd.extend
 def LigandRMSProcess(pfile, keyword, label, RMS_Cutoff, alpha, nonidentical):
