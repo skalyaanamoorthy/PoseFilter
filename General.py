@@ -259,102 +259,121 @@ def GeneralSimCheck(RMSItemList, Total_Array, working_dir, Dir_Type, cutoff, Add
     for item in RMSItemList:
         RotListPDB.append(item.PoseNameExt)
 
-    Rot_type = [RotListPDB, [0]*length]
+    #RotListPDB
+    #Rot_type = [RotListPDB, [0]*length]
 
     Similar_path, Unique_path = CreateDirs(Dir_Type, Add_Type)
 
     # In the fingerprint case, similar path is unique one
-    if Dir_Type == "Fingerprint":
-        similar_file_path = os.path.join(Unique_path, 'Similar.csv')
-
-    else:
-        similar_file_path = os.path.join(Similar_path, 'Similar.csv')
+    similar_file_path = os.path.join(Similar_path, 'Similar.csv')
 
     sim_file = open(similar_file_path, 'w')
     sim_file.write('Reference, Structure, ' + Dir_Type + ', Rotation #\n')
 
     # The first row is the name, the second is the type: 's' for similar, nothing for unique
     # Uses the global numpy variable to check for similarities and then sorts the files.
-
-    x = length-1
-    while x > 0:
-        y = x
-        while y >= 0:
-            if x == y:
-                pass
-            else:
-
-                if Dir_Type == "RMS":
-                    Is_similar = (Total_Array[x][y] <= cutoff)
-                    our_dir = os.path.join(working_dir, "PDBComplex")
-                else:
-                    Is_similar = (Total_Array[x][y] >= cutoff)
-                    our_dir = os.path.join(working_dir, "PDBLigand")
-
-                if Is_similar:
-               # if Total_Array[x][y] <= cutoff:
-                    # Structure
-                    Rot_type[1][y] = 's'
-                   # print(Rot_type[0][y] + " is similar")
-                    # Need to make one unique out of the set
-                    # Reference
-                    Rot_type[1][x] = 'u'
-                    PoseName_x = RMSItemList[x].PoseName
-                    PoseName_y = RMSItemList[y].PoseName
-
-                    # Could now write to a file to indicate which files are similar
-                    sim_file.write(PoseName_x + ', ' + PoseName_y + ', ' +
-                                   str(Total_Array[x][y]) + ', ' + RMSItemList[y].RotNum + '\n')
-
-                # Not similar; pass for now
-                else:
-                    pass
-
-            y = y - 1
-        x = x - 1
-    # Use this to create two new lists, sList, uList
-
-    # Go through the structures again and add to the proper directories
-    for w in range(length):
-        # Name
-        rot = str(Rot_type[0][w])
-    #    print("rot:" + rot)
-
-        PoseName = RMSItemList[w].PoseName
-
-        if Rot_type[1][w] == 's':
-            # Move from dir to dir
-
-            # Want a new path that has the directory similar on it
-            path_1 = os.path.join(our_dir, rot)
-
-            path_2 = os.path.join(Similar_path, rot)
-
-            shutil.copy(path_1, path_2)
-
-            # Rename
+    s_array = []
+    u_array = []
+    set_list = []
+    our_dir = ""
+  #  print(Total_Array)
+   # x = length-1
+    x = 0
+    while x < length:
+        y = x + 1
+        cur_set = []
+        while y < length:
 
             if Dir_Type == "RMS":
-                rot_add = '_rot'
+                Is_similar = (Total_Array[y][x] <= cutoff)
+                our_dir = os.path.join(working_dir, "PDBComplex")
             else:
-                rot_add = ''
+                Is_similar = (Total_Array[y][x] >= cutoff)
+                our_dir = os.path.join(working_dir, "PDBLigand")
+              #  print("similar val:")
+              #  print(Total_Array[y][x])
+              #  print(x)
+              #  print(y)
+              #  print(RMSItemList[x].PoseName)
+              #  print(RMSItemList[y].PoseName)
 
-            PoseExt = 'pdb'
+            if Is_similar:
+              #  print(RMSItemList[x].PoseName + "similar")
+              #  print(RMSItemList[y].PoseName + "similar")
+                # Append the reference structure to the similar list
 
-            path_3 = os.path.join(Similar_path, PoseName + rot_add + RMSItemList[w].RotNum + '.' + PoseExt)
-            os.rename(path_2, path_3)
+                if RMSItemList[x] not in cur_set:
+                    cur_set.append(RMSItemList[x])
 
-        else:
-            PoseExt = 'pdb'
-            path_1 = os.path.join(our_dir, rot)
+                if RMSItemList[y] not in cur_set:
+                    cur_set.append(RMSItemList[y])
 
-            path_2 = os.path.join(Unique_path, rot)
 
-            shutil.copy(path_1, path_2)
+                PoseName_x = RMSItemList[x].PoseName
+                PoseName_y = RMSItemList[y].PoseName
 
-            # Path to copy to
-            path_3 = os.path.join(Unique_path, PoseName + '_rot' + RMSItemList[w].RotNum + '.' + PoseExt)
-            os.rename(path_2, path_3)
+                # Could now write to a file to indicate which files are similar
+                sim_file.write(PoseName_x + ', ' + PoseName_y + ', ' +
+                               str(Total_Array[x][y]) + ', ' + RMSItemList[y].RotNum + '\n')
+
+            y = y + 1
+        set_list.append(cur_set)
+        x = x + 1
+
+    for s_set in set_list:
+       # print("new set")
+        u_set = 0
+        for i in s_set:
+            if (i not in s_array) and not any(j in u_array for j in s_set):
+         #       print("add to uarray (1):")
+         #       print(i.PoseName)
+                u_array.append(i)
+                s_array.append(i)
+                u_set = 1
+            elif (u_set == 0) and (i not in s_array) and (i not in u_array):
+                u_set = 1
+                u_array.append(i)
+                s_array.append(i)
+            elif i not in s_array:
+                s_array.append(i)
+
+    # For each set in the master set (1,2,3) (3,4)
+    for item in RMSItemList:
+        if (item not in s_array) and (item not in u_array):
+            u_array.append(item)
+        #    print("add to uarray: " + item.PoseName)
+        elif (item not in s_array):
+            u_array.append(item)
+        #    print("add to uarray: " + item.PoseName)
+
+    # Use this to create two new lists, sList, uList
+
+    if Dir_Type == "RMS":
+        rot_add = '_rot'
+    else:
+        rot_add = ''
+
+    # Go through the structures again and add to the proper directories
+   # print(s_array)
+   # print(u_array)
+    for s_item in s_array:
+
+        # Want a new path that has the directory similar on it
+        path_1 = os.path.join(our_dir, s_item.PoseNameExt)
+        path_2 = os.path.join(Similar_path, s_item.PoseNameExt)
+        shutil.copy(path_1, path_2)
+
+        path_3 = os.path.join(Similar_path, s_item.PoseNameExt)
+        os.rename(path_2, path_3)
+
+    for u_item in u_array:
+        path_1 = os.path.join(our_dir, u_item.PoseNameExt)
+        path_2 = os.path.join(Unique_path, u_item.PoseNameExt)
+        shutil.copy(path_1, path_2)
+
+        # Path to copy to
+        path_3 = os.path.join(Unique_path, u_item.PoseNameExt)
+        os.rename(path_2, path_3)
 
     sim_file.close()
 
@@ -390,11 +409,9 @@ def CreateDirs(Dir_Type, Add_Type):
                 os.makedirs(Dir_Type + '/' + Add_Type + '/' + 'Unique')
             else:
                 pass
-               # os.makedirs(Dir_Type + '/' + Add_Type + '/' + 'Similar')
-               # os.makedirs(Dir_Type + '/' + Add_Type + '/' + 'Unique')
-        # Switch these
-        Unique_path = os.path.join(Dir_Type, Add_Type, 'Similar')
-        Similar_path= os.path.join(Dir_Type, Add_Type, 'Unique')
+
+        Similar_path = os.path.join(Dir_Type, Add_Type, 'Similar')
+        Unique_path = os.path.join(Dir_Type, Add_Type, 'Unique')
 
     return Similar_path, Unique_path
 

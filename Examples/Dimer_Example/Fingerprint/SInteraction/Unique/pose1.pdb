@@ -1,0 +1,65 @@
+HETATM    1  O1  MJI A 193      31.323  30.951  29.860  1.00 54.38           O  
+HETATM    2  C1  MJI A 193      30.373  29.923  29.855  1.00 50.86           C  
+HETATM    3  C2  MJI A 193      30.596  29.065  31.067  1.00 53.83           C  
+HETATM    4  O2  MJI A 193      29.773  27.892  31.036  1.00 57.91           O  
+HETATM    5  P2  MJI A 193      28.490  27.758  31.990  1.00 60.69           P  
+HETATM    6  O21 MJI A 193      27.397  28.668  31.460  1.00 70.11           O1-
+HETATM    7  O22 MJI A 193      28.920  27.919  33.421  1.00 47.51           O  
+HETATM    8  O23 MJI A 193      28.013  26.255  31.720  1.00 61.97           O  
+HETATM    9  C2P MJI A 193      26.595  26.002  31.645  1.00 41.47           C  
+HETATM   10  C3  MJI A 193      32.041  28.624  31.089  1.00 54.37           C  
+HETATM   11  O3  MJI A 193      32.178  27.793  32.220  1.00 56.99           O  
+HETATM   12  C31 MJI A 193      33.046  28.382  33.156  1.00 46.70           C  
+HETATM   13  C32 MJI A 193      34.383  27.736  33.020  1.00 44.67           C  
+HETATM   14  F31 MJI A 193      34.831  27.261  34.190  1.00157.91           F  
+HETATM   15  F32 MJI A 193      35.305  28.589  32.569  1.00 52.59           F  
+HETATM   16  F33 MJI A 193      34.358  26.711  32.160  1.00 53.78           F  
+HETATM   17  C11 MJI A 193      31.873  31.187  28.590  1.00 55.88           C  
+HETATM   18  C12 MJI A 193      33.383  31.286  28.690  1.00 50.42           C  
+HETATM   19  C13 MJI A 193      33.789  32.740  28.843  1.00 52.30           C  
+HETATM   20  C14 MJI A 193      35.294  32.922  28.759  1.00 52.07           C  
+HETATM   21  C15 MJI A 193      35.599  34.331  28.267  1.00 39.88           C  
+HETATM   22  C16 MJI A 193      36.356  35.092  29.345  1.00 47.55           C  
+HETATM   23  C17 MJI A 193      35.862  36.529  29.398  1.00 45.13           C  
+HETATM   24  C18 MJI A 193      34.665  36.696  28.473  1.00 34.18           C  
+HETATM   25  C19 MJI A 193      34.116  38.113  28.605  1.00 39.32           C  
+HETATM   26  C20 MJI A 193      35.034  39.085  27.867  1.00 43.63           C  
+HETATM   27  C21 MJI A 193      34.242  39.817  26.796  1.00 39.94           C  
+HETATM   28  C22 MJI A 193      35.163  40.241  25.656  1.00 29.61           C  
+HETATM   29  C23 MJI A 193      34.846  39.334  24.464  1.00 19.73           C  
+HETATM   30  C24 MJI A 193      33.383  38.933  24.629  1.00 24.01           C  
+HETATM   31  C25 MJI A 193      32.867  38.553  23.244  1.00 21.02           C  
+HETATM   32  C26 MJI A 193      31.687  39.434  22.863  1.00 46.64           C  
+CONECT    1    2   17
+CONECT    2    1    3
+CONECT    3    2    4   10
+CONECT    4    3    5
+CONECT    5    4    6    7    8
+CONECT    6    5
+CONECT    7    5
+CONECT    8    5    9
+CONECT    9    8
+CONECT   10    3   11
+CONECT   11   10   12
+CONECT   12   11   13
+CONECT   13   12   14   15   16
+CONECT   14   13
+CONECT   15   13
+CONECT   16   13
+CONECT   17    1   18
+CONECT   18   17   19
+CONECT   19   18   20
+CONECT   20   19   21
+CONECT   21   20   22
+CONECT   22   21   23
+CONECT   23   22   24
+CONECT   24   23   25
+CONECT   25   24   26
+CONECT   26   25   27
+CONECT   27   26   28
+CONECT   28   27   29
+CONECT   29   28   30
+CONECT   30   29   31
+CONECT   31   30   32
+CONECT   32   31
+END

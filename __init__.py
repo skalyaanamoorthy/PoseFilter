@@ -125,6 +125,14 @@ def make_dialog():
         files, UNK, cur_dir, pname = FileGeneration()
         files = natural_sort(files)
         Fingerprint_Wrapper(files, IText, form.PDBCODE.text(), FP_SI, FP_SPLIF, TextInteraction, cur_dir, pname)
+        form.dir_select.setText("")
+        form.file_select.setText("")
+        form.PDBCODE.setText("")
+        form.Ligandkeyword.setText("")
+        form.file_select.setText("")
+        form.crystal_structure.setText("")
+        form.complexid.setText("")
+
 
     def run():
         global dialog
