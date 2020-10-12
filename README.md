@@ -57,6 +57,7 @@ named pymol that contains the proper packages:
 `source activate pymol`
 5. Launch pymol by typing `pymol` in the terminal. This can be done using an activated environment. If the terminal is
 closed, pymol needs to be reactivated in order to be opened.
+
 Troubleshooting: ensure that dependencies are installed though the wiki: https://pymolwiki.org/index.php/MAC_Install
 If no module named or initialized failed errors occur, try installing through: https://github.com/schrodinger/pymol-open-source
 and running `python setup.py install`.
