@@ -47,17 +47,19 @@ If the terminal is closed, pymol needs to be reactivated in order to be opened a
 
 
 ### MacOS Installation
-1. Ensure that Anaconda3 is installed, if not then install it through the following link: https://docs.anaconda.com/anaconda/install/mac-os/
+1. Ensure that Anaconda3 is installed and activated, if not then install it through the following link: https://docs.anaconda.com/anaconda/install/mac-os/
 2. Open a terminal in the Anaconda3 directory named "envs." Use the following command to create an environment
 named pymol that contains the proper packages:
 `conda create -n pymol python=3.7 rdkit matplotlib seaborn pip numpy conda-forge::pmw tpeulen::pymol-open-source scikit-learn git`
-3. Install recent oddt updates:
+3. Install recent oddt updates. If fingerprint is run and does not yield 1's across the diagonal, the oddt update may be missing:
 `pip install git+https://github.com/oddt/oddt#egg=oddt`
 4. Activate the anaconda environment:
 `source activate pymol`
 5. Launch pymol by typing `pymol` in the terminal. This can be done using an activated environment. If the terminal is
 closed, pymol needs to be reactivated in order to be opened.
-
+Troubleshooting: ensure that dependencies are installed though the wiki: https://pymolwiki.org/index.php/MAC_Install
+If no module named or initialized failed errors occur, try installing through: https://github.com/schrodinger/pymol-open-source
+and running `python setup.py install`.
 
 ## Installing the PoseFilter Plugin 
 
