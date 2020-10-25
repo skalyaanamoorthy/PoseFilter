@@ -150,11 +150,10 @@ complete” will be displayed in the PyMOL command window once this process has 
 Files in the example folder were prepared using AutoDock Vina, Schrodinger Maestro was used for preprocessing for files
   contained in the "Additional Examples" folder. These files can be run with the PoseFilter plugin.
   
-  Run with tab option 1: Trimer and tetramer examples; files except 1JF4 in "Additional Examples" folder
+  Run with tab option 1: In the Examples folder; Dimer_Example, Trimer_Example, Tetramer_Example and Heteromer_Example folders
   
-  Run with tab option 2: Dimer; 1JF4 (from "Additional Example" folder), which can also be run with the "crystal.pdb"
+  Run with tab option 2: Monomer_Example (from Examples folder), which can also be run with the "crystal.pdb"
   file, containing the pose from the PDB database crystal structure.
-Other 
 
 
 ## Command Line Input 

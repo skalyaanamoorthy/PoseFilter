@@ -1,0 +1,41 @@
+REMARK VINA RESULT:      -3.7      6.697      8.217
+REMARK  6 active torsions:
+REMARK  status: ('A' for Active; 'I' for Inactive)
+REMARK    1  A    between atoms: C1_1  and  O1_8 
+REMARK    2  A    between atoms: C2_2  and  O2_9 
+REMARK    3  A    between atoms: C3_3  and  O3_10 
+REMARK    4  A    between atoms: C4_4  and  O4_11 
+REMARK    5  A    between atoms: C5_5  and  C6_6 
+REMARK    6  A    between atoms: C6_6  and  O6_13 
+ROOT
+HETATM    1  C1  AMG     0      50.061  33.675  28.428  0.00  0.00     0.290 C 
+HETATM    2  C2  AMG     0      49.108  34.427  27.497  0.00  0.00     0.204 C 
+HETATM    3  C3  AMG     0      47.667  34.031  27.830  0.00  0.00     0.183 C 
+HETATM    4  C4  AMG     0      47.555  32.504  27.783  0.00  0.00     0.180 C 
+HETATM    5  C5  AMG     0      48.625  31.897  28.692  0.00  0.00     0.179 C 
+HETATM    6  O5  AMG     0      49.921  32.271  28.230  0.00  0.00    -0.349 OA
+ENDROOT
+BRANCH   5   7
+HETATM    7  C6  AMG     0      48.500  30.372  28.675  0.00  0.00     0.198 C 
+BRANCH   7   8
+HETATM    8  O6  AMG     0      49.437  29.827  27.744  0.00  0.00    -0.398 OA
+HETATM    9  HO6 AMG     0      49.535  30.476  27.034  0.00  0.00     0.209 HD
+ENDBRANCH   7   8
+ENDBRANCH   5   7
+BRANCH   4  10
+HETATM   10  O4  AMG     0      47.753  32.049  26.443  0.00  0.00    -0.390 OA
+HETATM   11  HO4 AMG     0      47.089  32.491  25.897  0.00  0.00     0.210 HD
+ENDBRANCH   4  10
+BRANCH   3  12
+HETATM   12  O3  AMG     0      46.775  34.607  26.875  0.00  0.00    -0.390 OA
+HETATM   13  HO3 AMG     0      46.440  35.427  27.264  0.00  0.00     0.210 HD
+ENDBRANCH   3  12
+BRANCH   1  14
+HETATM   14  O1  AMG     0      49.751  33.996  29.786  0.00  0.00    -0.363 OA
+HETATM   15  C7  AMG     0      50.989  34.295  30.432  0.00  0.00     0.204 C 
+ENDBRANCH   1  14
+BRANCH   2  16
+HETATM   16  O2  AMG     0      49.271  35.834  27.680  0.00  0.00    -0.388 OA
+HETATM   17  HO2 AMG     0      48.786  36.070  28.482  0.00  0.00     0.210 HD
+ENDBRANCH   2  16
+TORSDOF 6
