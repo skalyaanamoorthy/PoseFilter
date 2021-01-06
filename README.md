@@ -19,10 +19,11 @@ Add the Anaconda3 folder, and Anaconda3\Scripts to the path variable, which shou
 will give conformation that Anaconda3 was installed correctly and the paths were added. A menu with commands should appear.
 4. In this command prompt, type the following:
 `conda create -n pymol python=3.7 rdkit=2020.03.3.0 matplotlib seaborn pip numpy conda-forge::pmw tpeulen::pymol-open-source scikit-learn git `
-5. Install recent oddt updates:
-`pip install git+https://github.com/oddt/oddt#egg=oddt`
-6. Activate the anaconda environment.
+5. Activate the anaconda environment.
 `activate pymol`
+6. Install oddt.
+`pip install git+git://github.com/oddt/oddt.git@a3ff8b84b3abf986ad5bdbfebc9ef96cb8a84d8c`
+
 7. Open source PyMOL can now be opened through the activated anaconda directory. Type pymol into the command line to 
 open the open source program.
 8. If the command line is closed, `activate pymol` needs to be typed in again before `pymol` to open the program.
@@ -36,11 +37,11 @@ in the command prompt to open the program.
 https://docs.anaconda.com/anaconda/install/linux/
 2. Open a terminal in the Anaconda3 directory named "envs." Use the following command to create an environment
 named pymol that contains the proper packages:
-`conda create -n pymol python=3.7 rdkit matplotlib seaborn pip numpy conda-forge::pmw tpeulen::pymol-open-source scikit-learn git`
-2. Activate the anaconda environment:
+`conda create -n pymol python=3.7 rdkit=2020.03.3 matplotlib seaborn pip numpy conda-forge::pmw tpeulen::pymol-open-source scikit-learn git`
+2. Activate the anaconda environment.
 `source activate pymol`
-3. Install recent oddt updates:
-`pip install git+https://github.com/oddt/oddt#egg=oddt`
+3. Install oddt.
+`pip install git+git://github.com/oddt/oddt.git@a3ff8b84b3abf986ad5bdbfebc9ef96cb8a84d8c`
 4. Launch pymol by typing `pymol` in the terminal. If an error occurs, try to install some additional requirements.
 Ensure to run as root: https://pymolwiki.org/index.php/Linux_Install. This is done using an activated environment.
 If the terminal is closed, pymol needs to be reactivated in order to be opened again.
@@ -51,10 +52,10 @@ If the terminal is closed, pymol needs to be reactivated in order to be opened a
 2. Open a terminal in the Anaconda3 directory named "envs." Use the following command to create an environment
 named pymol that contains the proper packages:
 `conda create -n pymol python=3.7 rdkit matplotlib seaborn pip numpy conda-forge::pmw tpeulen::pymol-open-source scikit-learn git`
-3. Install recent oddt updates. If fingerprint is run and does not yield 1's across the diagonal, the oddt update may be missing:
-`pip install git+https://github.com/oddt/oddt#egg=oddt`
-4. Activate the anaconda environment:
+3. Activate the anaconda environment.
 `source activate pymol`
+4. Install oddt.
+`pip install git+git://github.com/oddt/oddt.git@a3ff8b84b3abf986ad5bdbfebc9ef96cb8a84d8c`
 5. Launch pymol by typing `pymol` in the terminal. This can be done using an activated environment. If the terminal is
 closed, pymol needs to be reactivated in order to be opened.
 
@@ -80,7 +81,7 @@ PoseFilter GUI panel.
 Please use one of these tab options at a time to choose your input files.
 
 #### Tab 1 Description
-![Input Type 1](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/GUITab1.jpg)
+![Input Type 1](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/GUITab1.jpg)
 
 The first tab (File input - type 1) gives the option to process a
 folder that contain protein and ligand poses as separate files.
@@ -94,7 +95,7 @@ the keyword “pose” should be used in the “Ligand filename identifier” bo
 This is optional and the box can be left blank.
 
 #### Tab 2 Description
-![Input Type 2](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/GUITab2.jpg)
+![Input Type 2](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/GUITab2.jpg)
 
 The second tab (File input - type 2) allows the input of protein + ligand complex files.
 
@@ -155,6 +156,20 @@ Files in the example folder were prepared using AutoDock Vina, Schrodinger Maest
   Run with tab option 2: Monomer_Example (from Examples folder), which can also be run with the "crystal.pdb"
   file, containing the pose from the PDB database crystal structure.
 
+### Example Dimer Input
+![Dimer Input](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Dimer_example.jpg)
+
+### Example Trimer Input
+![Trimer Input](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Trimer_example.jpg)
+
+### Example Tetramer Input
+![Tetramer Input](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Tetramer_example.jpg)
+
+### Example Homomer Input
+![Homomer Input](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Homomer_example.jpg)
+
+### Example Heteromer Input
+![Heteromer Input](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Heteromer_example.jpg)
 
 ## Command Line Input 
 
@@ -220,8 +235,8 @@ rotations will only occur for exactly identical chains (residue count and type b
 After following the installation instructions, PoseFilter can be used through the command line as well. The following
 commands should be typed into the command line after a new PyMOL session is opened.
 
-     `from pmg_tk.startup.PoseFilter import LigandFP`
-     `from pmg_tk.startup.PoseFilter import ComplexFP`
+     from pmg_tk.startup.PoseFilter import LigandFP
+     from pmg_tk.startup.PoseFilter import ComplexFP
 
 #### Input Type 1 (Ligand)
 `LigandFP(pfile, keyword, label, FPList, FP_SI, FP_SPLIF, TextInteraction)`

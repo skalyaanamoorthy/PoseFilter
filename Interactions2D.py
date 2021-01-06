@@ -3,8 +3,6 @@ import os
 from pymol import cmd
 from pymol import stored
 from pymol import selector
-from scipy.spatial import distance
-import itertools
 
 #import os
 import numpy as np
@@ -33,40 +31,6 @@ class ProtLigInfo:
     self.Dist = Dist
 
 
-class InteractionInfo:
-    def __init__(self, LigAtomType, LigAtomIdx, ProtAtomType, ProtAtomIdx, ProtResName, ProtResNum, ProtResChain, Dist):
-        self.LigAtomType = LigAtomType
-        self.LigAtomIdx = LigAtomIdx
-        self.ProtAtomType = ProtAtomType
-        self.ProtAtomIdx = ProtAtomIdx
-        self.ProtResName = ProtResName
-        self.ProtResNum = ProtResNum
-        self.ProtResChain = ProtResChain
-        self.Dist = Dist
-
-    def __eq__(self, other):
-        if self.LigAtomType != other.LigAtomType:
-            return 0
-        elif self.LigAtomIdx != other.LigAtomIdx:
-            return 0
-        elif self.ProtAtomType != other.ProtAtomType:
-            return 0
-        elif self.ProtAtomIdx != other.ProtAtomIdx:
-            return 0
-        elif self.ProtResName != other.ProtResName:
-            return 0
-        elif self.ProtResNum != other.ProtResNum:
-            return 0
-        elif self.ProtResChain != other.ProtResChain:
-            return 0
-        elif self.Dist != other.Dist:
-            return 0
-        else:
-            # Everything is equal
-            return 1
-
-
-
 def FindPymolType(AtomID):
     global proteinpath
     pbase = os.path.basename(proteinpath)
@@ -82,50 +46,6 @@ def FindPymolType(AtomID):
     else:
         return stored.name[0]
 
-
-def remove_duplicates(itemList):
-    NewItemList = []
-    for item in itemList:
-        if len(NewItemList) == 0:
-            NewItemList.append(item)
-        elif item not in NewItemList:
-            NewItemList.append(item)
-
-    return NewItemList
-
-def hydrophobic_interactions(ligand_i, protein_i):
-    max_dist = 4.0
-    min_dist = 0.5
-
-   # data = namedtuple('hydroph_interaction', 'bsatom bsatom_orig_idx ligatom ligatom_orig_idx '
-    #                                         'distance restype resnr reschain restype_l, resnr_l, reschain_l')
-    protein_ligand_set = []
-
-    for a, b in itertools.product(ligand_i, protein_i):
-
-        # current ligand and protein atoms
-        l_atom = ligand_i[a]
-        p_atom = protein_i[b]
-
-        # defining
-        LigAtomIdx = l_atom['id'] + 1
-
-        # need to convert to symbol?
-        LigAtomType = l_atom['atomicnum']
-        ProtAtomType = p_atom['atomicnum']
-
-        ProtAtomIdx = p_atom['id'] + 1
-        ProtResName = p_atom['resname']
-        ProtResNum = p_atom['resnum']
-        ProtResChain = p_atom['reschain']
-
-        Dist = distance.euclidean(l_atom['coords'], p_atom['coords'])
-        item = InteractionInfo(LigAtomType, LigAtomIdx, ProtAtomType, ProtAtomIdx, ProtResName, ProtResNum, ProtResChain, Dist)
-
-        if (min_dist < Dist < max_dist):
-            protein_ligand_set.append(item)
-
-    return remove_duplicates(protein_ligand_set)
 
 # Protein molecule, and a list of ligands
 def InteractionCheck(ppath, Listoflig, cur_dir):
@@ -164,7 +84,6 @@ def InteractionCheck(ppath, Listoflig, cur_dir):
         # Read in and define the reference ligand
         ligand = next(oddt.toolkit.readfile('pdb', ligandname, sanitize=False, removeHs=False, cleanupSubstructures=False))
 
-        # protein and ligand are defined
 
         # Hydrophobic interactions
         p_hydroph, l_hydroph = interactions.hydrophobic_contacts(protein, ligand)
