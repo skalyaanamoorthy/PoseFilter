@@ -18,7 +18,7 @@ Add the Anaconda3 folder, and Anaconda3\Scripts to the path variable, which shou
 3. Close and then open the command prompt again, selecting to "run as administrator." Typing "conda" into the command line
 will give conformation that Anaconda3 was installed correctly and the paths were added. A menu with commands should appear.
 4. In this command prompt, type the following:
-`conda create -n pymol python=3.7 rdkit matplotlib seaborn pip numpy conda-forge::pmw tpeulen::pymol-open-source scikit-learn git `
+`conda create -n pymol python=3.7 rdkit=2020.03.3.0 matplotlib seaborn pip numpy conda-forge::pmw tpeulen::pymol-open-source scikit-learn git `
 5. Install recent oddt updates:
 `pip install git+https://github.com/oddt/oddt#egg=oddt`
 6. Activate the anaconda environment.
