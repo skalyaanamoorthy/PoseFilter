@@ -58,7 +58,7 @@ As shown visually, tab 1 is used for the trimer example.
 As shown visually, tab 1 is used for the dimer example.
 ![Tetramer Input](https://github.com/justinecwilliams/PoseFilter/blob/master/Snapshots/Tetramer_Example.jpg)
 
-#### Dimer Output
+#### Tetramer Output
 
 ##### RMS output
 ![Tetramer RMS Output](https://github.com/justinecwilliams/PoseFilter/blob/master/Snapshots/Tetramer_RMS.jpg)
@@ -77,7 +77,7 @@ As shown visually, tab 1 is used for the dimer example.
 As shown visually, tab 1 is used for the dimer example.
 ![Monomer Input](https://github.com/justinecwilliams/PoseFilter/blob/master/Snapshots/Monomer_Example.jpg)
 
-#### Dimer Output
+#### Monomer Output
 
 ##### RMS output
 ![Monomer RMS Output](https://github.com/justinecwilliams/PoseFilter/blob/master/Snapshots/Monomer_RMS.jpg)
@@ -98,7 +98,7 @@ As shown visually, tab 1 is used for the dimer example.
 #### Heteromer Output
 
 ##### RMS output
-![Heteromer RMS Output](https://github.com/justinecwilliams/PoseFilter/blob/master/Snapshots/RMS_example.jpg)
+![Heteromer RMS Output](https://github.com/justinecwilliams/PoseFilter/blob/master/Snapshots/Heteromer_RMS.jpg)
 
 ##### SPLIF Fingerprint output
 ![Heteromer SPLIF FP Output](https://github.com/justinecwilliams/PoseFilter/blob/master/Snapshots/Heteromer_SPLIF.jpg)
