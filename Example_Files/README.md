@@ -20,54 +20,54 @@ Files in the example folder were prepared using AutoDock Vina, Schrodinger Maest
 #### Dimer Input
 
 As shown visually, tab 2 is used for the dimer example.
-![Dimer Input](https://github.com/justinecwilliams/PoseFilter/blob/master/Snapshots/Dimer_example.jpg)
+![Dimer Input](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Dimer_Example.jpg)
 
 #### Dimer Output
 
 ##### RMS output
-![Dimer RMS Output](https://github.com/justinecwilliams/PoseFilter/blob/master/Snapshots/Dimer_RMS.jpg)
+![Dimer RMS Output](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Dimer_RMS.jpg)
 
 ##### SPLIF Fingerprint output
-![Dimer SPLIF FP Output](https://github.com/justinecwilliams/PoseFilter/blob/master/Snapshots/Dimer_SPLIF.jpg)
+![Dimer SPLIF FP Output](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Dimer_SPLIF.jpg)
 
 ##### Simple Interaction Fingerprint output
-![Dimer SPLIF FP Output](https://github.com/justinecwilliams/PoseFilter/blob/master/Snapshots/Dimer_SInteraction.jpg)
+![Dimer SPLIF FP Output](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Dimer_SInteraction.jpg)
 
 
 ### Trimer Example
 #### Trimer Input
 
 As shown visually, tab 1 is used for the trimer example.
-![Trimer Input](https://github.com/justinecwilliams/PoseFilter/blob/master/Snapshots/Trimer_Example.jpg)
+![Trimer Input](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Trimer_Example.jpg)
 
 #### Trimer Output
 
 ##### RMS output
-![Trimer RMS Output](https://github.com/justinecwilliams/PoseFilter/blob/master/Snapshots/Trimer_RMS.jpg)
+![Trimer RMS Output](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Trimer_RMS.jpg)
 
 ##### SPLIF Fingerprint output
-![Trimer SPLIF FP Output](https://github.com/justinecwilliams/PoseFilter/blob/master/Snapshots/Trimer_SPLIF.jpg)
+![Trimer SPLIF FP Output](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Trimer_SPLIF.jpg)
 
 ##### Simple Interaction Fingerprint output
-![Trimer SPLIF FP Output](https://github.com/justinecwilliams/PoseFilter/blob/master/Snapshots/Trimer_SInteraction.jpg)
+![Trimer SPLIF FP Output](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Trimer_SInteraction.jpg)
 
 
 ### Tetramer Example
 #### Tetramer Input
 
 As shown visually, tab 1 is used for the dimer example.
-![Tetramer Input](https://github.com/justinecwilliams/PoseFilter/blob/master/Snapshots/Tetramer_Example.jpg)
+![Tetramer Input](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Tetramer_Example.jpg)
 
 #### Tetramer Output
 
 ##### RMS output
-![Tetramer RMS Output](https://github.com/justinecwilliams/PoseFilter/blob/master/Snapshots/Tetramer_RMS.jpg)
+![Tetramer RMS Output](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Tetramer_RMS.jpg)
 
 ##### SPLIF Fingerprint output
-![Tetramer SPLIF FP Output](https://github.com/justinecwilliams/PoseFilter/blob/master/Snapshots/Tetramer_SPLIF.jpg)
+![Tetramer SPLIF FP Output](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Tetramer_SPLIF.jpg)
 
 ##### Simple Interaction Fingerprint output
-![Tetramer SPLIF FP Output](https://github.com/justinecwilliams/PoseFilter/blob/master/Snapshots/Tetramer_SInteraction.jpg)
+![Tetramer SPLIF FP Output](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Tetramer_SInteraction.jpg)
 
 
 
@@ -75,36 +75,36 @@ As shown visually, tab 1 is used for the dimer example.
 #### Monomer Input
 
 As shown visually, tab 1 is used for the dimer example.
-![Monomer Input](https://github.com/justinecwilliams/PoseFilter/blob/master/Snapshots/Monomer_Example.jpg)
+![Monomer Input](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Monomer_Example.jpg)
 
 #### Monomer Output
 
 ##### RMS output
-![Monomer RMS Output](https://github.com/justinecwilliams/PoseFilter/blob/master/Snapshots/Monomer_RMS.jpg)
+![Monomer RMS Output](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Monomer_RMS.jpg)
 
 ##### SPLIF Fingerprint output
-![Monomer SPLIF FP Output](https://github.com/justinecwilliams/PoseFilter/blob/master/Snapshots/Monomer_SPLIF.jpg)
+![Monomer SPLIF FP Output](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Monomer_SPLIF.jpg)
 
 ##### Simple Interaction Fingerprint output
-![Monomer SPLIF FP Output](https://github.com/justinecwilliams/PoseFilter/blob/master/Snapshots/Monomer_SInteraction.jpg)
+![Monomer SPLIF FP Output](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Monomer_SInteraction.jpg)
 
 
 ### Heteromer Example
 #### Heteromer Input
 
 As shown visually, tab 1 is used for the dimer example.
-![Heteromer Input](https://github.com/justinecwilliams/PoseFilter/blob/master/Snapshots/Heteromer_Example.jpg)
+![Heteromer Input](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Heteromer_Example.jpg)
 
 #### Heteromer Output
 
 ##### RMS output
-![Heteromer RMS Output](https://github.com/justinecwilliams/PoseFilter/blob/master/Snapshots/Heteromer_RMS.jpg)
+![Heteromer RMS Output](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Heteromer_RMS.jpg)
 
 ##### SPLIF Fingerprint output
-![Heteromer SPLIF FP Output](https://github.com/justinecwilliams/PoseFilter/blob/master/Snapshots/Heteromer_SPLIF.jpg)
+![Heteromer SPLIF FP Output](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Heteromer_SPLIF.jpg)
 
 ##### Simple Interaction Fingerprint output
-![Tetramer SPLIF FP Output](https://github.com/justinecwilliams/PoseFilter/blob/master/Snapshots/Heteromer_SInteraction.jpg)
+![Heteromer SPLIF FP Output](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Heteromer_SInteraction.jpg)
 
 ## Command Line Input 
 
