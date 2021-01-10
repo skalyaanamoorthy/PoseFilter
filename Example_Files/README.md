@@ -110,10 +110,13 @@ As shown visually, tab 1 is used for the dimer example.
 
 ### RMS 
 1. After following the installation instructions, PoseFilter can be used through the command line as well. The following
-commands should be typed into the command line after a new PyMOL session is opened.
-
-     `from pmg_tk.startup.PoseFilter import LigandRMSProcess`
-     `from pmg_tk.startup.PoseFilter import ComplexRMSProcess`
+commands should be typed into the command line after a new PyMOL session is opened. The name (in this case PoseFilter)
+should correspond to the folder. If it is 'PoseFilter-master,' then replace that keyword instead of PoseFilter in the following
+commands.
+   
+    `from pmg_tk.startup.PoseFilter import LigandRMSProcess`
+   
+    `from pmg_tk.startup.PoseFilter import ComplexRMSProcess`
 
     
 2. The command line can be used for the same result as the GUI first tab option, where a folder is processed that
