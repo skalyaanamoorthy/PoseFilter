@@ -89,6 +89,7 @@ As shown visually, tab 1 is used for the dimer example.
 ![Monomer SPLIF FP Output](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Monomer_SInteraction.jpg)
 
 
+
 ### Heteromer Example
 #### Heteromer Input
 
@@ -105,6 +106,8 @@ As shown visually, tab 1 is used for the dimer example.
 
 ##### Simple Interaction Fingerprint output
 ![Heteromer SPLIF FP Output](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Heteromer_SInteraction.jpg)
+
+
 
 ## Command Line Input 
 
