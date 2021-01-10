@@ -16,17 +16,17 @@ Add the Anaconda3 folder, and Anaconda3\Scripts to the path variable, which shou
 `C:\tools\Anaconda3\Scripts`
 `C:\tools\Anaconda3`
 3. Close and then open the command prompt again, selecting to "run as administrator." Typing "conda" into the command line
-will give conformation that Anaconda3 was installed correctly and the paths were added. A menu with commands should appear.
+will give confirmation that Anaconda3 was installed correctly and the paths were added. A menu with commands should appear.
 4. In this command prompt, type the following:
 `conda create -n pymol python=3.7 rdkit=2020.03.3.0 matplotlib seaborn pip numpy conda-forge::pmw tpeulen::pymol-open-source scikit-learn git `
 5. Activate the anaconda environment.
-`activate pymol`
+`conda activate pymol`
 6. Install oddt.
 `pip install git+git://github.com/oddt/oddt.git@a3ff8b84b3abf986ad5bdbfebc9ef96cb8a84d8c`
 
 7. Open source PyMOL can now be opened through the activated anaconda directory. Type pymol into the command line to 
 open the open source program.
-8. If the command line is closed, `activate pymol` needs to be typed in again before `pymol` to open the program.
+8. If the command line is closed, `conda activate pymol` needs to be typed in again before `pymol` to open the program.
 After activating the environment, the paths can be added to the environment variables, as Anaconda3 was. Type `path` into the command
 prompt, and then copy and paste the links into the path environment variable. Once this is done, `pymol` can be used 
 in the command prompt to open the program.
@@ -66,7 +66,8 @@ and running `python setup.py install`.
 ## Installing the PoseFilter Plugin 
 
    1. Ensure that open-source PyMOL is installed in the conda environment (as outlined above).
-   2. The PoseFilter files can be obtained from this repository. Download and extract the files.
+   2. The PoseFilter files can be obtained from this repository. Download and extract the files. For simplicity, ensure
+      that the extracted folder is named `PoseFilter`
    3. In PyMOL, click on "Plugin" at the top bar, then "Plugin Manager." Select the tab "Install New Plugin" and then
      under "Install from local file" select "choose file...". Find the downloaded GitHub folder and select the
       "\_\_init\_\_.py" file from the PoseFilter folder, then "Open" and press "Okay" twice. 
