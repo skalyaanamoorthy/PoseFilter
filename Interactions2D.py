@@ -54,7 +54,7 @@ def InteractionCheck(ppath, Listoflig, cur_dir):
     os.chdir(os.path.dirname(proteinpath))
 #    pname = os.path.basename(proteinpath)
 
-    protein = next(oddt.toolkit.readfile('pdb', proteinpath, sanitize=False, removeHs=False, cleanupSubstructures=False))
+    protein = next(oddt.toolkit.readfile('pdb', proteinpath, removeHs=False))
     protein.protein = True
 
     # Making a new file with the proper numbering
@@ -82,7 +82,7 @@ def InteractionCheck(ppath, Listoflig, cur_dir):
         file.close()
 
         # Read in and define the reference ligand
-        ligand = next(oddt.toolkit.readfile('pdb', ligandname, sanitize=False, removeHs=False, cleanupSubstructures=False))
+        ligand = next(oddt.toolkit.readfile('pdb', ligandname, removeHs=False))
 
 
         # Hydrophobic interactions
