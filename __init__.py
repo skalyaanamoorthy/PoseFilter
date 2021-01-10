@@ -98,13 +98,12 @@ def make_dialog():
 
         if filedir:
             form.dir_select.setText(filedir)
-           # print(filedir)
 
 
     def fingerprint():
         cmd.reinitialize()
         cmd.do('set retain_order,1')
-       # cmd.do('set pdb_retain_ids,1')
+        ErrorGenerated = 0
 
         AnyChecked = 0
         IText = []
@@ -122,9 +121,21 @@ def make_dialog():
 
         FP_SI = form.FP_SICutoff.text()
         FP_SPLIF = form.FP_SPLIFCutoff.text()
-        files, UNK, cur_dir, pname = FileGeneration()
-        files = natural_sort(files)
-        Fingerprint_Wrapper(files, IText, form.PDBCODE.text(), FP_SI, FP_SPLIF, TextInteraction, cur_dir, pname)
+
+        try:
+            files, UNK, cur_dir, pname = FileGeneration()
+        except:
+            print("Error: please check file inputs.")
+            ErrorGenerated = 1
+
+        if ErrorGenerated == 0:
+            files = natural_sort(files)
+            try:
+                Fingerprint_Wrapper(files, IText, form.PDBCODE.text(), FP_SI, FP_SPLIF, TextInteraction, cur_dir, pname)
+            except:
+                print("Error with fingerprint generation. Please check input files, required packages (specifically ODDT and rdkit builds"
+                      "specified in installation), then try again.")
+
         form.dir_select.setText("")
         form.file_select.setText("")
         form.PDBCODE.setText("")
@@ -138,6 +149,7 @@ def make_dialog():
         global dialog
         cmd.reinitialize()
         cmd.do('set retain_order,1')
+        ErrorGenerated = 0
        # cmd.do('set pdb_retain_ids,1')
        # InfoArray = TabInfo()
         alpha = 0
@@ -146,10 +158,15 @@ def make_dialog():
         nonidentical = 0
         if form.Nonchains.isChecked():
             nonidentical = 1
+        try:
+            files, UNK, cur_dir, pname = FileGeneration()
+        except:
+            print("Error: please check input files.")
+            ErrorGenerated = 1
 
-        files, UNK, cur_dir, pname = FileGeneration()
-        files = natural_sort(files)
-        CreateRMS(files, form.PDBCODE.text(), form.RMSCutoff.text(), UNK, alpha, nonidentical, cur_dir, pname)
+        if ErrorGenerated == 0:
+            files = natural_sort(files)
+            CreateRMS(files, form.PDBCODE.text(), form.RMSCutoff.text(), UNK, alpha, nonidentical, cur_dir, pname)
 
     form.Button_browse.clicked.connect(browse_filename)
     form.dirButton.clicked.connect(get_dir)
