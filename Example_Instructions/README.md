@@ -18,8 +18,13 @@ Files in the example folder were prepared using AutoDock Vina, Schrodinger Maest
 
 ### Dimer Example
 #### Dimer Input
+##### Dimer Tab 1
 
-![Dimer Input](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Dimer_Example.jpg)
+![Dimer Input](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Dimer_Tab1.jpg)
+
+##### Dimer Tab 2
+
+![Dimer Input](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Dimer_Tab2.jpg)
 
 #### Dimer Output
 
@@ -33,10 +38,14 @@ Files in the example folder were prepared using AutoDock Vina, Schrodinger Maest
 ![Dimer SPLIF FP Output](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Dimer_SInteraction.jpg)
 
 
+
 ### Trimer Example
 #### Trimer Input
+##### Trimer Tab 1
+![Trimer Input](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Trimer_Tab1.jpg)
 
-![Trimer Input](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Trimer_Example.jpg)
+##### Trimer Tab 2
+![Trimer Input](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Trimer_Tab2.jpg)
 
 #### Trimer Output
 
@@ -50,10 +59,14 @@ Files in the example folder were prepared using AutoDock Vina, Schrodinger Maest
 ![Trimer SPLIF FP Output](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Trimer_SInteraction.jpg)
 
 
+
 ### Tetramer Example
 #### Tetramer Input
+##### Tetramer Tab 1
+![Tetramer Input](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Tetramer_Tab1.jpg)
 
-![Tetramer Input](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Tetramer_Example.jpg)
+##### Tetramer Tab 2
+![Tetramer Input](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Tetramer_Tab2.jpg)
 
 #### Tetramer Output
 
@@ -70,8 +83,11 @@ Files in the example folder were prepared using AutoDock Vina, Schrodinger Maest
 
 ### Monomer Example
 #### Monomer Input
+##### Monomer Tab 1
+![Monomer Input](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Monomer_Tab1.jpg)
 
-![Monomer Input](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Monomer_Example.jpg)
+##### Monomer Tab 2
+![Monomer Input](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Monomer_Tab2.jpg)
 
 #### Monomer Output
 
@@ -88,8 +104,11 @@ Files in the example folder were prepared using AutoDock Vina, Schrodinger Maest
 
 ### Heteromer Example
 #### Heteromer Input
+##### Heteromer Tab 1
+![Heteromer Input](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Heteromer_Tab1.jpg)
 
-![Heteromer Input](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Heteromer_Example.jpg)
+##### Heteromer Tab 2
+![Heteromer Input](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Heteromer_Tab2.jpg)
 
 #### Heteromer Output
 
@@ -124,10 +143,6 @@ contains ligand files and a corresponding protein file.
 
 #### Input Type 1 (Ligand)
 
-Type the following into the command line, filling in the appropriate variables.
-`LigandRMSProcess(pfile, keyword, label, RMS_Cutoff, alpha, nonidentical)` 
-Ex: LigandRMSProcess('/home/.../PoseFilter/Examples/6ewp/6ewp.pdbqt', 'pose', '', 2.0, 0, 0)
-
 pfile: the full pathway for the protein file, which is in the same directory as the ligand pose files.
 
 keyword: keyword matching the ligand files (for pose1.pdb, pose2.pdb, pose3.pdb), keyword would be `pose`.
@@ -142,11 +157,17 @@ alpha: boolean value (0 or 1), 1 indicating that only the α carbon will be alig
 nonidentical: boolean value (0 or 1), 1 indicating that the chains are nonidentical, where a check will be made, and
 rotations will only occur for exactly identical chains (residue count and type being equal).
 
+##### Input Example
+Type the following into the command line, filling in the appropriate variables. Shown below is a sammple.
+`LigandRMSProcess(pfile, keyword, label, RMS_Cutoff, alpha, nonidentical)`
+
+LigandRMSProcess('/home/.../PoseFilter/Dimer_Example/Tab1_input/1FX9.pdbqt', 'pose', '', 2.0, 0, 0)
+
 #### Input Type 2 (Complex)
 
 Type the following into the command line, filling in the appropriate variables.
 `ComplexRMSProcess(folder_dir, keyword, label, ResId, crystal_struct, RMS_Cutoff, alpha, nonidentical)`
-Ex: ComplexRMSProcess('/home/.../PoseFilter/Examples/Dimer_Example', 'pose', '', 'UNK', '', 2.0, 0,0)
+Ex: ComplexRMSProcess('/home/.../PoseFilter/Dimer_Example/Tab2_input', 'pose', '', 'MJI', '', 2.0, 0,0)
 
 folder_dir: The directory that contains the protein complexes.
 
@@ -176,7 +197,7 @@ commands should be typed into the command line after a new PyMOL session is open
 
 #### Input Type 1 (Ligand)
 `LigandFP(pfile, keyword, label, FPList, FP_SI, FP_SPLIF, TextInteraction)`
-Ex: LigandFP('/home/.../PoseFilter/Examples/6ewp/6ewp.pdbqt', 'pose', '', ['SPLIF'], 0.5, 0.5, 1)
+Ex: LigandFP('/home/.../PoseFilter/Dimer_Example/Tab1_input/1FX9.pdbqt', 'pose', '', ['SPLIF'], 0.5, 0.5, 1)
 
 pfile: The full pathway for the protein file, which is in the same directory as the ligand pose files.
 
@@ -196,7 +217,7 @@ TextInteraction: bool value (0 or 1). If 1, then generates CSV files containing 
 
 #### Input Type 2 (Complex)
 `ComplexFP(folder_dir, keyword, label, ResId, crystal_struct, FPList, FP_SI, FP_SPLIF, TextInteraction)`
-Ex: ComplexFP('/home/.../PoseFilter/Examples/Dimer_Example', 'pose', '', 'UNK', '', ['SPLIF'], 0.5, 0.5, 1)
+Ex: ComplexFP('/home/.../PoseFilter/Dimer_Example/Tab2_input', 'pose', '', 'UNK', '', ['SPLIF'], 0.5, 0.5, 1)
 
 folder_dir: The directory that contains the protein complexes.
 
