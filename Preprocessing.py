@@ -10,7 +10,6 @@ import shutil
 import glob
 import numpy as np
 import sys
-from statistics import mode
 from collections import Counter
 global Testing
 Testing = 0

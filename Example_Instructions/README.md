@@ -19,7 +19,6 @@ Files in the example folder were prepared using AutoDock Vina, Schrodinger Maest
 ### Dimer Example
 #### Dimer Input
 
-As shown visually, tab 2 is used for the dimer example.
 ![Dimer Input](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Dimer_Example.jpg)
 
 #### Dimer Output
@@ -37,7 +36,6 @@ As shown visually, tab 2 is used for the dimer example.
 ### Trimer Example
 #### Trimer Input
 
-As shown visually, tab 1 is used for the trimer example.
 ![Trimer Input](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Trimer_Example.jpg)
 
 #### Trimer Output
@@ -55,7 +53,6 @@ As shown visually, tab 1 is used for the trimer example.
 ### Tetramer Example
 #### Tetramer Input
 
-As shown visually, tab 1 is used for the dimer example.
 ![Tetramer Input](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Tetramer_Example.jpg)
 
 #### Tetramer Output
@@ -74,7 +71,6 @@ As shown visually, tab 1 is used for the dimer example.
 ### Monomer Example
 #### Monomer Input
 
-As shown visually, tab 1 is used for the dimer example.
 ![Monomer Input](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Monomer_Example.jpg)
 
 #### Monomer Output
@@ -93,7 +89,6 @@ As shown visually, tab 1 is used for the dimer example.
 ### Heteromer Example
 #### Heteromer Input
 
-As shown visually, tab 1 is used for the dimer example.
 ![Heteromer Input](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Heteromer_Example.jpg)
 
 #### Heteromer Output

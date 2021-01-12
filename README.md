@@ -22,7 +22,7 @@ will give confirmation that Anaconda3 was installed correctly and the paths were
 5. Activate the anaconda environment.
 `conda activate pymol`
 6. Install oddt.
-`pip install git+git://github.com/oddt/oddt.git@a3ff8b84b3abf986ad5bdbfebc9ef96cb8a84d8c`
+`pip install git+git://github.com/oddt/oddt.git@88a5481e0a74348df5f2a9b27132148a3d5b94c1`
 
 7. Open source PyMOL can now be opened through the activated anaconda directory. Type pymol into the command line to 
 open the open source program.
@@ -41,7 +41,7 @@ named pymol that contains the proper packages:
 2. Activate the anaconda environment.
 `source activate pymol`
 3. Install oddt.
-`pip install git+git://github.com/oddt/oddt.git@a3ff8b84b3abf986ad5bdbfebc9ef96cb8a84d8c`
+`pip install git+git://github.com/oddt/oddt.git@88a5481e0a74348df5f2a9b27132148a3d5b94c1`
 4. Launch pymol by typing `pymol` in the terminal. If an error occurs, try to install some additional requirements.
 Ensure to run as root: https://pymolwiki.org/index.php/Linux_Install. This is done using an activated environment.
 If the terminal is closed, pymol needs to be reactivated in order to be opened again.
@@ -51,11 +51,11 @@ If the terminal is closed, pymol needs to be reactivated in order to be opened a
 1. Ensure that Anaconda3 is installed and activated, if not then install it through the following link: https://docs.anaconda.com/anaconda/install/mac-os/
 2. Open a terminal in the Anaconda3 directory named "envs." Use the following command to create an environment
 named pymol that contains the proper packages:
-`conda create -n pymol python=3.7 rdkit matplotlib seaborn pip numpy conda-forge::pmw tpeulen::pymol-open-source scikit-learn git`
+`conda create -n pymol python=3.7 rdkit=2020.03.3.0 matplotlib seaborn pip numpy conda-forge::pmw tpeulen::pymol-open-source scikit-learn git`
 3. Activate the anaconda environment.
-`source activate pymol`
+`conda activate pymol`
 4. Install oddt.
-`pip install git+git://github.com/oddt/oddt.git@a3ff8b84b3abf986ad5bdbfebc9ef96cb8a84d8c`
+`pip install git+git://github.com/oddt/oddt.git@88a5481e0a74348df5f2a9b27132148a3d5b94c1`
 5. Launch pymol by typing `pymol` in the terminal. This can be done using an activated environment. If the terminal is
 closed, pymol needs to be reactivated in order to be opened.
 
