@@ -11,7 +11,6 @@ import numpy as np
 import os
 import sys
 from .General import CreateHeatMap
-from statistics import mode
 from collections import Counter
 from pymol import cmd
 from .Preprocessing import PDBInfo_Wrapper
