@@ -90,20 +90,21 @@ def Fingerprint(proteinName, Listoflig, Type):
 def SPLIF_Fingerprint(ref_input, Listoflig, proteinpath):
     F_Scores = [0]*len(Listoflig)
 
-    protein = next(oddt.toolkit.readfile('pdb', proteinpath, removeHs=False, cleanupSubstructures=False, sanitize=False))
+    #protein = next(oddt.toolkit.readfile('pdb', proteinpath, removeHs=False, cleanupSubstructures=False, sanitize=False))
+    protein = next(oddt.toolkit.readfile('pdb', proteinpath, removeHs=False))
     protein.protein = True
 
     # Read in and define the reference ligand
-  #  print("ref input:")
-  #  print(ref_input)
-    ref_ligand = next(oddt.toolkit.readfile('pdb', ref_input, removeHs=False, cleanupSubstructures=False, sanitize=False))
+    #ref_ligand = next(oddt.toolkit.readfile('pdb', ref_input, removeHs=False, cleanupSubstructures=False, sanitize=False))
+    ref_ligand = next(oddt.toolkit.readfile('pdb', ref_input, removeHs=False))
     ref = fp.SPLIF(ref_ligand, protein)
 
     # Loop through each ligand in the list
     count = 0
    # print(Listoflig)
     for ligandpath in Listoflig:
-        ligand = next(oddt.toolkit.readfile('pdb', ligandpath, removeHs=False, cleanupSubstructures=False, sanitize=False))
+        #ligand = next(oddt.toolkit.readfile('pdb', ligandpath, removeHs=False, cleanupSubstructures=False, sanitize=False))
+        ligand = next(oddt.toolkit.readfile('pdb', ligandpath, removeHs=False))
         fp_query = fp.SPLIF(ligand, protein)
         # similarity score for current query
         F_Scores[count] = fp.similarity_SPLIF(ref, fp_query, rmsd_cutoff=3.)
@@ -118,17 +119,20 @@ def Simple_Interaction_Fingerprint(ref_input, Listoflig, proteinpath):
     F_Scores = [0]*len(Listoflig)
 
     # Read in protein
-    protein = next(oddt.toolkit.readfile('pdb', proteinpath, removeHs=False, cleanupSubstructures=False, sanitize=False))
+    #protein = next(oddt.toolkit.readfile('pdb', proteinpath, removeHs=False, cleanupSubstructures=False, sanitize=False))
+    protein = next(oddt.toolkit.readfile('pdb', proteinpath, removeHs=False))
     protein.protein = True
 
     # Read in and define the reference ligand
-    ref_ligand = next(oddt.toolkit.readfile('pdb', ref_input, removeHs=False, cleanupSubstructures=False, sanitize=False))
+    #ref_ligand = next(oddt.toolkit.readfile('pdb', ref_input, removeHs=False, cleanupSubstructures=False, sanitize=False))
+    ref_ligand = next(oddt.toolkit.readfile('pdb', ref_input, removeHs=False))
     ref = fp.SimpleInteractionFingerprint(ref_ligand, protein)
 
     # Loop through each ligand in the list
     count = 0
     for ligandpath in Listoflig:
         ligand = next(oddt.toolkit.readfile('pdb', ligandpath, removeHs=False, cleanupSubstructures=False, sanitize=False))
+        ligand = next(oddt.toolkit.readfile('pdb', ligandpath, removeHs=False))
         fp_query = fp.SimpleInteractionFingerprint(ligand, protein)
 
         # similarity score for current query
