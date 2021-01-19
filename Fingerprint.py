@@ -131,7 +131,7 @@ def Simple_Interaction_Fingerprint(ref_input, Listoflig, proteinpath):
     # Loop through each ligand in the list
     count = 0
     for ligandpath in Listoflig:
-        ligand = next(oddt.toolkit.readfile('pdb', ligandpath, removeHs=False, cleanupSubstructures=False, sanitize=False))
+        #ligand = next(oddt.toolkit.readfile('pdb', ligandpath, removeHs=False, cleanupSubstructures=False, sanitize=False))
         ligand = next(oddt.toolkit.readfile('pdb', ligandpath, removeHs=False))
         fp_query = fp.SimpleInteractionFingerprint(ligand, protein)
 
