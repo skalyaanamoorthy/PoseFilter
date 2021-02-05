@@ -143,6 +143,7 @@ def make_dialog():
         form.file_select.setText("")
         form.crystal_structure.setText("")
         form.complexid.setText("")
+        form.resInput.setText("")
 
 
     def run():

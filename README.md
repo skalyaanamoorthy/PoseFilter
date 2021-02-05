@@ -22,7 +22,7 @@ will give confirmation that Anaconda3 was installed correctly and the paths were
 5. Activate the anaconda environment.
 `conda activate pymol`
 6. Install oddt.
-`pip install git+git://github.com/oddt/oddt.git@88a5481e0a74348df5f2a9b27132148a3d5b94c1`
+`pip install git+git://github.com/oddt/oddt`
 
 7. Open source PyMOL can now be opened through the activated anaconda directory. Type pymol into the command line to 
 open the open source program.
@@ -30,6 +30,8 @@ open the open source program.
 After activating the environment, the paths can be added to the environment variables, as Anaconda3 was. Type `path` into the command
 prompt, and then copy and paste the links into the path environment variable. Once this is done, `pymol` can be used 
 in the command prompt to open the program.
+9. If there are any package errors, oddt can be downgraded to the corresponding build:
+`pip install git+git://github.com/oddt/oddt.git@88a5481e0a74348df5f2a9b27132148a3d5b94c1`
 
 
 ### Linux Installation
@@ -41,24 +43,32 @@ named pymol that contains the proper packages:
 2. Activate the anaconda environment.
 `source activate pymol`
 3. Install oddt.
-`pip install git+git://github.com/oddt/oddt.git@88a5481e0a74348df5f2a9b27132148a3d5b94c1`
+`pip install git+git://github.com/oddt/oddt`
 4. Launch pymol by typing `pymol` in the terminal. If an error occurs, try to install some additional requirements.
 Ensure to run as root: https://pymolwiki.org/index.php/Linux_Install. This is done using an activated environment.
 If the terminal is closed, pymol needs to be reactivated in order to be opened again.
 
 
 ### MacOS Installation
-1. Ensure that Anaconda3 is installed and activated, if not then install it through the following link: https://docs.anaconda.com/anaconda/install/mac-os/
-2. Open a terminal in the Anaconda3 directory named "envs." Use the following command to create an environment
-named pymol that contains the proper packages:
-`conda create -n pymol python=3.7 rdkit=2020.03.3.0 matplotlib seaborn pip numpy conda-forge::pmw tpeulen::pymol-open-source scikit-learn git`
-3. Activate the anaconda environment.
-`conda activate pymol`
-4. Install oddt.
-`pip install git+git://github.com/oddt/oddt.git@88a5481e0a74348df5f2a9b27132148a3d5b94c1`
+Homebrew should be used to install the required packages.
+
+1. Install open-source-pymol using homebrew.
+
+`brew install brewsci/bio/pymol`
+
+2. Need to check version of python that homebrew is using. For the following steps, ensure that the appropriate python path is being referenced.
+3. Install additional packages:
+`python3 -m pip install matplotlib`
+`python3 -m pip install seaborn`
+`python3 -m pip install git+git://github.com/oddt/oddt`
+4. Install rdkit using homebrew:
+`brew tap rdkit/rdkit`
+`brew install rdkit`
 5. Launch pymol by typing `pymol` in the terminal. This can be done using an activated environment. If the terminal is
 closed, pymol needs to be reactivated in order to be opened.
-
+6. If there are any package errors, oddt can be downgraded to the corresponding build:
+`pip install git+git://github.com/oddt/oddt.git@88a5481e0a74348df5f2a9b27132148a3d5b94c1`
+7. An alternative is to build using conda and the linux instructions.
 Troubleshooting: ensure that dependencies are installed though the wiki: https://pymolwiki.org/index.php/MAC_Install.
 If no module named or initialized failed errors occur, try installing through: https://github.com/schrodinger/pymol-open-source
 and running `python setup.py install`.

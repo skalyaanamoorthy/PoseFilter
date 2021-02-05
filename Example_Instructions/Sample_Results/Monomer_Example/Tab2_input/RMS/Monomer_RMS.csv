@@ -1,0 +1,8 @@
+RMS values
+ ,crystal_0rot.pdb, pose1_0rot.pdb, pose2_0rot.pdb, pose3_0rot.pdb, pose4_0rot.pdb, pose5_0rot.pdb, 
+crystal_0rot.pdb, 0.0, 9.0, 4.03, 9.51, 8.58, 7.81, 
+pose1_0rot.pdb, 9.0, 0.0, 7.5, 7.5, 9.55, 7.62, 
+pose2_0rot.pdb, 4.03, 7.5, 0.0, 9.07, 8.21, 6.54, 
+pose3_0rot.pdb, 9.51, 7.5, 9.07, 0.0, 13.08, 11.54, 
+pose4_0rot.pdb, 8.58, 9.55, 8.21, 13.08, 0.0, 8.0, 
+pose5_0rot.pdb, 7.81, 7.62, 6.54, 11.54, 8.0, 0.0, 

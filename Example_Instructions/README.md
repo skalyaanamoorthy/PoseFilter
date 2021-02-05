@@ -1,7 +1,7 @@
 # PoseFilter Worked Examples
 
 Please refer to the user guide for explanation of PoseFilter options. Described is usage of these options
-with example files (found in the Examples folder).
+with example files (found in the "Examples" folder).
 
 PoseFilter is a PyMOL plugin and assists in the analysis of docked ligands through identification of unique
 oligomeric poses by utilizing RMSD and interaction fingerprint analysis methods.

@@ -1,0 +1,35 @@
+HETATM    1  C1  AMG     0      52.301  31.811  26.001  0.00  0.00           C  
+HETATM    2  C2  AMG     0      51.912  30.469  25.376  0.00  0.00           C  
+HETATM    3  C3  AMG     0      53.183  29.705  25.002  0.00  0.00           C  
+HETATM    4  C4  AMG     0      54.056  30.605  24.122  0.00  0.00           C  
+HETATM    5  C5  AMG     0      54.284  31.936  24.842  0.00  0.00           C  
+HETATM    6  O5  AMG     0      53.035  32.588  25.058  0.00  0.00           O  
+HETATM    7  C6  AMG     0      55.182  32.829  23.983  0.00  0.00           C  
+HETATM    8  O6  AMG     0      54.403  33.889  23.423  0.00  0.00           O  
+HETATM    9  HO6 AMG     0      53.508  33.795  23.777  0.00  0.00           H  
+HETATM   10  O4  AMG     0      53.399  30.841  22.876  0.00  0.00           O  
+HETATM   11  HO4 AMG     0      52.807  30.092  22.726  0.00  0.00           H  
+HETATM   12  O3  AMG     0      52.840  28.519  24.283  0.00  0.00           O  
+HETATM   13  HO3 AMG     0      52.595  27.853  24.941  0.00  0.00           H  
+HETATM   14  O1  AMG     0      53.108  31.580  27.158  0.00  0.00           O  
+HETATM   15  C7  AMG     0      52.902  32.688  28.034  0.00  0.00           C  
+HETATM   16  O2  AMG     0      51.153  29.706  26.315  0.00  0.00           O  
+HETATM   17  HO2 AMG     0      51.190  28.785  26.022  0.00  0.00           H  
+CONECT    1    2    6   14
+CONECT    2    1    3   16
+CONECT    3    2    4   12
+CONECT    4    3    5   10
+CONECT    5    4    6    7
+CONECT    6    1    5
+CONECT    7    5    8
+CONECT    8    7    9
+CONECT    9    8
+CONECT   10    4   11
+CONECT   11   10
+CONECT   12    3   13
+CONECT   13   12
+CONECT   14    1   15
+CONECT   15   14
+CONECT   16    2   17
+CONECT   17   16
+END

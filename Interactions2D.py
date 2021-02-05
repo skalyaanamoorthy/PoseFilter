@@ -58,22 +58,9 @@ def InteractionCheck(ppath, Listoflig, cur_dir):
     protein = next(oddt.toolkit.readfile('pdb', proteinpath, removeHs=False))
     protein.protein = True
 
-    # Making a new file with the proper numbering
-   # proteinfile = pname.split('.')[0] + '_mol.pdb'
-  #  of = Outputfile(format='pdb', filename=molfile, overwrite=True)
-  #  of.write(protein)
-
-   # destination = os.path.join(cur_dir, 'Fingerprint', pname)
-   # current = os.path.join(cur_dir, 'PDBLigand', pname)
- #   molpath = destination
-
-   # shutil.move(current, destination)
-
 
     for ligand_object in Listoflig:
         ligandname = ligand_object.PoseNameExt
-
-        #Ligand_Name = ligandname.split('.')[0]
 
         ResReport = ligand_object.PoseName + "_ResidueReport.csv"
         path = os.path.join(cur_dir, 'Fingerprint', ResReport)
@@ -83,10 +70,7 @@ def InteractionCheck(ppath, Listoflig, cur_dir):
         file.close()
 
         # Read in and define the reference ligand
-
-       # ligand = next(oddt.toolkit.readfile('pdb', ligandname, removeHs=False, cleanupSubstructures=False, sanitize=False))
         ligand = next(oddt.toolkit.readfile('pdb', ligandname, removeHs=False))
-
 
         # Hydrophobic interactions
         p_hydroph, l_hydroph = interactions.hydrophobic_contacts(protein, ligand)
@@ -145,12 +129,10 @@ def InteractionsFile(protein, ligand, FilePath, Interaction_Name):
                        'Resn, Resi, Ligand to Protein Distance (Angstrom)\n')
         ListOfDist = []
 
-
         # Put everything into a list; use an object so that it is neater
         for y in range(len(protein)):
 
             try:
-              #  print('coords are here')
                 p_coords = protein[y]['coords']
                 l_coords = ligand[y]['coords']
 
@@ -175,7 +157,6 @@ def InteractionsFile(protein, ligand, FilePath, Interaction_Name):
                 # Key is not present
                 pass
 
-
         # Sort the list according to the distance
         ListOfDist.sort(key=lambda z: z.Dist, reverse=False)
 
@@ -189,8 +170,6 @@ def InteractionsFile(protein, ligand, FilePath, Interaction_Name):
                        r0.ProtResName + ', ' + r0.ProtResNum + ', ' +
                        str(round(r0.Dist, 2)) + '\n')
             ResnResi.append([r0.ProtResName, r0.ProtResNum])
-           # print("first printed")
-           # print(r0.ProtResName + " " + r0.ProtResNum)
 
             for residue in ListOfDist:
                 InResnResiList = 0
@@ -214,13 +193,7 @@ def ANumtoASym(ANum, dirname):
     for line in lines:
         symlist = line.split(',')
         if symlist[0] == str(ANum):
-          #  print(symlist[0])
-          #  print(str(ANum))
             file.close()
             return symlist[1]
     file.close()
     return 'X'
-
-#proteinpath = '/home/justine/protein.pdb'
-#ligandpaths = ['ligand1.pdb', 'ligand2.pdb', 'ligand3.pdb']
-#InteractionCheck(proteinpath, ligandpaths)

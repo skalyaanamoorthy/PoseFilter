@@ -123,8 +123,6 @@ def ComplexRMSProcess(folder_dir, keyword, label, resInput, crystal_struct, RMS_
     pname = "protein1.pdb"
     UNK, pdb_files = InputFileSort(all_files, "complex", folder_dir, "", resInput, pname)
     files = natural_sort(pdb_files)
-   # print(files)
-   # print(UNK)
     CreateRMS(files, label, RMS_Cutoff, UNK, alpha, nonidentical, folder_dir, pname)
 
 @cmd.extend
@@ -164,8 +162,6 @@ def LigandFileSort(filelist, maindir, Ligand_path, Complex_path, ppath):
    # cmd.do('set retain_order,1')
 
     for file in filelist:
-    #    print("file")
-    #    print(file)
         # Splits on the '.' into the name and ext
         file_name, file_ext = file.split('.')
 
@@ -179,10 +175,8 @@ def LigandFileSort(filelist, maindir, Ligand_path, Complex_path, ppath):
     copyfile(ppath, New_ppath)
 
     # Check if pdb, if it isn't, make pdb and delete other file
-  #  print("pfile base name")
 
     pfilewext = os.path.basename(ppath)
-  #  print(pfilewext)
 
     pfile, pext = pfilewext.split('.')
     if pext != 'pdb':
