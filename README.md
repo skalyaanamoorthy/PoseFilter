@@ -175,8 +175,11 @@ should correspond to the folder. The package name can be checked in "Plugin" -> 
 please use the appropriate keywords in the following commands. 
    
 `from pmg_tk.startup.PoseFilter import LigandRMSProcess`
+
 `from pmg_tk.startup.PoseFilter import ComplexRMSProcess`
+
 `from pmg_tk.startup.PoseFilter import LigandFP`
+
 `from pmg_tk.startup.PoseFilter import ComplexFP`
 
 
@@ -292,4 +295,4 @@ Syntax:
 
 Example:
 
-`ComplexFP('/home/.../PoseFilter/Dimer_Example/Tab2_input', 'pose', '', 'UNK', '', ['SInteraction', 'SPLIF'], 0.5, 0.5, 1)`
+`ComplexFP('/home/.../PoseFilter/Dimer_Example/Tab2_input', 'pose', '', 'MJI', '', ['SInteraction', 'SPLIF'], 0.5, 0.5, 1)`
