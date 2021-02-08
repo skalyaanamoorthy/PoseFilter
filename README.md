@@ -52,6 +52,10 @@ named pymol that contains the proper packages:
 4. Launch pymol by typing `pymol` in the terminal. If an error occurs, try to install some additional requirements.
 Ensure to run as root: https://pymolwiki.org/index.php/Linux_Install. This is done using an activated environment.
 If the terminal is closed, pymol needs to be reactivated in order to be opened again.
+   
+If there are any package errors, oddt can be downgraded to the corresponding build:
+   
+`pip install git+git://github.com/oddt/oddt.git@88a5481e0a74348df5f2a9b27132148a3d5b94c1`
 
 
 ### MacOS Installation
