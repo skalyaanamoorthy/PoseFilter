@@ -20,9 +20,9 @@ To use PoseFilter can be used through the command line as well, type the followi
 a new PyMOL session is opened. The name (in this case PoseFilter) should correspond to the folder. The package name can be
 checked in "Plugin" -> "Plugin Manager" If it is not "PoseFilter" please use the appropriate keyword  in the following commands.
    
-    `from pmg_tk.startup.PoseFilter import LigandRMSProcess`
-   
-    `from pmg_tk.startup.PoseFilter import ComplexRMSProcess`
+`from pmg_tk.startup.PoseFilter import LigandRMSProcess`
+
+`from pmg_tk.startup.PoseFilter import ComplexRMSProcess`
 
 
 ### Dimer Example
@@ -34,9 +34,11 @@ checked in "Plugin" -> "Plugin Manager" If it is not "PoseFilter" please use the
 ##### Dimer Tab 1 Command Line
 
 RMS:
+
 `LigandRMSProcess('/home/.../PoseFilter/Dimer_Example/Tab1_input/1FX9.pdbqt', 'pose', 'Dimer', 2.0, 0, 0)`
 
 Fingerprint:
+
 `LigandFP('/home/.../PoseFilter/Dimer_Example/Tab1_input/1FX9.pdbqt', 'pose', 'Dimer', ['SInteraction', 'SPLIF'], 0.5, 0.5, 1)`
 
 ##### Dimer Tab 2 GUI
@@ -46,9 +48,11 @@ Fingerprint:
 ##### Dimer Tab 2 Command Line
 
 RMS:
+
 `ComplexRMSProcess('/home/.../PoseFilter/Dimer_Example/Tab2_input', 'pose', 'Dimer', 'MJI', '', 2.0, 0,0)`
 
 Fingerprint:
+
 `ComplexFP('/home/.../PoseFilter/Dimer_Example/Tab2_input', 'pose', 'Dimer', 'MJI', '', ['SInteraction', 'SPLIF'], 0.5, 0.5, 1)`
 
 #### Dimer Output
@@ -72,9 +76,11 @@ Fingerprint:
 ##### Trimer Tab 1 Command Line
 
 RMS:
+
 `LigandRMSProcess('/home/.../PoseFilter/Trimer_Example/Tab1_input/5EIL.pdb', 'pose', 'Trimer', 2.0, 0, 0)`
 
 Fingerprint:
+
 `LigandFP('/home/.../PoseFilter/Trimer_Example/Tab1_input/5EIL.pdb', 'pose', 'Trimer', ['SInteraction', 'SPLIF'], 0.5, 0.5, 1)`
 
 ##### Trimer Tab 2 GUI
@@ -83,9 +89,11 @@ Fingerprint:
 ##### Trimer Tab 2 Command Line
 
 RMS:
+
 `ComplexRMSProcess('/home/.../PoseFilter/Trimer_Example/Tab2_input', 'pose', 'Trimer', 'UNK', '', 2.0, 0,0)`
 
 Fingerprint:
+
 `ComplexFP('/home/.../PoseFilter/Trimer_Example/Tab2_input', 'pose', 'Trimer', 'UNK', '', ['SInteraction', 'SPLIF'], 0.5, 0.5, 1)`
 
 #### Trimer Output
@@ -109,9 +117,11 @@ Fingerprint:
 ##### Tetramer Tab 1 Command Line
 
 RMS:
+
 `LigandRMSProcess('/home/.../PoseFilter/Tetramer_Example/Tab1_input/5kmh.pdbqt', 'pose', 'Tetramer', 2.0, 0, 0)`
 
 Fingerprint:
+
 `LigandFP('/home/.../PoseFilter/Tetramer_Example/Tab1_input/5kmh.pdbqt', 'pose', 'Tetramer', ['SInteraction', 'SPLIF'], 0.5, 0.5, 1)`
 
 ##### Tetramer Tab 2 GUI
@@ -120,9 +130,11 @@ Fingerprint:
 ##### Tetramer Tab 2 Command Line
 
 RMS:
+
 `ComplexRMSProcess('/home/.../PoseFilter/Tetramer_Example/Tab2_input', 'pose', 'Tetramer', '6U8', '', 2.0, 0,0)`
 
 Fingerprint:
+
 `ComplexFP('/home/.../PoseFilter/Tetramer_Example/Tab2_input', 'pose', 'Tetramer', '6U8', '', ['SInteraction', 'SPLIF'], 0.5, 0.5, 1)`
 
 #### Tetramer Output
@@ -146,9 +158,11 @@ Fingerprint:
 ##### Monomer Tab 1 Command Line
 
 RMS:
+
 `LigandRMSProcess('/home/.../PoseFilter/Monomer_Example/Tab1_input/protein1.pdb', 'pose', 'Monomer', 2.0, 0, 0)`
 
 Fingerprint:
+
 `LigandFP('/home/.../PoseFilter/Monomer_Example/Tab1_input/protein1.pdb', 'pose', '', ['SInteraction', 'SPLIF'], 0.5, 0.5, 1)`
 
 ##### Monomer Tab 2 GUI
@@ -157,9 +171,11 @@ Fingerprint:
 ##### Monomer Tab 2 Command Line
 
 RMS:
+
 `ComplexRMSProcess('/home/.../PoseFilter/Monomer_Example/Tab2_input', 'pose', 'Monomer', 'SHH', '', 2.0, 0,0)`
 
 Fingerprint:
+
 `ComplexFP('/home/.../PoseFilter/Monomer_Example/Tab2_input', 'pose', 'Monomer', 'SHH', '', ['SInteraction', 'SPLIF'], 0.5, 0.5, 1)`
 
 #### Monomer Output
@@ -183,9 +199,11 @@ Fingerprint:
 ##### Heteromer Tab 1 Command Line
 
 RMS:
+
 `LigandRMSProcess('/home/.../PoseFilter/Heteromer_Example/Tab1_input/1TOQ.pdbqt', 'pose', 'Heteromer', 2.0, 0, 0)`
 
 Fingerprint:
+
 `LigandFP('/home/.../PoseFilter/Heteromer_Example/Tab1_input/1TOQ.pdbqt', 'pose', 'Heteromer', ['SInteraction', 'SPLIF'], 0.5, 0.5, 1)`
 
 ##### Heteromer Tab 2 GUI
@@ -194,9 +212,11 @@ Fingerprint:
 ##### Heteromer Tab 2 Command Line
 
 RMS:
+
 `ComplexRMSProcess('/home/.../PoseFilter/Dimer_Example/Tab2_input', 'pose', 'Heteromer', 'MJI', '', 2.0, 0,0)`
 
 Fingerprint:
+
 `ComplexFP('/home/.../PoseFilter/Dimer_Example/Tab2_input', 'pose', 'Heteromer', 'UNK', '', ['SInteraction', 'SPLIF'], 0.5, 0.5, 1)`
 
 #### Heteromer Output

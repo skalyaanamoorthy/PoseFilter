@@ -31,6 +31,7 @@ After activating the environment, the paths can be added to the environment vari
 prompt, and then copy and paste the links into the path environment variable. Once this is done, `pymol` can be used 
 in the command prompt to open the program.
 9. If there are any package errors, oddt can be downgraded to the corresponding build:
+
 `pip install git+git://github.com/oddt/oddt.git@88a5481e0a74348df5f2a9b27132148a3d5b94c1`
 
 
@@ -39,6 +40,7 @@ in the command prompt to open the program.
 https://docs.anaconda.com/anaconda/install/linux/
 2. Open a terminal in the Anaconda3 directory named "envs." Use the following command to create an environment
 named pymol that contains the proper packages:
+   
 `conda create -n pymol python=3.7 rdkit=2020.03.3 matplotlib seaborn pip numpy conda-forge::pmw tpeulen::pymol-open-source scikit-learn git`
 2. Activate the anaconda environment.
 `source activate pymol`
@@ -53,8 +55,8 @@ If the terminal is closed, pymol needs to be reactivated in order to be opened a
 Homebrew should be used to install the required packages.
 
 1. Install open-source-pymol using homebrew.
-
-    `brew install brewsci/bio/pymol`
+   
+`brew install brewsci/bio/pymol`
 
 2. Need to check version of python that homebrew is using. For the following steps, ensure that the appropriate python path is being referenced.
    Substitute python3 for the homebrew python pathway.
@@ -73,7 +75,7 @@ Homebrew should be used to install the required packages.
 5. Launch pymol by typing `pymol` in the terminal.
 6. If there are any package errors, oddt can be downgraded to the corresponding build:
    
-    pip install git+git://github.com/oddt/oddt.git@88a5481e0a74348df5f2a9b27132148a3d5b94c1
+`pip install git+git://github.com/oddt/oddt.git@88a5481e0a74348df5f2a9b27132148a3d5b94c1`
    
 7. An alternative is to build using conda and the linux instructions.
 Troubleshooting: ensure that dependencies are installed though the wiki: https://pymolwiki.org/index.php/MAC_Install.
@@ -172,10 +174,10 @@ commands should be typed into the command line after a new PyMOL session is open
 should correspond to the folder. The package name can be checked in "Plugin" -> "Plugin Manager" If it is not "PoseFilter"
 please use the appropriate keywords in the following commands. 
    
-    from pmg_tk.startup.PoseFilter import LigandRMSProcess
-    from pmg_tk.startup.PoseFilter import ComplexRMSProcess
-    from pmg_tk.startup.PoseFilter import LigandFP
-    from pmg_tk.startup.PoseFilter import ComplexFP
+`from pmg_tk.startup.PoseFilter import LigandRMSProcess`
+`from pmg_tk.startup.PoseFilter import ComplexRMSProcess`
+`from pmg_tk.startup.PoseFilter import LigandFP`
+`from pmg_tk.startup.PoseFilter import ComplexFP`
 
 
 #### RMS
@@ -197,11 +199,11 @@ rotations will only occur for exactly identical chains (residue count and type b
 
 Syntax:
 
-    LigandRMSProcess(pfile, keyword, label, RMS_Cutoff, alpha, nonidentical)
+`LigandRMSProcess(pfile, keyword, label, RMS_Cutoff, alpha, nonidentical)`
 
 Example:
 
-    LigandRMSProcess('/home/.../PoseFilter/Dimer_Example/Tab1_input/1FX9.pdbqt', 'pose', '', 2.0, 0, 0)
+`LigandRMSProcess('/home/.../PoseFilter/Dimer_Example/Tab1_input/1FX9.pdbqt', 'pose', '', 2.0, 0, 0)`
 
 
 ##### Input Type 2 (Complex)
@@ -227,11 +229,11 @@ rotations will only occur for exactly identical chains (residue count and type b
 
 Syntax:
 
-    ComplexRMSProcess(folder_dir, keyword, label, ResId, crystal_struct, RMS_Cutoff, alpha, nonidentical)
+`ComplexRMSProcess(folder_dir, keyword, label, ResId, crystal_struct, RMS_Cutoff, alpha, nonidentical)`
 
 Example:
 
-    ComplexRMSProcess('/home/.../PoseFilter/Dimer_Example/Tab2_input', 'pose', '', 'MJI', '', 2.0, 0,0)
+`ComplexRMSProcess('/home/.../PoseFilter/Dimer_Example/Tab2_input', 'pose', '', 'MJI', '', 2.0, 0,0)`
 
 ### Interaction Fingerprint
 #### Input Type 1 (Ligand)
@@ -285,7 +287,9 @@ FP_SPLIF: SPLIF fingerprint cutoff value (0-1).
 TextInteraction: bool value (0 or 1). If 1, then generates CSV files containing interaction information of various types.
 
 Syntax:
+
 `ComplexFP(folder_dir, keyword, label, ResId, crystal_struct, FPList, FP_SI, FP_SPLIF, TextInteraction)`
 
 Example:
+
 `ComplexFP('/home/.../PoseFilter/Dimer_Example/Tab2_input', 'pose', '', 'UNK', '', ['SInteraction', 'SPLIF'], 0.5, 0.5, 1)`
