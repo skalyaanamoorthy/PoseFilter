@@ -42,10 +42,13 @@ https://docs.anaconda.com/anaconda/install/linux/
 named pymol that contains the proper packages:
    
 `conda create -n pymol python=3.7 rdkit=2020.03.3 matplotlib seaborn pip numpy conda-forge::pmw tpeulen::pymol-open-source scikit-learn git`
+
 2. Activate the anaconda environment.
 `source activate pymol`
+
 3. Install oddt.
 `pip install git+git://github.com/oddt/oddt`
+
 4. Launch pymol by typing `pymol` in the terminal. If an error occurs, try to install some additional requirements.
 Ensure to run as root: https://pymolwiki.org/index.php/Linux_Install. This is done using an activated environment.
 If the terminal is closed, pymol needs to be reactivated in order to be opened again.
@@ -62,9 +65,11 @@ Homebrew should be used to install the required packages.
    Substitute python3 for the homebrew python pathway.
 3. Install additional packages:
    
-    python3 -m pip install matplotlib
-    python3 -m pip install seaborn
-    python3 -m pip install git+git://github.com/oddt/oddt
+    `python3 -m pip install matplotlib`
+   
+    `python3 -m pip install seaborn`
+   
+    `python3 -m pip install git+git://github.com/oddt/oddt`
    
 
 4. Install rdkit using homebrew:
@@ -170,9 +175,8 @@ complete” will be displayed in the PyMOL command window once this process has 
 ### Command Line Input 
 
 1. After following the installation instructions, PoseFilter can be used through the command line as well. The following
-commands should be typed into the command line after a new PyMOL session is opened. The name (in this case PoseFilter)
-should correspond to the folder. The package name can be checked in "Plugin" -> "Plugin Manager" If it is not "PoseFilter"
-please use the appropriate keywords in the following commands. 
+commands should be typed into the command line after a new PyMOL session is opened. The package name can be checked in "Plugin" -> "Plugin Manager."
+If the package name is not "PoseFilter," please use the appropriate keywords in the following commands. 
    
 `from pmg_tk.startup.PoseFilter import LigandRMSProcess`
 
