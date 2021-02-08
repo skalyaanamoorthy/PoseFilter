@@ -57,6 +57,7 @@ Homebrew should be used to install the required packages.
 `brew install brewsci/bio/pymol`
 
 2. Need to check version of python that homebrew is using. For the following steps, ensure that the appropriate python path is being referenced.
+   Substitute python3 for the homebrew python pathway.
 3. Install additional packages:
 `python3 -m pip install matplotlib`
 `python3 -m pip install seaborn`
@@ -64,8 +65,7 @@ Homebrew should be used to install the required packages.
 4. Install rdkit using homebrew:
 `brew tap rdkit/rdkit`
 `brew install rdkit`
-5. Launch pymol by typing `pymol` in the terminal. This can be done using an activated environment. If the terminal is
-closed, pymol needs to be reactivated in order to be opened.
+5. Launch pymol by typing `pymol` in the terminal.
 6. If there are any package errors, oddt can be downgraded to the corresponding build:
 `pip install git+git://github.com/oddt/oddt.git@88a5481e0a74348df5f2a9b27132148a3d5b94c1`
 7. An alternative is to build using conda and the linux instructions.
@@ -75,7 +75,7 @@ and running `python setup.py install`.
 
 ## Installing the PoseFilter Plugin 
 
-   1. Ensure that open-source PyMOL is installed in the conda environment (as outlined above).
+   1. Ensure that open-source PyMOL is installed (as outlined above).
    2. The PoseFilter files can be obtained from this repository. Download and extract the files. For simplicity, ensure
       that the extracted folder is named `PoseFilter`
    3. In PyMOL, click on "Plugin" at the top bar, then "Plugin Manager." Select the tab "Install New Plugin" and then
@@ -94,9 +94,9 @@ Please use one of these tab options at a time to choose your input files.
 #### Tab 1 Description
 ![Input Type 1](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/GUITab1.jpg)
 
-The first tab (File input - type 1) gives the option to process a
-folder that contain protein and ligand poses as separate files.
-1. Ensure that the only the protein structure and ligand pose files are available in .pdb format in this directory. 
+The first tab (File input - type 1) gives the option to process a folder that contains a protein file
+and ligand poses as separate files.
+1. Ensure that only the protein structure and ligand pose files are available in PyMOL compatible formats in this directory. 
 2. Choose the receptor/protein structure file using the “Choose a protein file” option.
 3. Provide a filename identifier that corresponds to the ligand poses in the “ligand filename identifier” box.
 Note this should match the filename of the ligand files in the folder and not the protein. For example, if the ligand poses
@@ -156,3 +156,123 @@ analysis output, which is placed in a sub-folder named ‘Fingerprint’.
 generated in the ‘Similar’ folder, which shows the similar poses’ relationship to each other. 
 6. Once the button has been pressed the calculation will take a few minutes to complete. The "Fingerprint analysis
 complete” will be displayed in the PyMOL command window once this process has finished.
+   
+
+### Command Line Input 
+
+1. After following the installation instructions, PoseFilter can be used through the command line as well. The following
+commands should be typed into the command line after a new PyMOL session is opened. The name (in this case PoseFilter)
+should correspond to the folder. The package name can be checked in "Plugin" -> "Plugin Manager" If it is not "PoseFilter"
+please use the appropriate keywords in the following commands.
+   
+   `from pmg_tk.startup.PoseFilter import LigandRMSProcess`
+   `from pmg_tk.startup.PoseFilter import ComplexRMSProcess`
+   `from pmg_tk.startup.PoseFilter import LigandFP`
+   `from pmg_tk.startup.PoseFilter import ComplexFP`
+
+
+#### RMS
+##### Input Type 1 (Ligand)
+
+pfile: the full pathway for the protein file, which is in the same directory as the ligand pose files.
+
+keyword: keyword matching the ligand files (for pose1.pdb, pose2.pdb, pose3.pdb), keyword would be `pose`.
+
+label: PDB code, or any kind of label to label the RMS/Fingerprint files.
+
+RMS_cutoff: The RMS similarity cutoff (> 0) is the value used for sorting the poses as ‘Similar’ and ‘Unique’. The default
+auto-filled value is 2.0 Å, and this value can be changed by the user.  
+
+alpha: boolean value (0 or 1), 1 indicating that only the α carbon will be aligned for the rotations.
+
+nonidentical: boolean value (0 or 1), 1 indicating that the chains are nonidentical, where a check will be made, and
+rotations will only occur for exactly identical chains (residue count and type being equal).
+
+Syntax:
+`LigandRMSProcess(pfile, keyword, label, RMS_Cutoff, alpha, nonidentical)`
+
+Example:
+`LigandRMSProcess('/home/.../PoseFilter/Dimer_Example/Tab1_input/1FX9.pdbqt', 'pose', '', 2.0, 0, 0)`
+
+
+##### Input Type 2 (Complex)
+
+folder_dir: The directory that contains the protein complexes.
+
+keyword: keyword matching the complex files (for complex1.pdb, complex2.pdb, complex3.pdb), keyword would be `complex`.
+
+label: PDB code, or any kind of label to label the RMS/Fingerprint files.
+
+ResId: The ligand residue identifier refers to the three-letter code for the ligand residue name as available in the
+complex file. Eg., "LIG" or "UNK."
+
+crystal_struct: Full pathway of a crystal structure (protein with ligand), which will be included into the analysis.
+
+RMS_cutoff: The RMS similarity cutoff (> 0) is the value used for sorting the poses as ‘Similar’ and ‘Unique’. The default
+auto-filled value is 2.0 Å, and this value can be changed by the user.  
+
+alpha: Boolean value (0 or 1), 1 indicating that only the α carbon will be aligned for the rotations.
+
+nonidentical: Boolean value (0 or 1), 1 indicating that the chains are nonidentical, where a check will be made, and
+rotations will only occur for exactly identical chains (residue count and type being equal).
+
+Syntax:
+`ComplexRMSProcess(folder_dir, keyword, label, ResId, crystal_struct, RMS_Cutoff, alpha, nonidentical)`
+
+Example:
+`ComplexRMSProcess('/home/.../PoseFilter/Dimer_Example/Tab2_input', 'pose', '', 'MJI', '', 2.0, 0,0)`
+
+### Interaction Fingerprint
+#### Input Type 1 (Ligand)
+
+pfile: The full pathway for the protein file, which is in the same directory as the ligand pose files.
+
+keyword: keyword matching the ligand files (for pose1.pdb, pose2.pdb, pose3.pdb), keyword would be `pose`.
+
+label: PDB code, or any kind of label to label the RMS/Fingerprint files.
+
+FPList: A list of the fingerprint types that will be performed, for example: `['SInteraction', 'SPLIF']` to perform both. Or
+`[SPLIF]` to perform just SPLIF.
+
+FP_SI: Simple interaction fingerprint cutoff value. The Fingerprint similarity cutoff (0-1) is the value used for
+sorting the files as 'Similar' and 'Unique'.
+
+FP_SPLIF: SPLIF fingerprint cutoff value (0-1).
+
+TextInteraction: bool value (0 or 1). If 1, then generates CSV files containing interaction information of various types.
+
+Syntax:
+`LigandFP(pfile, keyword, label, FPList, FP_SI, FP_SPLIF, TextInteraction)`
+
+Example:
+`LigandFP('/home/.../PoseFilter/Dimer_Example/Tab1_input/1FX9.pdbqt', 'pose', '', ['SInteraction', 'SPLIF'], 0.5, 0.5, 1)`
+
+
+#### Input Type 2 (Complex)
+
+folder_dir: The directory that contains the protein complexes.
+
+keyword: keyword matching the complex files (for complex1.pdb, complex2.pdb, complex3.pdb), keyword would be `complex`.
+
+label: PDB code, or any kind of label to label the RMS/Fingerprint files.
+
+ResId: The ligand residue identifier refers to the three-letter code for the ligand residue name as available in the
+complex file. Eg., "LIG" or "UNK."
+
+crystal_struct: Full pathway of a crystal structure (protein with ligand), which will be included into the analysis.
+
+FPList: A list of the fingerprint types that will be performed, for example: `['SInteraction', 'SPLIF']` to perform both. Or
+`[SPLIF]` to perform just SPLIF.
+
+FP_SI: Simple interaction fingerprint cutoff value. The Fingerprint similarity cutoff (0-1) is the value used for
+sorting the files as 'Similar' and 'Unique'.
+
+FP_SPLIF: SPLIF fingerprint cutoff value (0-1).
+
+TextInteraction: bool value (0 or 1). If 1, then generates CSV files containing interaction information of various types.
+
+Syntax:
+`ComplexFP(folder_dir, keyword, label, ResId, crystal_struct, FPList, FP_SI, FP_SPLIF, TextInteraction)`
+
+Example:
+`ComplexFP('/home/.../PoseFilter/Dimer_Example/Tab2_input', 'pose', '', 'UNK', '', ['SInteraction', 'SPLIF'], 0.5, 0.5, 1)`

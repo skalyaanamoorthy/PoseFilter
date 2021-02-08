@@ -55,8 +55,15 @@ def InteractionCheck(ppath, Listoflig, cur_dir):
 #    pname = os.path.basename(proteinpath)
 
     # protein = next(oddt.toolkit.readfile('pdb', proteinpath, removeHs=False, cleanupSubstructures=False, sanitize=False))
-    protein = next(oddt.toolkit.readfile('pdb', proteinpath, removeHs=False))
-    protein.protein = True
+    try:
+        protein = next(oddt.toolkit.readfile('pdb', proteinpath, removeHs=False))
+        protein.protein = True
+    except Exception as e:
+
+        print("Input structure could not be split into protein and ligand. Please check ligand identifier.")
+        f2 = open(os.path.join(os.path.basename(proteinpath), 'ErrorLog.txt'), 'w')
+        f2.write(str(e))
+        f2.close()
 
 
     for ligand_object in Listoflig:
@@ -147,7 +154,7 @@ def InteractionsFile(protein, ligand, FilePath, Interaction_Name):
                 l_atomsym = ANumtoASym(l_atomicnum, os.path.dirname(__file__))
 
                 l_type = str(l_atomsym) + ' ' + str(ligand[y]['id']+1)
-                p_type = str(p_atomsym) + ' ' +str(protein[y]['id']+1)
+                p_type = str(p_atomsym) + ' ' + str(protein[y]['id']+1)
 
                 dst = distance.euclidean(p_coords, l_coords)
                 item = ProtLigInfo(l_type, p_type, protein[y]['resname'], str(protein[y]['resnum']), dst)

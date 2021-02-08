@@ -91,8 +91,15 @@ def SPLIF_Fingerprint(ref_input, Listoflig, proteinpath):
     F_Scores = [0]*len(Listoflig)
 
     #protein = next(oddt.toolkit.readfile('pdb', proteinpath, removeHs=False, cleanupSubstructures=False, sanitize=False))
-    protein = next(oddt.toolkit.readfile('pdb', proteinpath, removeHs=False))
-    protein.protein = True
+    try:
+        protein = next(oddt.toolkit.readfile('pdb', proteinpath, removeHs=False))
+        protein.protein = True
+    except Exception as e:
+        print("Input structure could not be split into protein and ligand. Please check ligand identifier.")
+
+        f2 = open(os.path.join(os.path.basename(proteinpath), 'ErrorLog.txt'), 'w')
+        f2.write(str(e))
+        f2.close()
 
     # Read in and define the reference ligand
     #ref_ligand = next(oddt.toolkit.readfile('pdb', ref_input, removeHs=False, cleanupSubstructures=False, sanitize=False))
@@ -120,8 +127,15 @@ def Simple_Interaction_Fingerprint(ref_input, Listoflig, proteinpath):
 
     # Read in protein
     #protein = next(oddt.toolkit.readfile('pdb', proteinpath, removeHs=False, cleanupSubstructures=False, sanitize=False))
-    protein = next(oddt.toolkit.readfile('pdb', proteinpath, removeHs=False))
-    protein.protein = True
+    try:
+        protein = next(oddt.toolkit.readfile('pdb', proteinpath, removeHs=False))
+        protein.protein = True
+    except Exception as e:
+        print("Input structure could not be split into protein and ligand. Please check ligand identifier.")
+
+        f2 = open(os.path.join(os.path.basename(proteinpath), 'ErrorLog.txt'), 'w')
+        f2.write(str(e))
+        f2.close()
 
     # Read in and define the reference ligand
     #ref_ligand = next(oddt.toolkit.readfile('pdb', ref_input, removeHs=False, cleanupSubstructures=False, sanitize=False))

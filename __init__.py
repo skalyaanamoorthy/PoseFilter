@@ -124,17 +124,25 @@ def make_dialog():
 
         try:
             files, UNK, cur_dir, pname = FileGeneration()
-        except:
+        except Exception as e:
             print("Error: please check file inputs.")
             ErrorGenerated = 1
+
+            f2 = open('ErrorLog.txt', 'w')
+            f2.write(str(e))
+            f2.close()
 
         if ErrorGenerated == 0:
             files = natural_sort(files)
             try:
                 Fingerprint_Wrapper(files, IText, form.PDBCODE.text(), FP_SI, FP_SPLIF, TextInteraction, cur_dir, pname)
-            except:
+            except Exception as e:
                 print("Error with fingerprint generation. Please check input files, required packages (specifically ODDT and rdkit builds"
-                      "specified in installation), then try again.")
+                      " specified in installation), then try again.")
+
+                f2 = open('ErrorLog.txt', 'w')
+                f2.write(str(e))
+                f2.close()
 
         form.dir_select.setText("")
         form.file_select.setText("")
@@ -161,9 +169,13 @@ def make_dialog():
             nonidentical = 1
         try:
             files, UNK, cur_dir, pname = FileGeneration()
-        except:
+        except Exception as e:
             print("Error: please check input files.")
             ErrorGenerated = 1
+
+            f2 = open('ErrorLog.txt', 'w')
+            f2.write(str(e))
+            f2.close()
 
         if ErrorGenerated == 0:
             files = natural_sort(files)
