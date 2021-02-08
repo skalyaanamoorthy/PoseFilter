@@ -1,10 +1,8 @@
 # PoseFilter Worked Examples
 
-Please refer to the user guide for explanation of PoseFilter options. Described is usage of these options
-with example files (found in the "Examples" folder).
-
-PoseFilter is a PyMOL plugin and assists in the analysis of docked ligands through identification of unique
-oligomeric poses by utilizing RMSD and interaction fingerprint analysis methods.
+Please refer to the user guide for explanation of PoseFilter options. Described is GUI/command line usage of these options
+with example files (found in the "Examples" folder). Windows was used to create the following examples. Procedures will be the same
+for other OS, but file pathway format should be based on the OS.
 
 ## Description
 
@@ -13,8 +11,7 @@ Files in the example folder were prepared using AutoDock Vina, Schrodinger Maest
 
 Each example type can be run with tab 1 or tab 2 options. The fingerprint assumes that the ligand and protein can be separated
 from each other: either pre-separated through ligand and protein input, or by the ligand identifier keyword. In addition, a crystal
-structure is included with the Monomer example as well, and can be selected for the tab 2 input. Command line inputs are listed with each example.
-Detailed command line example instructions are listed at the end of the document.
+structure is included with the Monomer example, and can be selected for the tab 2 input.
 
 To use PoseFilter can be used through the command line as well, type the following commands into the command line after
 a new PyMOL session is opened. The name (in this case PoseFilter) should correspond to the folder. The package name can be
