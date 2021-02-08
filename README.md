@@ -54,20 +54,27 @@ Homebrew should be used to install the required packages.
 
 1. Install open-source-pymol using homebrew.
 
-`brew install brewsci/bio/pymol`
+    `brew install brewsci/bio/pymol`
 
 2. Need to check version of python that homebrew is using. For the following steps, ensure that the appropriate python path is being referenced.
    Substitute python3 for the homebrew python pathway.
 3. Install additional packages:
-`python3 -m pip install matplotlib`
-`python3 -m pip install seaborn`
-`python3 -m pip install git+git://github.com/oddt/oddt`
+   
+    python3 -m pip install matplotlib
+    python3 -m pip install seaborn
+    python3 -m pip install git+git://github.com/oddt/oddt
+   
+
 4. Install rdkit using homebrew:
-`brew tap rdkit/rdkit`
-`brew install rdkit`
+   
+    brew tap rdkit/rdkit
+    brew install rdkit
+   
 5. Launch pymol by typing `pymol` in the terminal.
 6. If there are any package errors, oddt can be downgraded to the corresponding build:
-`pip install git+git://github.com/oddt/oddt.git@88a5481e0a74348df5f2a9b27132148a3d5b94c1`
+   
+    pip install git+git://github.com/oddt/oddt.git@88a5481e0a74348df5f2a9b27132148a3d5b94c1
+   
 7. An alternative is to build using conda and the linux instructions.
 Troubleshooting: ensure that dependencies are installed though the wiki: https://pymolwiki.org/index.php/MAC_Install.
 If no module named or initialized failed errors occur, try installing through: https://github.com/schrodinger/pymol-open-source
@@ -163,12 +170,12 @@ complete” will be displayed in the PyMOL command window once this process has 
 1. After following the installation instructions, PoseFilter can be used through the command line as well. The following
 commands should be typed into the command line after a new PyMOL session is opened. The name (in this case PoseFilter)
 should correspond to the folder. The package name can be checked in "Plugin" -> "Plugin Manager" If it is not "PoseFilter"
-please use the appropriate keywords in the following commands.
+please use the appropriate keywords in the following commands. 
    
-   `from pmg_tk.startup.PoseFilter import LigandRMSProcess`
-   `from pmg_tk.startup.PoseFilter import ComplexRMSProcess`
-   `from pmg_tk.startup.PoseFilter import LigandFP`
-   `from pmg_tk.startup.PoseFilter import ComplexFP`
+    from pmg_tk.startup.PoseFilter import LigandRMSProcess
+    from pmg_tk.startup.PoseFilter import ComplexRMSProcess
+    from pmg_tk.startup.PoseFilter import LigandFP
+    from pmg_tk.startup.PoseFilter import ComplexFP
 
 
 #### RMS
@@ -189,10 +196,12 @@ nonidentical: boolean value (0 or 1), 1 indicating that the chains are nonidenti
 rotations will only occur for exactly identical chains (residue count and type being equal).
 
 Syntax:
-`LigandRMSProcess(pfile, keyword, label, RMS_Cutoff, alpha, nonidentical)`
+
+    LigandRMSProcess(pfile, keyword, label, RMS_Cutoff, alpha, nonidentical)
 
 Example:
-`LigandRMSProcess('/home/.../PoseFilter/Dimer_Example/Tab1_input/1FX9.pdbqt', 'pose', '', 2.0, 0, 0)`
+
+    LigandRMSProcess('/home/.../PoseFilter/Dimer_Example/Tab1_input/1FX9.pdbqt', 'pose', '', 2.0, 0, 0)
 
 
 ##### Input Type 2 (Complex)
@@ -217,10 +226,12 @@ nonidentical: Boolean value (0 or 1), 1 indicating that the chains are nonidenti
 rotations will only occur for exactly identical chains (residue count and type being equal).
 
 Syntax:
-`ComplexRMSProcess(folder_dir, keyword, label, ResId, crystal_struct, RMS_Cutoff, alpha, nonidentical)`
+
+    ComplexRMSProcess(folder_dir, keyword, label, ResId, crystal_struct, RMS_Cutoff, alpha, nonidentical)
 
 Example:
-`ComplexRMSProcess('/home/.../PoseFilter/Dimer_Example/Tab2_input', 'pose', '', 'MJI', '', 2.0, 0,0)`
+
+    ComplexRMSProcess('/home/.../PoseFilter/Dimer_Example/Tab2_input', 'pose', '', 'MJI', '', 2.0, 0,0)
 
 ### Interaction Fingerprint
 #### Input Type 1 (Ligand)
@@ -242,9 +253,11 @@ FP_SPLIF: SPLIF fingerprint cutoff value (0-1).
 TextInteraction: bool value (0 or 1). If 1, then generates CSV files containing interaction information of various types.
 
 Syntax:
+
 `LigandFP(pfile, keyword, label, FPList, FP_SI, FP_SPLIF, TextInteraction)`
 
 Example:
+
 `LigandFP('/home/.../PoseFilter/Dimer_Example/Tab1_input/1FX9.pdbqt', 'pose', '', ['SInteraction', 'SPLIF'], 0.5, 0.5, 1)`
 
 
