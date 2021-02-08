@@ -24,6 +24,11 @@ checked in "Plugin" -> "Plugin Manager" If it is not "PoseFilter" please use the
 
 `from pmg_tk.startup.PoseFilter import ComplexRMSProcess`
 
+`from pmg_tk.startup.PoseFilter import LigandFP`
+
+`from pmg_tk.startup.PoseFilter import ComplexFP`
+
+
 
 ### Dimer Example
 #### Dimer Input
@@ -35,11 +40,11 @@ checked in "Plugin" -> "Plugin Manager" If it is not "PoseFilter" please use the
 
 RMS:
 
-`LigandRMSProcess('/home/.../PoseFilter/Dimer_Example/Tab1_input/1FX9.pdbqt', 'pose', 'Dimer', 2.0, 0, 0)`
+`LigandRMSProcess(r'C:\Users\...\PoseFilter\Example_Instructions\Examples\Dimer_Example\Tab1_input\1FX9.pdbqt', 'pose', 'Dimer', 2.0, 0, 0)`
 
 Fingerprint:
 
-`LigandFP('/home/.../PoseFilter/Dimer_Example/Tab1_input/1FX9.pdbqt', 'pose', 'Dimer', ['SInteraction', 'SPLIF'], 0.5, 0.5, 1)`
+`LigandFP(r'C:\Users\...\PoseFilter\Example_Instructions\Examples\Dimer_Example\Tab1_input\1FX9.pdbqt', 'pose', 'Dimer', ['SInteraction', 'SPLIF'], 0.5, 0.5, 1)`
 
 ##### Dimer Tab 2 GUI
 
@@ -77,11 +82,11 @@ Fingerprint:
 
 RMS:
 
-`LigandRMSProcess('/home/.../PoseFilter/Trimer_Example/Tab1_input/5EIL.pdb', 'pose', 'Trimer', 2.0, 0, 0)`
+`LigandRMSProcess(r'C:\Users\...\PoseFilter\Example_Instructions\Examples\Trimer_Example\Tab1_input\5EIL.pdb', 'pose', 'Trimer', 2.0, 0, 0)`
 
 Fingerprint:
 
-`LigandFP('/home/.../PoseFilter/Trimer_Example/Tab1_input/5EIL.pdb', 'pose', 'Trimer', ['SInteraction', 'SPLIF'], 0.5, 0.5, 1)`
+`LigandFP(r'C:\Users\...\PoseFilter\Example_Instructions\Examples\Trimer_Example\Tab1_input\5EIL.pdb', 'pose', 'Trimer', ['SInteraction', 'SPLIF'], 0.5, 0.5, 1)`
 
 ##### Trimer Tab 2 GUI
 ![Trimer Input](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Trimer_Tab2.jpg)
@@ -90,11 +95,11 @@ Fingerprint:
 
 RMS:
 
-`ComplexRMSProcess('/home/.../PoseFilter/Trimer_Example/Tab2_input', 'pose', 'Trimer', 'UNK', '', 2.0, 0,0)`
+`ComplexRMSProcess(r'C:\Users\...\PoseFilter\Example_Instructions\Examples\Trimer_Example\Tab2_input', 'pose', 'Trimer', 'UNK', '', 2.0, 0,0)`
 
 Fingerprint:
 
-`ComplexFP('/home/.../PoseFilter/Trimer_Example/Tab2_input', 'pose', 'Trimer', 'UNK', '', ['SInteraction', 'SPLIF'], 0.5, 0.5, 1)`
+`ComplexFP(r'C:\Users\...\PoseFilter\Example_Instructions\Examples\Trimer_Example\Tab2_input', 'pose', 'Trimer', 'UNK', '', ['SInteraction', 'SPLIF'], 0.5, 0.5, 1)`
 
 #### Trimer Output
 
@@ -118,11 +123,11 @@ Fingerprint:
 
 RMS:
 
-`LigandRMSProcess('/home/.../PoseFilter/Tetramer_Example/Tab1_input/5kmh.pdbqt', 'pose', 'Tetramer', 2.0, 0, 0)`
+`LigandRMSProcess(r'C:\Users\...\PoseFilter\Example_Instructions\Examples\Tetramer_Example\Tab1_input\5kmh.pdbqt', 'pose', 'Tetramer', 2.0, 0, 0)`
 
 Fingerprint:
 
-`LigandFP('/home/.../PoseFilter/Tetramer_Example/Tab1_input/5kmh.pdbqt', 'pose', 'Tetramer', ['SInteraction', 'SPLIF'], 0.5, 0.5, 1)`
+`LigandFP(r'C:\Users\...\PoseFilter\Example_Instructions\Examples\Tetramer_Example\Tab1_input\5kmh.pdbqt', 'pose', 'Tetramer', ['SInteraction', 'SPLIF'], 0.5, 0.5, 1)`
 
 ##### Tetramer Tab 2 GUI
 ![Tetramer Input](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Tetramer_Tab2.jpg)
@@ -131,11 +136,11 @@ Fingerprint:
 
 RMS:
 
-`ComplexRMSProcess('/home/.../PoseFilter/Tetramer_Example/Tab2_input', 'pose', 'Tetramer', '6U8', '', 2.0, 0,0)`
+`ComplexRMSProcess(r'C:\Users\...\PoseFilter\Example_Instructions\Examples\Tetramer_Example\Tab2_input', 'pose', 'Tetramer', '6U8', '', 2.0, 0,0)`
 
 Fingerprint:
 
-`ComplexFP('/home/.../PoseFilter/Tetramer_Example/Tab2_input', 'pose', 'Tetramer', '6U8', '', ['SInteraction', 'SPLIF'], 0.5, 0.5, 1)`
+`ComplexFP(r'C:\Users\...\PoseFilter\Example_Instructions\Examples\Tetramer_Example\Tab2_input', 'pose', 'Tetramer', '6U8', '', ['SInteraction', 'SPLIF'], 0.5, 0.5, 1)`
 
 #### Tetramer Output
 
@@ -159,11 +164,11 @@ Fingerprint:
 
 RMS:
 
-`LigandRMSProcess('/home/.../PoseFilter/Monomer_Example/Tab1_input/protein1.pdb', 'pose', 'Monomer', 2.0, 0, 0)`
+`LigandRMSProcess(r'C:\Users\...\PoseFilter\Example_Instructions\Examples\Monomer_Example\Tab1_input\1T69.pdb', 'pose', 'Monomer', 2.0, 0, 0)`
 
 Fingerprint:
 
-`LigandFP('/home/.../PoseFilter/Monomer_Example/Tab1_input/protein1.pdb', 'pose', '', ['SInteraction', 'SPLIF'], 0.5, 0.5, 1)`
+`LigandFP(r'C:\Users\...\PoseFilter\Example_Instructions\Examples\Monomer_Example\Tab1_input\1T69.pdb', 'pose', '', ['SInteraction', 'SPLIF'], 0.5, 0.5, 1)`
 
 ##### Monomer Tab 2 GUI
 ![Monomer Input](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Monomer_Tab2.jpg)
@@ -172,11 +177,11 @@ Fingerprint:
 
 RMS:
 
-`ComplexRMSProcess('/home/.../PoseFilter/Monomer_Example/Tab2_input', 'pose', 'Monomer', 'SHH', '', 2.0, 0,0)`
+`ComplexRMSProcess(r'C:\Users\...\PoseFilter\Example_Instructions\Examples\Monomer_Example\Tab2_input', 'pose', 'Monomer', 'SHH', 'crystal.pdb', 2.0, 0,0)`
 
 Fingerprint:
 
-`ComplexFP('/home/.../PoseFilter/Monomer_Example/Tab2_input', 'pose', 'Monomer', 'SHH', '', ['SInteraction', 'SPLIF'], 0.5, 0.5, 1)`
+`ComplexFP(r'C:\Users\...\PoseFilter\Example_Instructions\Examples\Monomer_Example\Tab2_input', 'pose', 'Monomer', 'SHH', 'crystal.pdb', ['SInteraction', 'SPLIF'], 0.5, 0.5, 1)`
 
 #### Monomer Output
 
@@ -200,11 +205,11 @@ Fingerprint:
 
 RMS:
 
-`LigandRMSProcess('/home/.../PoseFilter/Heteromer_Example/Tab1_input/1TOQ.pdbqt', 'pose', 'Heteromer', 2.0, 0, 0)`
+`LigandRMSProcess(r'C:\Users\...\PoseFilter\Example_Instructions\Examples\Heteromer_Example\Tab1_input\1TOQ.pdbqt', 'pose', 'Heteromer', 2.0, 0, 0)`
 
 Fingerprint:
 
-`LigandFP('/home/.../PoseFilter/Heteromer_Example/Tab1_input/1TOQ.pdbqt', 'pose', 'Heteromer', ['SInteraction', 'SPLIF'], 0.5, 0.5, 1)`
+`LigandFP(r'C:\Users\...\PoseFilter\Example_Instructions\Examples\Heteromer_Example\Tab1_input\1TOQ.pdbqt', 'pose', 'Heteromer', ['SInteraction', 'SPLIF'], 0.5, 0.5, 1)`
 
 ##### Heteromer Tab 2 GUI
 ![Heteromer Input](https://github.com/skalyaanamoorthy/PoseFilter/blob/master/Snapshots/Heteromer_Tab2.jpg)
@@ -213,11 +218,11 @@ Fingerprint:
 
 RMS:
 
-`ComplexRMSProcess('/home/.../PoseFilter/Dimer_Example/Tab2_input', 'pose', 'Heteromer', 'MJI', '', 2.0, 0,0)`
+`ComplexRMSProcess(r'C:\Users\...\PoseFilter\Example_Instructions\Examples\Heteromer_Example\Tab2_input', 'pose', 'Heteromer', 'AMG', '', 2.0, 0,0)`
 
 Fingerprint:
 
-`ComplexFP('/home/.../PoseFilter/Dimer_Example/Tab2_input', 'pose', 'Heteromer', 'UNK', '', ['SInteraction', 'SPLIF'], 0.5, 0.5, 1)`
+`ComplexFP(r'C:\Users\...\PoseFilter\Example_Instructions\Examples\Heteromer_Example\Tab2_input', 'pose', 'Heteromer', 'AMG', '', ['SInteraction', 'SPLIF'], 0.5, 0.5, 1)`
 
 #### Heteromer Output
 
