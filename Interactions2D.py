@@ -56,7 +56,7 @@ def InteractionCheck(ppath, Listoflig, cur_dir):
 
     # protein = next(oddt.toolkit.readfile('pdb', proteinpath, removeHs=False, cleanupSubstructures=False, sanitize=False))
     try:
-        protein = next(oddt.toolkit.readfile('pdb', proteinpath, removeHs=False, sanitize=False))
+        protein = next(oddt.toolkit.readfile('pdb', proteinpath, removeHs=False))
         protein.protein = True
     except Exception as e:
 
@@ -77,7 +77,7 @@ def InteractionCheck(ppath, Listoflig, cur_dir):
         file.close()
 
         # Read in and define the reference ligand
-        ligand = next(oddt.toolkit.readfile('pdb', ligandname, removeHs=False, sanitize=False))
+        ligand = next(oddt.toolkit.readfile('pdb', ligandname, removeHs=False))
 
         # Hydrophobic interactions
         p_hydroph, l_hydroph = interactions.hydrophobic_contacts(protein, ligand)

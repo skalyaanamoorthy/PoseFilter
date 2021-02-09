@@ -92,7 +92,7 @@ def SPLIF_Fingerprint(ref_input, Listoflig, proteinpath):
 
     #protein = next(oddt.toolkit.readfile('pdb', proteinpath, removeHs=False, cleanupSubstructures=False, sanitize=False))
     try:
-        protein = next(oddt.toolkit.readfile('pdb', proteinpath, removeHs=False, sanitize=False))
+        protein = next(oddt.toolkit.readfile('pdb', proteinpath, removeHs=False))
         protein.protein = True
     except Exception as e:
         print("Input structure could not be split into protein and ligand. Please check ligand identifier.")
@@ -103,7 +103,7 @@ def SPLIF_Fingerprint(ref_input, Listoflig, proteinpath):
 
     # Read in and define the reference ligand
     #ref_ligand = next(oddt.toolkit.readfile('pdb', ref_input, removeHs=False, cleanupSubstructures=False, sanitize=False))
-    ref_ligand = next(oddt.toolkit.readfile('pdb', ref_input, removeHs=False, sanitize=False))
+    ref_ligand = next(oddt.toolkit.readfile('pdb', ref_input, removeHs=False))
     ref = fp.SPLIF(ref_ligand, protein)
 
     # Loop through each ligand in the list
@@ -111,7 +111,7 @@ def SPLIF_Fingerprint(ref_input, Listoflig, proteinpath):
    # print(Listoflig)
     for ligandpath in Listoflig:
         #ligand = next(oddt.toolkit.readfile('pdb', ligandpath, removeHs=False, cleanupSubstructures=False, sanitize=False))
-        ligand = next(oddt.toolkit.readfile('pdb', ligandpath, removeHs=False, sanitize=False))
+        ligand = next(oddt.toolkit.readfile('pdb', ligandpath, removeHs=False))
         fp_query = fp.SPLIF(ligand, protein)
         # similarity score for current query
         F_Scores[count] = fp.similarity_SPLIF(ref, fp_query, rmsd_cutoff=3.)
@@ -128,7 +128,7 @@ def Simple_Interaction_Fingerprint(ref_input, Listoflig, proteinpath):
     # Read in protein
     #protein = next(oddt.toolkit.readfile('pdb', proteinpath, removeHs=False, cleanupSubstructures=False, sanitize=False))
     try:
-        protein = next(oddt.toolkit.readfile('pdb', proteinpath, removeHs=False, sanitize=False))
+        protein = next(oddt.toolkit.readfile('pdb', proteinpath, removeHs=False))
         protein.protein = True
     except Exception as e:
         print("Input structure could not be split into protein and ligand. Please check ligand identifier.")
@@ -139,14 +139,14 @@ def Simple_Interaction_Fingerprint(ref_input, Listoflig, proteinpath):
 
     # Read in and define the reference ligand
     #ref_ligand = next(oddt.toolkit.readfile('pdb', ref_input, removeHs=False, cleanupSubstructures=False, sanitize=False))
-    ref_ligand = next(oddt.toolkit.readfile('pdb', ref_input, removeHs=False, sanitize=False))
+    ref_ligand = next(oddt.toolkit.readfile('pdb', ref_input, removeHs=False))
     ref = fp.SimpleInteractionFingerprint(ref_ligand, protein)
 
     # Loop through each ligand in the list
     count = 0
     for ligandpath in Listoflig:
         #ligand = next(oddt.toolkit.readfile('pdb', ligandpath, removeHs=False, cleanupSubstructures=False, sanitize=False))
-        ligand = next(oddt.toolkit.readfile('pdb', ligandpath, removeHs=False, sanitize=False))
+        ligand = next(oddt.toolkit.readfile('pdb', ligandpath, removeHs=False))
         fp_query = fp.SimpleInteractionFingerprint(ligand, protein)
 
         # similarity score for current query
