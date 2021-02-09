@@ -59,7 +59,7 @@ If there are any package errors, oddt can be downgraded to the corresponding bui
 
 
 ### MacOS Installation
-Homebrew should be used to install the required packages.
+Installation of all required packages using 'Homebrew' is recommended in MacOS.
 
 1. Install open-source-pymol using homebrew.
    
