@@ -78,8 +78,9 @@ Installation of all required packages using 'Homebrew' is recommended in MacOS.
 
 4. Install rdkit using homebrew:
    
-    brew tap rdkit/rdkit
-    brew install rdkit
+    `brew tap rdkit/rdkit`
+   
+    `brew install rdkit`
    
 5. Launch pymol by typing `pymol` in the terminal.
 6. If there are any package errors, oddt can be downgraded to the corresponding build:
