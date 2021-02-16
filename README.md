@@ -66,7 +66,7 @@ Installation of all required packages using 'Homebrew' is recommended in MacOS.
 `brew install brewsci/bio/pymol`
 
 2. Need to check version of python that homebrew is using. For the following steps, ensure that the homebrew python path is being referenced.
-   Substitute python3 for the homebrew python pathway (eg., path_to_homebrew_python -m pip install <package>) or assign homebrew python as an alias to python3 in the bash_profile before installing the
+   Substitute python3 for the homebrew python pathway (eg., path_to_homebrew_python -m pip install <<package>>) or assign homebrew python as an alias to python3 in the bash_profile before installing the
    additional packages.
 3. Install additional packages:
    
